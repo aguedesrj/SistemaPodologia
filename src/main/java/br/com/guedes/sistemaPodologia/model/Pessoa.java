@@ -2,6 +2,8 @@ package br.com.guedes.sistemaPodologia.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -46,7 +49,10 @@ public class Pessoa implements Serializable {
 	
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="END_CODIGO")
-	private Endereco endereco;	
+	private Endereco endereco;
+	
+	@OneToMany(mappedBy = "pessoa", fetch=FetchType.EAGER)
+	private Set<Contato> listaContato = new HashSet<Contato>();
 	
 	public Integer getPesCodigo() {
 		return pesCodigo;
@@ -102,5 +108,13 @@ public class Pessoa implements Serializable {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public Set<Contato> getListaContato() {
+		return listaContato;
+	}
+
+	public void setListaContato(Set<Contato> listaContato) {
+		this.listaContato = listaContato;
 	}
 }

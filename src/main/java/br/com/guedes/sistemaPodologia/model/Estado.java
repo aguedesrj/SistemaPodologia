@@ -18,7 +18,7 @@ public class Estado implements Serializable {
 
 	@Id
 	@Column(name="EST_CODIGO")
-	private Integer lojCodigo;
+	private Integer estCodigo;
 	
 	@Column(name="EST_NOME", length=60, nullable=false)
 	private String estNome;
@@ -26,12 +26,12 @@ public class Estado implements Serializable {
 	@Column(name="EST_SIGLA", length=2, nullable=false)
 	private String estSigla;
 
-	public Integer getLojCodigo() {
-		return lojCodigo;
+	public Integer getEstCodigo() {
+		return estCodigo;
 	}
 
-	public void setLojCodigo(Integer lojCodigo) {
-		this.lojCodigo = lojCodigo;
+	public void setEstCodigo(Integer estCodigo) {
+		this.estCodigo = estCodigo;
 	}
 
 	public String getEstNome() {

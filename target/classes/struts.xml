@@ -39,5 +39,6 @@
     </package>
     
     <include file="struts-usuario.xml"/>
+    <include file="struts-cliente.xml"/>
 
 </struts>

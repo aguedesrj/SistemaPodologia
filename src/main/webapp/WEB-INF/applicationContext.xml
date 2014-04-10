@@ -15,14 +15,23 @@
 	<!-- Activates scanning of @Autowired -->
 	<context:annotation-config/>	
 	
+   	<!-- Bean que implementa a classe ClienteFacadeImpl -->  
+   	<bean id="clienteFacadeImpl" class="br.com.guedes.sistemaPodologia.facade.ClienteFacadeImpl">  
+    	<property name="clienteDao" ref="clienteDaoImpl" />
+    	<property name="sessionFactory" ref="sessionFactory" />  
+   	</bean>
+   	
    	<!-- Bean que implementa a classe UsuarioFacadeImpl -->  
    	<bean id="usuarioFacadeImpl" class="br.com.guedes.sistemaPodologia.facade.UsuarioFacadeImpl">  
     	<property name="usuarioDao" ref="usuarioDaoImpl" />
     	<property name="sessionFactory" ref="sessionFactory" />  
-   	</bean>    		
+   	</bean>   				
       
+   	<!-- Implementacao da interface ClienteDaoImpl -->  
+   	<bean id="clienteDaoImpl" class="br.com.guedes.sistemaPodologia.dao.ClienteDaoImpl" parent="baseSessionFactory"/>   
+   	
    	<!-- Implementacao da interface UsuarioDaoImpl -->  
-   	<bean id="usuarioDaoImpl" class="br.com.guedes.sistemaPodologia.dao.UsuarioDaoImpl" parent="baseSessionFactory"/>   					
+   	<bean id="usuarioDaoImpl" class="br.com.guedes.sistemaPodologia.dao.UsuarioDaoImpl" parent="baseSessionFactory"/>    							
       
    	<!-- Bean abstrato para evitar repetição de código -->  
    	<bean id="baseSessionFactory" abstract="true">  

@@ -38,7 +38,7 @@ public class Usuario implements Serializable {
 	private String usuSituacao;
 	
 	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="PES_CODIGO")
+	@JoinColumn(name="PES_CODIGO", nullable=false)
 	private Pessoa pessoa;
 
 	public Integer getUsuCodigo() {

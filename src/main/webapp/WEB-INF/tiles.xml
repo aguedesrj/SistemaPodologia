@@ -52,6 +52,14 @@
     </definition>
    	<definition name="manutencao.usuario" extends="template.index">
         <put-attribute name="conteudo" value="/WEB-INF/jsp/usuario/manutencaoUsuario.jsp"/>
-    </definition>        
+    </definition>
+    
+    <!-- Cliente -->
+   	<definition name="cliente.novo" extends="template.index">
+        <put-attribute name="conteudo" value="/WEB-INF/jsp/cliente/manutencaoCliente.jsp"/>
+    </definition>
+   	<definition name="cliente.pesquisa" extends="template.index">
+        <put-attribute name="conteudo" value="/WEB-INF/jsp/cliente/pesquisaCliente.jsp"/>
+    </definition>   	
 
 </tiles-definitions>

@@ -18,6 +18,26 @@
         <mapping class="br.com.guedes.sistemaPodologia.model.Pessoa"/>
         <mapping class="br.com.guedes.sistemaPodologia.model.Endereco"/>
         <mapping class="br.com.guedes.sistemaPodologia.model.Estado"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Usuario"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Configuracao"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Consulta"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Contato"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Diagnostico"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.DiagnosticoDoencaPk"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Doenca"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Hora"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Modulo"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.ModuloPerfil"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.ModuloPerfilPk"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Paciente"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Perfil"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Profissao"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Profissional"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.TipoContato"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.Tratamento"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.UsuarioPerfil"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.UsuarioPerfilPk"/>
+        <mapping class="br.com.guedes.sistemaPodologia.model.VW_Usuario"/>
 
     </session-factory>
 </hibernate-configuration>
