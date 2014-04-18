@@ -14,10 +14,12 @@
 
 	<!-- Activates scanning of @Autowired -->
 	<context:annotation-config/>	
-	
+
    	<!-- Bean que implementa a classe ClienteFacadeImpl -->  
    	<bean id="clienteFacadeImpl" class="br.com.guedes.sistemaPodologia.facade.ClienteFacadeImpl">  
     	<property name="clienteDao" ref="clienteDaoImpl" />
+    	<property name="contatoDao" ref="contatoDaoImpl" />
+    	<property name="enderecoDao" ref="enderecoDaoImpl" />
     	<property name="sessionFactory" ref="sessionFactory" />  
    	</bean>
    	
@@ -30,23 +32,29 @@
    	<!-- Implementacao da interface ClienteDaoImpl -->  
    	<bean id="clienteDaoImpl" class="br.com.guedes.sistemaPodologia.dao.ClienteDaoImpl" parent="baseSessionFactory"/>   
    	
+   	<!-- Implementacao da interface ContatoDaoImpl -->  
+   	<bean id="contatoDaoImpl" class="br.com.guedes.sistemaPodologia.dao.ContatoDaoImpl" parent="baseSessionFactory"/>
+   	
    	<!-- Implementacao da interface UsuarioDaoImpl -->  
-   	<bean id="usuarioDaoImpl" class="br.com.guedes.sistemaPodologia.dao.UsuarioDaoImpl" parent="baseSessionFactory"/>    							
+   	<bean id="usuarioDaoImpl" class="br.com.guedes.sistemaPodologia.dao.UsuarioDaoImpl" parent="baseSessionFactory"/> 
+   	
+   	<!-- Implementacao da interface EnderecoDaoImpl -->  
+   	<bean id="enderecoDaoImpl" class="br.com.guedes.sistemaPodologia.dao.EnderecoDaoImpl" parent="baseSessionFactory"/>   								
       
    	<!-- Bean abstrato para evitar repetição de código -->  
    	<bean id="baseSessionFactory" abstract="true">  
       	<property name="sessionFactory" ref="sessionFactory" />  
    	</bean>
-	
+
 	<!-- Conexão e Configuração do Hibernate -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">  
 	    <property name="configLocation" value="classpath:hibernate.cfg.xml" />
 	</bean>	    
-	
+
 	<bean id="transactionManager"  class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
 		<property name="sessionFactory" ref="sessionFactory"></property>  
    	</bean>  
    
    	<tx:annotation-driven transaction-manager="transactionManager" />
-	
+
 </beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+ 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="jobsTask" class="br.com.guedes.sistemaPodologia.util.JobsTask"></bean>
+	
+	<bean id="guedesJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="jobsTask"></property>
+		<property name="targetMethod" value="efetuarBackupEnvioEmail"></property>	    
+	</bean>
+	
+	<!--
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+	    <property name="jobDetail" ref="guedesJob"></property>
+	    <property name="repeatInterval" value="500"></property>
+	    <property name="startDelay" value="1000"></property>
+	</bean>
+	-->
+	
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	    <property name="jobDetail" ref="guedesJob"></property>
+	    <property name="cronExpression" value="0 0 16 ? * *"></property>
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+		    <list>
+		        <ref bean="guedesJob"/>
+		    </list>
+		</property> 
+		<property name="triggers">
+		    <list>
+		        <!--<ref bean="simpleTrigger"/>-->
+		        <ref bean="cronTrigger"/>
+		    </list>
+		</property>   
+	</bean>
+</beans>

@@ -1,6 +1,8 @@
 package br.com.guedes.sistemaPodologia.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnderecoVO implements Serializable {
 
@@ -12,8 +14,13 @@ public class EnderecoVO implements Serializable {
 	private String endBairro;
 	private String endCidade;
 	private String endCep;
-	private Integer estCodigo;
-	private String estNome;
+	private EstadoVO estadoVO;
+	private List<EstadoVO> listaEstadosVO;
+	
+	public EnderecoVO() {
+		this.estadoVO = new EstadoVO();
+		this.listaEstadosVO = new ArrayList<EstadoVO>();
+	}
 	
 	public Integer getEndCodigo() {
 		return endCodigo;
@@ -62,20 +69,20 @@ public class EnderecoVO implements Serializable {
 	public void setEndCep(String endCep) {
 		this.endCep = endCep;
 	}
-	
-	public Integer getEstCodigo() {
-		return estCodigo;
+
+	public EstadoVO getEstadoVO() {
+		return estadoVO;
 	}
-	
-	public void setEstCodigo(Integer estCodigo) {
-		this.estCodigo = estCodigo;
+
+	public void setEstadoVO(EstadoVO estadoVO) {
+		this.estadoVO = estadoVO;
 	}
-	
-	public String getEstNome() {
-		return estNome;
+
+	public List<EstadoVO> getListaEstadosVO() {
+		return listaEstadosVO;
 	}
-	
-	public void setEstNome(String estNome) {
-		this.estNome = estNome;
+
+	public void setListaEstadosVO(List<EstadoVO> listaEstadosVO) {
+		this.listaEstadosVO = listaEstadosVO;
 	}
 }

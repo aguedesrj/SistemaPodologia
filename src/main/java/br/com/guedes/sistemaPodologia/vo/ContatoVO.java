@@ -1,16 +1,23 @@
 package br.com.guedes.sistemaPodologia.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContatoVO implements Serializable {
 
 	private static final long serialVersionUID = -1074993420183706486L;
 
 	private Integer conCodigo;
-	private Integer tcoCodigo;
 	private String conDescricao;
 	private String conResponsavel;
-	private String tcoDescricao;
+	private TipoContatoVO tipoContatoVO;
+	private List<TipoContatoVO> listaTipoContatosVO;
+	
+	public ContatoVO() {
+		this.tipoContatoVO = new TipoContatoVO();
+		this.listaTipoContatosVO = new ArrayList<TipoContatoVO>();
+	}
 	
 	public Integer getConCodigo() {
 		return conCodigo;
@@ -18,14 +25,6 @@ public class ContatoVO implements Serializable {
 	
 	public void setConCodigo(Integer conCodigo) {
 		this.conCodigo = conCodigo;
-	}
-	
-	public Integer getTcoCodigo() {
-		return tcoCodigo;
-	}
-	
-	public void setTcoCodigo(Integer tcoCodigo) {
-		this.tcoCodigo = tcoCodigo;
 	}
 	
 	public String getConDescricao() {
@@ -43,12 +42,20 @@ public class ContatoVO implements Serializable {
 	public void setConResponsavel(String conResponsavel) {
 		this.conResponsavel = conResponsavel;
 	}
-	
-	public String getTcoDescricao() {
-		return tcoDescricao;
+
+	public TipoContatoVO getTipoContatoVO() {
+		return tipoContatoVO;
 	}
-	
-	public void setTcoDescricao(String tcoDescricao) {
-		this.tcoDescricao = tcoDescricao;
+
+	public void setTipoContatoVO(TipoContatoVO tipoContatoVO) {
+		this.tipoContatoVO = tipoContatoVO;
+	}
+
+	public List<TipoContatoVO> getListaTipoContatosVO() {
+		return listaTipoContatosVO;
+	}
+
+	public void setListaTipoContatosVO(List<TipoContatoVO> listaTipoContatosVO) {
+		this.listaTipoContatosVO = listaTipoContatosVO;
 	}
 }

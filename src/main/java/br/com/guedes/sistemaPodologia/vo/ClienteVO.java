@@ -1,6 +1,7 @@
 package br.com.guedes.sistemaPodologia.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteVO implements Serializable {
@@ -28,6 +29,13 @@ public class ClienteVO implements Serializable {
 	private String pacAltura;
 	private ContatoVO contatoVO;
 	private List<ContatoVO> listaContatos;
+	
+	public ClienteVO() {
+		this.pessoaVO = new PessoaVO();
+		this.enderecoVO = new EnderecoVO();
+		this.contatoVO = new ContatoVO();
+		this.listaContatos = new ArrayList<ContatoVO>();
+	}
 	
 	public PessoaVO getPessoaVO() {
 		return pessoaVO;

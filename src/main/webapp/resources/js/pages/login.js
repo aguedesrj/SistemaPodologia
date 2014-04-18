@@ -1,24 +1,7 @@
 ﻿$(document).ready(function() {
 	$("#usuLogin").focus();
 	
-	$('.ui.form').form({
-		usuLogin: {
-			identifier  : 'usuLogin',
-		    rules: [{
-		    	type   : 'empty',
-		        prompt : 'Informe o login.'
-		    }]
-		},
-		usuSenha: {
-			identifier  : 'usuSenha',
-			rules: [{
-				type   : 'empty',
-			    prompt : 'Informe o login.'
-			}]
-		}		    
-	});	
-	
-	$('#divBtnEfetuarLogin').click(function() {
+	$('#btnEntrar').click(function() {
 		if (isCamposValidos()) {
 			$.ajax({
 				url: 'SistemaPodologia/Usuario/Login',
@@ -26,9 +9,9 @@
 				type: 'POST',
 				cache: false,
 				dataType: "json",
-				beforeSend: function(){
+				beforeSend: function() {
 					$("#divCarregando").css("visibility", "visible");
-					$("#divMessageRed").css("visibility", "hidden");
+					$("#divMensagemErro").css("display", "none");
 				},
 				success: function(data, status, request){ 
 					if (status == "success" && data.mensagemUsuario == null) {
@@ -36,14 +19,14 @@
 						$("#formLogin").submit();
 					} else {
 						$("#divCarregando").css("visibility", "hidden");
-						$("#divMessageRed").css("visibility", "visible");
-						$("#spanMessage").show().html(data.mensagemUsuario);					
+						$("#divMensagemErro").css("display", "block");
+						$("#spanMsgError").show().html(data.mensagemUsuario);					
 					}
 				},
 				error: function (request, error) {
 					$("#divCarregando").css("visibility", "hidden");
-					$("#divMessageRed").css("visibility", "visible");
-					$("#spanMessage").show().html("Sistema indisponível no momento.");
+					$("#divMensagemErro").css("display", "block");
+					$("#spanMsgError").show().html("Sistema indisponível no momento.");
 				}
 			});			
 		}
@@ -54,17 +37,29 @@
  * Validar os campos.
  */
 function isCamposValidos() {
+	var isValidos = false;
 	var usuLogin = $("#usuLogin"), 
 		usuSenha = $("#usuSenha");	
 
+	usuLogin.css("border", "1px solid #cccccc");
+	usuSenha.css("border", "1px solid #cccccc");
+	
 	// Validar campo login.
 	if (usuLogin.val().trim() == "") {
-		return false;
+		usuLogin.css("border", "1px solid #ff4500");
+		isValidos = true;
 	}
 	
 	// Validar campo senha.
 	if (usuSenha.val().trim() == "") {
-		return false;
+		usuSenha.css("border", "1px solid #ff4500");
+		isValidos = true;
+	}
+	
+	if (isValidos) {
+		$("#divMensagemErro").css("display", "block");
+		$("#spanMsgError").show().html("O(s) campo(s) em vermelho(s) é obrigatório.");			
+		return false;		
 	}
 	
 	return true;

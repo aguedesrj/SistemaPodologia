@@ -5,32 +5,119 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.guedes.sistemaPodologia.dao.ClienteDao;
+import br.com.guedes.sistemaPodologia.dao.ContatoDao;
+import br.com.guedes.sistemaPodologia.dao.EnderecoDao;
+import br.com.guedes.sistemaPodologia.model.Contato;
+import br.com.guedes.sistemaPodologia.model.Estado;
+import br.com.guedes.sistemaPodologia.model.Paciente;
+import br.com.guedes.sistemaPodologia.model.Pessoa;
 import br.com.guedes.sistemaPodologia.model.TipoContato;
+import br.com.guedes.sistemaPodologia.util.BusinessException;
 import br.com.guedes.sistemaPodologia.util.IntegrationException;
 
 @Service
 @Transactional(propagation = Propagation.NOT_SUPPORTED, rollbackFor = Exception.class)
-public class ClienteFacadeImpl extends HibernateDaoSupport implements ClienteFacade {
+public class ClienteFacadeImpl implements ClienteFacade {
 	
 	private static final Logger LOGGER = Logger.getLogger(ClienteFacadeImpl.class);
-
+	
 	@Autowired
 	private ClienteDao clienteDao;
 	
-	@Autowired  
-    private SessionFactory sessionFactory;
+	@Autowired
+	private ContatoDao contatoDao;
 	
-	@SuppressWarnings("unchecked")
+	@Autowired
+	private EnderecoDao enderecoDao;	
+	
+	@Autowired  
+    private SessionFactory sessionFactory;	
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#listaTipoContatos()
+	 */
 	public List<TipoContato> listaTipoContatos() throws IntegrationException {
 		LOGGER.info("Todos do tipo de contatos.");
-		return getHibernateTemplate().find("from TipoContato");
+		return contatoDao.listaTipoContatos();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#listaEstados()
+	 */
+	public List<Estado> listaEstados() throws IntegrationException {
+		LOGGER.info("Todos os Estados.");
+		return enderecoDao.listaEstados();
 	}	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#pesquisarPorCriterios(br.com.guedes.sistemaPodologia.model.Pessoa)
+	 */
+	public List<Pessoa> pesquisarPorCriterios(final Pessoa pessoa) throws IntegrationException {
+		return clienteDao.pesquisarPorCriterios(pessoa);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#salvar(br.com.guedes.sistemaPodologia.model.Pessoa, java.util.List, br.com.guedes.sistemaPodologia.model.Paciente)
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = IntegrationException.class)
+	public void salvar(final Pessoa pessoa, final List<Contato> listaContatos, final Paciente paciente) throws IntegrationException, BusinessException {
+		try {
+			// verifica se já existe algum Cliente com o mesmo nome.
+			Pessoa pessoaCond = new Pessoa();
+			pessoaCond.setPesNome(pessoa.getPesNome());
+			// verifica se está sendo alterado.
+			if (pessoa.getPesCodigo() == null || pessoa.getPesCodigo() == 0) {
+				List<Pessoa> lista = clienteDao.pesquisarPorCriterios(pessoaCond);
+				if (lista != null && !lista.isEmpty()) {
+					throw new BusinessException("Cliente já está cadastrado.");
+				}
+			}
+			// salvar dados Pessoa.
+			sessionFactory.getCurrentSession().saveOrUpdate(pessoa);
+			// salvar dados Paciente.
+			sessionFactory.getCurrentSession().saveOrUpdate(paciente);
+			// deletar contatos.
+			List<Contato> listaContatosDelete = contatoDao.listaContatosPorPessoa(pessoa);
+			for (Contato contatoDelete: listaContatosDelete) {
+				sessionFactory.getCurrentSession().delete(contatoDelete);
+			}
+			sessionFactory.getCurrentSession().flush();
+			// salvar contatos.
+			for (Contato contato: listaContatos) {
+				sessionFactory.getCurrentSession().saveOrUpdate(contato);
+			}
+			sessionFactory.getCurrentSession().flush();
+		} catch (Exception e) {
+			LOGGER.error(e);
+			if (e instanceof BusinessException) {
+				throw new BusinessException(e.getMessage());
+			} else {
+				throw new IntegrationException("Não foi possível salvar o Produto.");
+			}
+		}
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#obterPorId(br.com.guedes.sistemaPodologia.model.Pessoa, java.util.List, br.com.guedes.sistemaPodologia.model.Paciente)
+	 */
+	public void obterPorId(Pessoa pessoa, List<Contato> listaContatos, Paciente paciente) throws IntegrationException {
+		try {
+			
+		} catch (Exception e) {
+			LOGGER.error(e);
+			throw new IntegrationException("Não foi possível salvar o Produto.");
+		}
+	}
 
 	public ClienteDao getClienteDao() {
 		return clienteDao;
@@ -38,5 +125,29 @@ public class ClienteFacadeImpl extends HibernateDaoSupport implements ClienteFac
 
 	public void setClienteDao(ClienteDao clienteDao) {
 		this.clienteDao = clienteDao;
-	}	
+	}
+
+	public ContatoDao getContatoDao() {
+		return contatoDao;
+	}
+
+	public void setContatoDao(ContatoDao contatoDao) {
+		this.contatoDao = contatoDao;
+	}
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	public EnderecoDao getEnderecoDao() {
+		return enderecoDao;
+	}
+
+	public void setEnderecoDao(EnderecoDao enderecoDao) {
+		this.enderecoDao = enderecoDao;
+	}
 }
