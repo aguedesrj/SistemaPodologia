@@ -10,7 +10,7 @@
 <s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-top: 20px;">
 	<div class="container">
 		<div id="content">
-			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs" style="width: 800px;">
 				<li class="active"><a href="#DadosPessoais" data-toggle="tab">Dados pessoais</a></li>
 				<li><a href="#Endereco" data-toggle="tab">Endereço</a></li>
 				<li><a href="#Contatos" data-toggle="tab">Contatos</a></li>
@@ -42,6 +42,22 @@
 						</div>
 						<div class="col-lg-6">
 							<s:label for="catCodigo" cssClass="control-label">Sexo</s:label>
+							<div class="col-lg-2">
+					            <div class="input-group" style="width: 100px;">
+					               <span class="input-group-addon">
+					                  <s:radio name="clienteVO.pessoaVO.pesSexo" id="pacTabagismo" theme="simple" list="#{'F':''}"/>
+					               </span>
+					               <label class="form-control">Feminino</label>
+					            </div>
+					        </div>
+					        <div class="col-lg-2">
+					            <div class="input-group" style="width: 100px;">
+					               <span class="input-group-addon">
+					                  <s:radio name="clienteVO.pessoaVO.pesSexo" id="pacTabagismo" theme="simple" list="#{'M':''}"/>
+					               </span>
+					               <label class="form-control">Masculino</label>
+					            </div>							
+							</div>
 						</div>
 					</div>
 					<div class="row" style="margin-top: 10px;">
@@ -75,17 +91,18 @@
 					<div class="row" style="margin-top: 10px;">
 						<div class="col-lg-6">
 							<s:label for="forCodigo" cssClass="control-label">Bairro</s:label>
-							<s:textfield placeholder="Bairro" name="clienteVO.enderecoVO.endBairro" id="endBairro" maxlength="60" theme="simple" cssStyle="width: 350px;" cssClass="form-control"/>
+							<s:textfield placeholder="Bairro" name="clienteVO.enderecoVO.endBairro" id="endBairro" maxlength="60" theme="simple" cssStyle="width: 300px;" cssClass="form-control"/>
 						</div>
 						<div class="col-lg-6">
 							<s:label for="catCodigo" cssClass="control-label">Cidade</s:label>
-							<s:textfield placeholder="Cidade" name="clienteVO.enderecoVO.endCidade" id="endCidade" maxlength="60" theme="simple" cssStyle="width: 350px;" cssClass="form-control"/>
+							<s:textfield placeholder="Cidade" name="clienteVO.enderecoVO.endCidade" id="endCidade" maxlength="60" theme="simple" cssStyle="width: 300px;" cssClass="form-control"/>
 						</div>
 					</div>
 					<div class="row" style="margin-top: 10px;">
 						<div class="col-lg-6">
 							<s:label for="forCodigo" cssClass="control-label">Estado</s:label>
 							<s:select  cssClass="form-control"
+								cssStyle="width: 300px;"
 								theme="simple"
 								headerKey="-1" 
 								headerValue="::: Selecione :::"
@@ -103,16 +120,17 @@
 					</div>															
 				</div>
 				<div class="tab-pane" id="Contatos">
-					<div class="row" style="margin-top: 20px;">
-						<table class="ui celled table segment" style="padding-top: 20px;">
+					<div class="row" style="margin-top: 20px; ">
+						<table id="tabelaContatos" class="ui celled table segment" style="width: 780px; padding-top: 20px; margin-left: 20px;">
 				  			<thead>
 				    			<tr>
 				    				<th width="150px">Tipo Contato</th>
-				    				<th>Descrição</th>
-				    				<th>Responsável</th>
-				    				<th>Ação</th>
+				    				<th width="200px">Descrição</th>
+				    				<th width="200px">Responsável</th>
+				    				<th width="50px">Ação</th>
 				  				</tr>
 				  			</thead>
+				  			<tbody class="tbodyTabelaContatos"></tbody>
 						</table>
 						<div class="panel-body">
 					    	<button id="btnNovoContato" type="button" class="btn btn-primary">Novo contato</button>
@@ -121,36 +139,124 @@
 				</div>
 				<div class="tab-pane" id="Informacoes">
 					<div class="row" style="margin-top: 20px;">
-						<div class="col-lg-6">
-							<s:label for="pacLabora" cssClass="control-label">Labora</s:label>
-							<s:checkbox name="clienteVO.pacLabora" id="pacLabora" theme="simple" value="true" cssClass="form-control"/>
+						<div class="col-lg-3">
+						    <div class="input-group">
+						    	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacLabora" id="pacLabora" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Labora</label>
+						    </div>
 						</div>
-						<div class="col-lg-6">
-							<s:label for="pacVisitaPedicuro" cssClass="control-label">Visita pedicuro</s:label>
-							<s:checkbox name="clienteVO.pacVisitaPedicuro" id="pacVisitaPedicuro" theme="simple" value="true" cssClass="form-control"/>
+						<div class="col-lg-3">
+							<div class="input-group">
+						    	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacVisitaPedicuro" id="pacVisitaPedicuro" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Visita pedicuro</label>
+						    </div>					
 						</div>
-						<div class="col-lg-6">
-							<s:label for="pacHipertensao" cssClass="control-label">Hipertensão</s:label>
-							<s:checkbox name="clienteVO.pacHipertensao" id="pacHipertensao" theme="simple" value="true" cssClass="form-control"/>
+						<div class="col-lg-3">
+						    <div class="input-group">
+						      	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacDiabetes" id="pacDiabetes" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Diabético</label>
+						    </div>					
 						</div>
-						<div class="col-lg-6">
-							<s:label for="pacTabagismo" cssClass="control-label">Tabagismo</s:label>
-							<s:checkbox name="clienteVO.pacTabagismo" id="pacTabagismo" theme="simple" value="true" cssClass="form-control"/>
+					</div>
+					<div class="row" style="margin-top: 20px;">
+						<div class="col-lg-3">
+						    <div class="input-group">
+						      	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacAndaDescalco" id="pacAndaDescalco" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Anda descalço</label>
+						    </div>
+						</div>
+						<div class="col-lg-3">
+						    <div class="input-group">
+						      	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacUnhaEngravada" id="pacUnhaEngravada" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Unha encravada</label>
+						    </div>						
+						</div>
+						<div class="col-lg-3">
+						    <div class="input-group">
+						      	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacTabagismo" id="pacTabagismo" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Tabagismo</label>
+						    </div>						
 						</div>						
 					</div>
+					<div class="row" style="margin-top: 20px;">
+						<div class="col-lg-3">
+						    <div class="input-group">
+						      	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacHipertensao" id="pacHipertensao" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Hipertensão</label>
+						    </div>						
+						</div>
+						<div class="col-lg-3">
+						    <div class="input-group">
+						      	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacCirurgiaPes" id="pacCirurgiaPes" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Cirurgia nos pés</label>
+						    </div>
+						</div>
+						<div class="col-lg-3">
+							<s:label for="pacCirurgiaMotivo" cssClass="control-label">Motivo da cirurgia</s:label>
+							<s:textfield placeholder="Motivo da cirurgia" name="clienteVO.pacCirurgiaMotivo" id="pacCirurgiaMotivo" maxlength="255" theme="simple" cssStyle="width: 220px;" cssClass="form-control"/>
+						</div>											
+					</div>
+					<div class="row" style="margin-top: 20px;">
+						<div class="col-lg-3">
+						    <div class="input-group">
+						      	<span class="input-group-addon">
+						        	<s:checkbox name="clienteVO.pacAlergicoMedicamentos" id="pacAlergicoMedicamentos" theme="simple"/>
+						      	</span>
+						      	<label class="form-control">Alérgico a medicamentos</label>
+						    </div>
+						</div>
+						<div class="col-lg-3">
+							<s:label for="pacAlergicoQuais" cssClass="control-label">Quais medicamentos</s:label>
+							<s:textfield placeholder="Quais medicamentos" name="clienteVO.pacAlergicoQuais" id="pacAlergicoQuais" maxlength="255" theme="simple" cssStyle="width: 220px;" cssClass="form-control"/>
+						</div>
+						<div class="col-lg-3">
+							<s:label for="pacCalcadoUtiliza" cssClass="control-label">Calçado que utiliza</s:label>
+							<s:textfield name="clienteVO.pacCalcadoUtiliza" id="pacCalcadoUtiliza" maxlength="100" theme="simple" cssStyle="width: 120px;" cssClass="form-control"/>
+						</div>												
+					</div>	
+					<div class="row" style="margin-top: 20px;">
+						<div class="col-lg-3">
+							<s:label for="pacNumeroCalcado" cssClass="control-label">Número do calçado</s:label>
+							<s:textfield name="clienteVO.pacNumeroCalcado" id="pacNumeroCalcado" maxlength="2" theme="simple" cssStyle="width: 220px;" cssClass="form-control"/>
+						</div>
+						<div class="col-lg-3">
+							<s:label for="pacPeso" cssClass="control-label">Peso</s:label>
+							<s:textfield name="clienteVO.pacPeso" id="pacPeso" maxlength="2" theme="simple" cssStyle="width: 50px;" cssClass="form-control"/>
+						</div>	
+						<div class="col-lg-3">
+							<s:label for="pacAltura" cssClass="control-label">Altura</s:label>
+							<s:textfield name="clienteVO.pacAltura" id="pacAltura" maxlength="2" theme="simple" cssStyle="width: 50px;" cssClass="form-control"/>
+						</div>																							
+					</div>																			
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="panel-body">
-    	<button id="btnSalvar" type="button" class="btn btn-primary">Salvar</button>
+	<div class="panel-body" style="margin-top: 20px;">
+    	<button id="btnSalvar" type="button" class="btn btn-primary">Salvar Cliente</button>
 	</div>	
 </s:form>
 </div>
 
 <!-- DIV do formulário contato -->
 <div id="modalContato" class="modal fade">
-	<div class="modal-dialog" style="width: 500px;">
+	<div class="modal-dialog" style="width: 650px;">
 		<div class="modal-content">
 			<!-- dialog body -->
 			<div class="modal-body">
@@ -162,9 +268,12 @@
    					<form id="formModalContato" style="margin-left: 15px;">
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-5">
+								<s:hidden name="clienteVO.contatoVO.tipoContatoVO.tcoDescricao" id="tcoDescricao"></s:hidden>
+								<s:hidden name="clienteVO.contatoVO.conCodigo" id="conCodigo"></s:hidden>
 								<s:label for="tcoCodigo" cssClass="control-label">Tipo contato</s:label>
 								<div class="input-group">
 									<s:select  cssClass="form-control"
+										onchange="javascript:setNomeTipoContato();"
 										theme="simple"
 										headerKey="-1" 
 										headerValue="::: Selecione :::"
@@ -179,7 +288,7 @@
 							<div class="col-lg-5">
 								<s:label for="conDescricao" cssClass="control-label">Descrição</s:label>
 								<div class="input-group">
-								  	<s:textfield name="clienteVO.contatoVO.conDescricao" id="conDescricao" maxlength="60" theme="simple" required="true" cssStyle="width: 350px;" cssClass="form-control"></s:textfield>
+								  	<s:textfield name="clienteVO.contatoVO.conDescricao" id="conDescricao" maxlength="60" theme="simple" cssStyle="width: 300px;" cssClass="form-control"></s:textfield>
 								</div>								
 							</div>						
 						</div>
@@ -187,7 +296,7 @@
 							<div class="col-lg-5">
 								<s:label for="conResponsavel" cssClass="control-label">Responsável</s:label>
 								<div class="input-group">
-								  	<s:textfield name="clienteVO.contatoVO.conResponsavel" id="conResponsavel" maxlength="80" theme="simple" required="true" cssStyle="width: 350px;" cssClass="form-control"></s:textfield>	
+								  	<s:textfield name="clienteVO.contatoVO.conResponsavel" id="conResponsavel" maxlength="80" theme="simple" cssStyle="width: 300px;" cssClass="form-control"></s:textfield>	
 								</div>								
 							</div>						
 						</div>

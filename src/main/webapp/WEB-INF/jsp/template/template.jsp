@@ -14,26 +14,28 @@
 	<link rel="stylesheet" type="text/css" href="../resources/css/principal.css">
 	<link rel="stylesheet" type="text/css" href="../resources/semantic/css/semantic.css">
 	<link rel="stylesheet" type="text/css" href="../resources/bootstrap-3.0.3-dist/dist/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="../resources/css/bootstrap-dialog.css" />
 	<link rel="stylesheet" type="text/css" href="../resources/css/bootstrap-datetimepicker.min.css" />
-	<link rel="stylesheet" type="text/css" href="../resources/css/bootstrap-combobox.css" />	
+	<link rel="stylesheet" type="text/css" href="../resources/css/bootstrap-combobox.css" />
+	<link rel="stylesheet" type="text/css" href="../resources/css/bootstrap-dialog.min.css" />	
 	
 	<script src="../resources/js/jquery-1.10.2.js"></script>
 	<script src="../resources/js/run_prettify.js"></script>	
-	<script src="../resources/js/bootstrap-dialog.js"></script>	
 	<script src="../resources/js/util.js"></script>	
 	<script src="../resources/bootstrap-3.0.3-dist/dist/js/bootstrap.min.js"></script>	
 	<script src="../resources/js/bootbox.js"></script>
 	<script src="../resources/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="../resources/js/bootstrap-combobox.js"></script>	
+	<script src="../resources/js/bootstrap-combobox.js"></script>
+	<script src="../resources/js/bootstrap-dialog.min.js"></script>	
 </head>
-<body style="width: 850px;">
-	<div id="divCarregando" class="ui active inverted dimmer" style="visibility: hidden;">
-		<div class="ui text loader">carregando...</div>
+<body>
+	<div id="page-wrap">
+		<div id="divCarregando" class="ui active inverted dimmer" style="visibility: hidden;">
+			<div class="ui text loader">carregando...</div>
+		</div>
+		<div id="tilesMenu"><tiles:insertAttribute name="menu"/></div>
+		<div id="tilesMensagem" style="padding-top: 100px;"><tiles:insertAttribute name="mensagem"/></div>
+		<div id="tilesConteudo"><tiles:insertAttribute name="conteudo"/></div>	
+		<div id="tilesRodape"><tiles:insertAttribute name="rodape"/></div>
 	</div>
-	<div id="tilesMenu"><tiles:insertAttribute name="menu"/></div>
-	<div id="tilesMensagem" style="padding-top: 100px;"><tiles:insertAttribute name="mensagem"/></div>
-	<div id="tilesConteudo"><tiles:insertAttribute name="conteudo"/></div>	
-	<div id="tilesRodape"><tiles:insertAttribute name="rodape"/></div>
 </body>
 </html>

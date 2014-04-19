@@ -3,6 +3,7 @@ package br.com.guedes.sistemaPodologia.controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,19 +112,67 @@ public class ClienteAction extends BasicAction {
 	  		if (getClienteVO().getListaContatos() == null) {
 	  			getClienteVO().setListaContatos(new ArrayList<ContatoVO>());
 	  		}
-	  		
-	  		getClienteVO().getListaContatos().add(getClienteVO().getContatoVO());
-	  		
+	  		// verifica se o contato é novo
+	  		if (getClienteVO().getContatoVO().getConCodigo() == null && !getClienteVO().getContatoVO().isNovo()) {
+	  			getClienteVO().getContatoVO().setNovo(true);
+	  			getClienteVO().getContatoVO().setConCodigo(new Random().nextInt());
+	  			getClienteVO().getListaContatos().add(getClienteVO().getContatoVO());
+	  		} else {
+	  			// está alterando.
+	  			for (ContatoVO contatoVO: getClienteVO().getListaContatos()) {
+	  				if (contatoVO.getConCodigo().intValue() == getClienteVO().getContatoVO().getConCodigo().intValue()) {
+	  					contatoVO.getTipoContatoVO().setTcoCodigo(getClienteVO().getContatoVO().getTipoContatoVO().getTcoCodigo());
+	  					contatoVO.getTipoContatoVO().setTcoDescricao(getClienteVO().getContatoVO().getTipoContatoVO().getTcoDescricao());
+	  					contatoVO.setConDescricao(getClienteVO().getContatoVO().getConDescricao());
+	  					contatoVO.setConResponsavel(getClienteVO().getContatoVO().getConResponsavel());
+	  					break;
+	  				}
+	  			}
+	  		}
 	  		this.getRequest().getSession().setAttribute(SESSION_LISTA_CONTATOS, getClienteVO().getListaContatos());
-	  		
 	  		return SUCCESS;
-  		
 		} catch (Exception e) {
-			
-			LOGGER.error("Erro ao incluir contato.", e);
-			setMensagemUsuario("Erro ao incluir contato.");
+			LOGGER.error("Erro ao salvar contato.", e);
+			setMensagemUsuario("Erro ao salvar contato.");
 			return ERROR;
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String alterarContato() {
+		try {
+	  		getClienteVO().setListaContatos((List<ContatoVO>) this.getRequest().getSession().getAttribute(SESSION_LISTA_CONTATOS));
+	  		for (ContatoVO contatoVO: getClienteVO().getListaContatos()) {
+	  			if (contatoVO.getConCodigo().intValue() == getClienteVO().getContatoVO().getConCodigo().intValue()) {
+	  				getClienteVO().setContatoVO(contatoVO);
+	  				break;
+	  			}
+	  		}
+	  		return SUCCESS;
+		} catch (Exception e) {
+			LOGGER.error("Erro ao alterar contato.", e);
+			setMensagemUsuario("Erro ao alterar contato.");
+			return ERROR;
+		}		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String excluirContato() {
+		try {
+	  		getClienteVO().setListaContatos((List<ContatoVO>) this.getRequest().getSession().getAttribute(SESSION_LISTA_CONTATOS));
+	  		for (ContatoVO contatoVO: getClienteVO().getListaContatos()) {
+	  			if (contatoVO.getConCodigo().intValue() == getClienteVO().getContatoVO().getConCodigo().intValue()) {
+	  				getClienteVO().getListaContatos().remove(contatoVO);
+	  				break;
+	  			}
+	  		}
+	  		this.getRequest().getSession().setAttribute(SESSION_LISTA_CONTATOS, getClienteVO().getListaContatos());
+	  		return SUCCESS;
+		} catch (Exception e) {
+			LOGGER.error("Erro ao excluir contato.", e);
+			setMensagemUsuario("Erro ao excluir contato.");
+			return ERROR;
+		}		
 	}
 	
 	public String executarPesquisa() {
@@ -202,7 +251,11 @@ public class ClienteAction extends BasicAction {
 		// lista de contatos
 		for (ContatoVO contatoVO: getClienteVO().getListaContatos()) {
 			Contato contato = new Contato();
-			contato.setConCodigo(contatoVO.getConCodigo());
+			if (contatoVO.isNovo()) {
+				contato.setConCodigo(null);
+			} else {
+				contato.setConCodigo(contatoVO.getConCodigo());
+			}
 			contato.setConDescricao(contatoVO.getConDescricao());
 			contato.setConResponsavel(contatoVO.getConResponsavel());
 			contato.setTipoContato(new TipoContato());
@@ -249,6 +302,7 @@ public class ClienteAction extends BasicAction {
 		getClienteVO().setListaContatos(new ArrayList<ContatoVO>());
 		for (Contato contato: listaContatos) {
 			ContatoVO contatoVO = new ContatoVO();
+			contatoVO.setNovo(false);
 			contatoVO.setConCodigo(contato.getConCodigo());
 			contatoVO.setConDescricao(contato.getConDescricao());
 			contatoVO.setConResponsavel(contato.getConResponsavel());

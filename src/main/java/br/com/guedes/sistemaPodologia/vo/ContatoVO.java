@@ -11,6 +11,7 @@ public class ContatoVO implements Serializable {
 	private Integer conCodigo;
 	private String conDescricao;
 	private String conResponsavel;
+	private boolean novo;
 	private TipoContatoVO tipoContatoVO;
 	private List<TipoContatoVO> listaTipoContatosVO;
 	
@@ -57,5 +58,13 @@ public class ContatoVO implements Serializable {
 
 	public void setListaTipoContatosVO(List<TipoContatoVO> listaTipoContatosVO) {
 		this.listaTipoContatosVO = listaTipoContatosVO;
+	}
+
+	public boolean isNovo() {
+		return novo;
+	}
+
+	public void setNovo(boolean novo) {
+		this.novo = novo;
 	}
 }

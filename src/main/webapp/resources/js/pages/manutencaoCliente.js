@@ -6,22 +6,12 @@
 
 	// Botão exibir modal de contatos..
     $("#btnNovoContato").button().click(function() {
-    	$("#tcoCodigo").css("border", "1px solid #cccccc");
-    	$("#conDescricao").css("border", "1px solid #cccccc");
-        // Limpar campos.
-        $("#conDescricao").val("");
-        $("#conResponsavel").val("");
-        // exibir modal.
-    	$("#modalContato").modal({
-	   		 "backdrop" : "static",
-	   		 "keyboard" : true,
-	   		 "show" : true
-    	});
+    	exibeModalContato(true, null);
     });	
     
     // Inserir contato.
 	$("#btnInserir").button().click(function() {
-		if (isCamposValoresValidos()) {
+//		if (isCamposValoresValidos()) {
 			// ir no servidor...
 			$.ajax({
 				url: 'SistemaPodologia/Cliente/IncluiContato',
@@ -36,14 +26,8 @@
 				success: function(data, status, request){
 					$("#loading").css("display", "none");
 					if (status == "success" && data.mensagemUsuario == null) {
-						$("#tabelaValores").addRowData(0, {
-							vvpDataCadastro : data.valoresProdutoVO.vvpDataCadastro,
-							vrpImpostoICMS  : data.valoresProdutoVO.vrpImpostoICMS,
-							vrpImpostoIPI   : data.valoresProdutoVO.vrpImpostoIPI,
-							vrpImpostoISS   : data.valoresProdutoVO.vrpImpostoISS,
-							vvpValorProduto : data.valoresProdutoVO.vvpValorProduto
-						});
-						$("#modalContato").modal('hide'); 
+						atualizaTabelaContato(data.clienteVO.listaContatos);
+						$("#modalContato").modal('hide');
 					} else {
 						$("#divMensagemErro").css("display", "block");
 						$("#spanMsgError").show().html(data.mensagemUsuario);						
@@ -55,7 +39,7 @@
 					$("#spanMsgError").show().html("Sistema indisponível no momento.");
 				}        
 			});                                
-		}		
+//		}		
     });    
     
     // Fechar modal do contato.
@@ -101,32 +85,135 @@
                 }
         	});                        
         }
-    });	
+    });	    
 });
 
-function montarTabelaContatos() {
-	
+function atualizaTabelaContato(listaContatos) {
+	$(".tbodyTabelaContatos").html("");
+	for (var i = 0; listaContatos.length > i; i++) {
+		atualizaIncluiTabelaContato(listaContatos[i]);
+	}
 }
 
-/*
-  			<tbody>
-    		<tr>
-      			<td>John</td>
-      			<td>Approved</td>
-      			<td>None</td>
-      			<td></td>
-    		</tr>
-    		<tr>
-      			<td>Jamie</td>
-      			<td>Approved</td>
-      			<td>Requires call</td>
-      			<td></td>
-    		</tr>
-    		<tr>
-      			<td>Jill</td>
-      			<td>Denied</td>
-      			<td>None</td>
-      			<td></td>
-    		</tr>
-  			</tbody> 
-*/
+function atualizaIncluiTabelaContato() {
+	var html = "<tr><td>"+
+		contatoVO.tipoContatoVO.tcoDescricao+
+		"</td><td>"+contatoVO.conDescricao+
+		"</td><td>"+contatoVO.conResponsavel+
+		"</td><td>"+
+		"<span title='Clique aqui para alterar este contato.' class='large glyphicon glyphicon-pencil' onclick='javascript:alterarContato("+contatoVO.conCodigo+");' style='cursor:pointer;'></span>"+
+		"<span title='Clique aqui para excluir este contato.' class='large glyphicon glyphicon-remove-sign' onclick='javascript:removerContato("+contatoVO.conCodigo+");' style='cursor:pointer; margin-left: 20px;'></span>"+
+		"</td></tr>";
+	$(".tbodyTabelaContatos").append(html);	
+}
+
+/**
+ * Set o nome do tipo de contato neste campo(hidden) no momento que alterar na combobox de lista de tipo de contato.
+ */
+function setNomeTipoContato() {
+	$("#tcoDescricao").val($('#tcoCodigo :selected').text());
+}
+
+function exibeModalContato(isLimpaCampo, contatoVO) {
+	$("#tcoCodigo").css("border", "1px solid #cccccc");
+	$("#conDescricao").css("border", "1px solid #cccccc");
+	if (isLimpaCampo) {
+	    // Limpar campos.
+		$("#tcoCodigo").val("-1");
+		$("#tcoDescricao").val("");
+		$("#conCodigo").val("");
+		$("#conDescricao").val("");
+	    $("#conResponsavel").val("");		
+	} else {
+		$("#tcoCodigo").val(contatoVO.tipoContatoVO.tcoCodigo);
+		$("#tcoDescricao").val(contatoVO.tipoContatoVO.tcoDescricao);
+		$("#conCodigo").val(contatoVO.conCodigo);
+		$("#conDescricao").val(contatoVO.conDescricao);
+	    $("#conResponsavel").val(contatoVO.conResponsavel);
+	}
+    // exibir modal.
+	$("#modalContato").modal({
+   		 "backdrop" : "static",
+   		 "keyboard" : true,
+   		 "show" : true
+	});
+}
+
+function alterarContato(conCodigo) {
+	$("#conCodigo").val(conCodigo);
+	$.ajax({
+		url: 'SistemaPodologia/Cliente/AlteraContato',
+		data: $('#formModalContato').serialize(),
+		type: 'POST',
+		cache: false,
+		dataType: "json",
+		beforeSend: function(){
+			$("#divCarregando").css("visibility", "visible");
+			$("#divMensagemErro").css("display", "none");
+		},
+		success: function(data, status, request){
+			$("#divCarregando").css("visibility", "hidden");
+			if (status == "success" && data.mensagemUsuario == null) {
+				// abrir modal.
+				exibeModalContato(false, data.clienteVO.contatoVO);
+			} else {
+				$("#divMensagemErro").css("display", "block");
+				$("#spanMsgError").show().html(data.mensagemUsuario);						
+			}
+		},
+		error: function (request, error) {
+			$("#divCarregando").css("visibility", "hidden");
+			$("#divMensagemErro").css("display", "block");
+			$("#spanMsgError").show().html("Sistema indisponível no momento.");
+		}        
+	});	
+}
+
+function removerContato(conCodigo) {
+    BootstrapDialog.show({
+        title: '::: Sistema Podologia :::',
+        message: 'Deseja excluir o contato selecinado?',
+        buttons: [{
+            label: 'Sim',
+            action: function(dialogItself) {
+            	dialogItself.close();
+    			$.ajax({
+    				url: 'SistemaPodologia/Cliente/ExcluiContato',
+    				data: $("#conCodigo").val(conCodigo),
+    				type: 'POST',
+    				cache: false,
+    				dataType: "json",
+    				beforeSend: function(){
+    					$("#divCarregando").css("visibility", "visible");
+    					$("#divMensagemErro").css("display", "none");
+    				},
+    				success: function(data, status, request){
+    					$("#divCarregando").css("visibility", "hidden");
+    					if (status == "success" && data.mensagemUsuario == null) {
+    						atualizaTabelaContato(data.clienteVO.listaContatos);
+    						$("#modalContato").modal('hide');
+    						BootstrapDialog.show({
+    					        title: '::: Sistema Podologia :::',
+    					        message: 'Contato excluído.'
+    					    });
+    					} else {
+    						$("#divMensagemErro").css("display", "block");
+    						$("#spanMsgError").show().html(data.mensagemUsuario);						
+    					}
+    				},
+    				error: function (request, error) {
+    					$("#divCarregando").css("visibility", "hidden");
+    					$("#divMensagemErro").css("display", "block");
+    					$("#spanMsgError").show().html("Sistema indisponível no momento.");
+    				}        
+    			});
+            }
+        }, {
+            label: 'Não',
+            action: function(dialogItself) {
+            	dialogItself.close();
+            }
+        }]
+    });	
+}
+
