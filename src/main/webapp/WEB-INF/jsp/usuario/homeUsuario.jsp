@@ -2,4 +2,3 @@
 
 <script src="../resources/js/pages/usuario/homeUsuario.js"></script>
 
-Home

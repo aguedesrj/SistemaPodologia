@@ -1,5 +1,7 @@
 ﻿$(document).ready(function() {
 	
+	$("#pesNome").focus();
+	
 	$('#datetimepicker1').datetimepicker({
 		language: 'pt-BR'
 	});	

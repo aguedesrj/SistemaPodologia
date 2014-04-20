@@ -39,6 +39,7 @@ public class ClienteAction extends BasicAction {
 	private String mensagemUsuario;
 	private ClienteVO clienteVO;
 	private List<ClienteVO> listaClienteVO;
+	private List<PessoaVO> listaPessoaVO;
 
 	public String iniciarCadastro() {
 		try {
@@ -181,23 +182,18 @@ public class ClienteAction extends BasicAction {
     		pessoaParam.setPesNome(getClienteVO().getPessoaVO().getPesNome());
     		List<Pessoa> listaPessoa = clienteFacade.pesquisarPorCriterios(pessoaParam);
     		if (listaPessoa == null || listaPessoa.isEmpty()) {
-    			setMensagemUsuario("Cliente n√£o encontrado.");
+    			setMensagemUsuario("Cliente n„o encontrado.");
     			return ERROR;
     		} else {
-    			// popular lista.
-    			setListaClienteVO(new ArrayList<ClienteVO>());
+    			setListaPessoaVO(new ArrayList<PessoaVO>());
     			for (Pessoa pessoa: listaPessoa) {
-    				ClienteVO clienteVO = new ClienteVO();
-    				clienteVO.setPessoaVO(new PessoaVO());
-    				
-    				clienteVO.getPessoaVO().setPesCodigo(pessoa.getPesCodigo());
-    				clienteVO.getPessoaVO().setPesNome(pessoa.getPesNome());
-    				
-    				getListaClienteVO().add(clienteVO);
+    				PessoaVO pessoaVO = new PessoaVO();
+    				pessoaVO.setPesCodigo(pessoa.getPesCodigo());
+    				pessoaVO.setPesNome(pessoa.getPesNome());
+    				getListaPessoaVO().add(pessoaVO);
     			}
     		}
     		return SUCCESS;
-			
 		} catch (Exception e) {
 			LOGGER.error("Erro ao pesquisar Clientes.", e);
 			setMensagemUsuario("Erro ao pesquisar Clientes.");
@@ -206,21 +202,23 @@ public class ClienteAction extends BasicAction {
 	}
 	
 	public String detalhar() {
-//    	try {
-//    		Produto produto = clienteFacade.obterProdutoPorId(getClienteVO().getPessoaVO().getPesCodigo());
-//    		if (produto == null) {
-//    			setMensagemUsuario("Cliente n„o encontrado.");
-//    			return ERROR;
-//    		} else {
-//    			// seta dados do Produto.
-//    			preencherProduto(produto);
-//    		}
+    	try {
+			Pessoa pessoa = new Pessoa();
+			pessoa.setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
+    		pessoa = clienteFacade.obterPorId(pessoa, null, null);
+    		if (pessoa.getPesNome() == null) {
+    			setMensagemUsuario("Cliente n„o encontrado.");
+    			return ERROR;
+    		} else {
+    			// seta dados do Produto.
+    			populaDePara(pessoa);
+    		}
     		return SUCCESS;
-//		} catch (Exception e) {
-//			LOGGER.error("Erro ao detalhar Cliente.", e);
-//			setMensagemUsuario("Erro ao detalhar Cliente.");
-//			return ERROR;
-//		}
+		} catch (Exception e) {
+			LOGGER.error("Erro ao detalhar Cliente.", e);
+			setMensagemUsuario("Erro ao detalhar Cliente.");
+			return ERROR;
+		}
 	}
 	
 	/**
@@ -283,7 +281,7 @@ public class ClienteAction extends BasicAction {
 		paciente.setPessoa(pessoa);
 	}
 	
-	private void populaDePara(Pessoa pessoa, List<Contato> listaContatos, Paciente paciente) throws Exception {
+	private void populaDePara(Pessoa pessoa) throws Exception {
 		// pessoa
 		getClienteVO().getPessoaVO().setPesCodigo(pessoa.getPesCodigo());
 		getClienteVO().getPessoaVO().setPesNome(pessoa.getPesNome());
@@ -300,7 +298,7 @@ public class ClienteAction extends BasicAction {
 		getClienteVO().getEnderecoVO().getEstadoVO().setEstCodigo(pessoa.getEndereco().getEstado().getEstCodigo());
 		// lista de contatos
 		getClienteVO().setListaContatos(new ArrayList<ContatoVO>());
-		for (Contato contato: listaContatos) {
+		for (Contato contato: pessoa.getListaContato()) {
 			ContatoVO contatoVO = new ContatoVO();
 			contatoVO.setNovo(false);
 			contatoVO.setConCodigo(contato.getConCodigo());
@@ -310,22 +308,22 @@ public class ClienteAction extends BasicAction {
 			getClienteVO().getListaContatos().add(contatoVO);
 		}
 		// paciente
-		getClienteVO().setPacAlergicoMedicamentos(paciente.getPacAlergicoMedicamentos());
-		getClienteVO().setPacAlergicoQuais(paciente.getPacAlergicoQuais());
-		getClienteVO().setPacAltura(paciente.getPacAltura());
-		getClienteVO().setPacAndaDescalco(paciente.getPacAndaDescalco());
-		getClienteVO().setPacCalcadoUtiliza(paciente.getPacCalcadoUtiliza());
-		getClienteVO().setPacCirurgiaMotivo(paciente.getPacCirurgiaMotivo());
-		getClienteVO().setPacCirurgiaPes(paciente.getPacCirurgiaPes());
-		getClienteVO().setPacCodigo(paciente.getPacCodigo());
-		getClienteVO().setPacDiabetes(paciente.getPacDiabetes());
-		getClienteVO().setPacHipertensao(paciente.getPacHipertensao());
-		getClienteVO().setPacLabora(paciente.getPacLabora());
-		getClienteVO().setPacNumeroCalcado(paciente.getPacNumeroCalcado());
-		getClienteVO().setPacPeso(paciente.getPacPeso());
-		getClienteVO().setPacTabagismo(paciente.getPacTabagismo());
-		getClienteVO().setPacUnhaEngravada(paciente.getPacUnhaEngravada());
-		getClienteVO().setPacVisitaPedicuro(paciente.getPacVisitaPedicuro());
+		getClienteVO().setPacAlergicoMedicamentos(pessoa.getPaciente().getPacAlergicoMedicamentos());
+		getClienteVO().setPacAlergicoQuais(pessoa.getPaciente().getPacAlergicoQuais());
+		getClienteVO().setPacAltura(pessoa.getPaciente().getPacAltura());
+		getClienteVO().setPacAndaDescalco(pessoa.getPaciente().getPacAndaDescalco());
+		getClienteVO().setPacCalcadoUtiliza(pessoa.getPaciente().getPacCalcadoUtiliza());
+		getClienteVO().setPacCirurgiaMotivo(pessoa.getPaciente().getPacCirurgiaMotivo());
+		getClienteVO().setPacCirurgiaPes(pessoa.getPaciente().getPacCirurgiaPes());
+		getClienteVO().setPacCodigo(pessoa.getPaciente().getPacCodigo());
+		getClienteVO().setPacDiabetes(pessoa.getPaciente().getPacDiabetes());
+		getClienteVO().setPacHipertensao(pessoa.getPaciente().getPacHipertensao());
+		getClienteVO().setPacLabora(pessoa.getPaciente().getPacLabora());
+		getClienteVO().setPacNumeroCalcado(pessoa.getPaciente().getPacNumeroCalcado());
+		getClienteVO().setPacPeso(pessoa.getPaciente().getPacPeso());
+		getClienteVO().setPacTabagismo(pessoa.getPaciente().getPacTabagismo());
+		getClienteVO().setPacUnhaEngravada(pessoa.getPaciente().getPacUnhaEngravada());
+		getClienteVO().setPacVisitaPedicuro(pessoa.getPaciente().getPacVisitaPedicuro());
 	}	
 
 	public String getMensagemUsuario() {
@@ -350,5 +348,13 @@ public class ClienteAction extends BasicAction {
 
 	public void setListaClienteVO(List<ClienteVO> listaClienteVO) {
 		this.listaClienteVO = listaClienteVO;
+	}
+
+	public List<PessoaVO> getListaPessoaVO() {
+		return listaPessoaVO;
+	}
+
+	public void setListaPessoaVO(List<PessoaVO> listaPessoaVO) {
+		this.listaPessoaVO = listaPessoaVO;
 	}
 }

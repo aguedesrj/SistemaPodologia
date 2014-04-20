@@ -11,15 +11,11 @@
     		<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
     	</result-types>        
 
-		<action name="Novo" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="iniciarCadastro">
-            <result name="success" type="tiles">cliente.novo</result>
-        </action>
-        
 		<action name="Pesquisa" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="iniciarPesquisa">
             <result name="success" type="tiles">cliente.pesquisa</result>
         </action>
         
-        <action name="IncluiContato" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="inserirContato">
+        <action name="ExecutaPesquisa" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="executarPesquisa">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
@@ -30,6 +26,40 @@
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
 					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+				</param>            
+            </result>
+        </action>
+        
+        <action name="Detalha" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="detalhar">
+            <result name="success" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
+				</param>            
+            </result>
+            <result name="error" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
+				</param>            
+            </result>
+        </action>        
+        
+		<action name="Novo" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="iniciarCadastro">
+            <result name="success" type="tiles">cliente.novo</result>
+        </action>        		
+        
+        <action name="IncluiContato" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="inserirContato">
+            <result name="success" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
+				</param>            
+            </result>
+            <result name="error" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
         </action>
@@ -38,13 +68,13 @@
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
         </action>        
@@ -53,13 +83,13 @@
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
         </action>        
@@ -68,13 +98,13 @@
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO,listaPessoaVO
 				</param>            
             </result>		    
         </action>        

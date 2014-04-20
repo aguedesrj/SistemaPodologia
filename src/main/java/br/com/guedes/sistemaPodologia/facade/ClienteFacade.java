@@ -53,7 +53,8 @@ public interface ClienteFacade {
 	 * @param pessoa Pessoa
 	 * @param listaContatos List<Contato>
 	 * @param paciente Paciente
+	 * @return Pessoa
 	 * @throws IntegrationException
 	 */
-	public void obterPorId(Pessoa pessoa, List<Contato> listaContatos, Paciente paciente) throws IntegrationException;
+	public Pessoa obterPorId(Pessoa pessoa, List<Contato> listaContatos, Paciente paciente) throws IntegrationException;
 }

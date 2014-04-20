@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -50,6 +51,9 @@ public class Pessoa implements Serializable {
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="END_CODIGO")
 	private Endereco endereco;
+	
+	@Transient
+	private Paciente paciente;	
 	
 	@OneToMany(mappedBy = "pessoa", fetch=FetchType.EAGER)
 	private Set<Contato> listaContato = new HashSet<Contato>();
@@ -116,5 +120,13 @@ public class Pessoa implements Serializable {
 
 	public void setListaContato(Set<Contato> listaContato) {
 		this.listaContato = listaContato;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 }

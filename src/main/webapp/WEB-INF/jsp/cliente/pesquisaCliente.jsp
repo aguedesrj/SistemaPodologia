@@ -1,27 +1,40 @@
 <%@ taglib prefix="s"  uri="/struts-tags" %>
 
-<script src="../resources/js/pages/usuario/pesquisaUsuario.js"></script>
+<script src="../resources/js/pages/pesquisaCliente.js"></script>
 
 <div class="container">
 	<div class="panel panel-default">
     	<div class="panel-heading">
-        	<h3 class="panel-title">Pesquisar Usuário</h3>
+        	<h3 class="panel-title">Pesquisar Clientes</h3>
         </div>
-	    <s:form namespace="Usuario" id="formUsuario" name="formUsuario" theme="simple">
-	    	<s:hidden id="usuCodigo" name="usuario.usuCodigo"></s:hidden>
-			<div class="panel-body">
-		    	<button id="btnPesquisar" type="button" class="btn btn-primary">Pesquisar</button>
-		    	<button style="margin-left: 10px;" id="btnNovo" type="button" class="btn btn-primary">Novo</button>
-			</div>
+	    <s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-left: 15px; margin-top: 15px;">
+	    	<s:hidden name="clienteVO.pessoaVO.pesCodigo" id="pesCodigo"/>
+	    	<div class="row">
+				<div class="col-lg-5">
+					<s:label for="proNome" cssClass="control-label">Nome do Cliente</s:label>
+					<s:textfield name="clienteVO.pessoaVO.pesNome" id="pesNome" maxlength="120" theme="simple" cssClass="form-control" cssStyle="width: 250px;" onkeypress="javascript:onChange();"/>
+				</div>
+			</div>	    	
 		</s:form>
+		<div class="panel-body">
+	    	<button id="btnPesquisar" type="button" class="btn btn-primary">Pesquisar</button>
+	    	<button style="margin-left: 10px;" id="btnNovo" type="button" class="btn btn-primary">Novo</button>
+		</div>
 	</div>
-	
 	<div class="panel panel-default">
     	<div class="panel-heading">
-        	<h3 class="panel-title">Listagem Usuário</h3>
+        	<h3 class="panel-title">Listagem</h3>
         </div>
 		<div class="panel-body">
-	    	<table width="100%" id="tabelaUsuarios" class="tablehead" style="background:#CCC;"></table>
+			<table id="tabelaCliente" class="ui celled table segment" style="width: 780px; padding-top: 20px; margin-left: 20px;">
+	  			<thead>
+	    			<tr>
+	    				<th width="350px;">Nome</th>
+	    				<th width="50px">Ação</th>
+	  				</tr>
+	  			</thead>
+	  			<tbody class="tbodyTabelaCliente"></tbody>
+			</table>		
 		</div>
 	</div>   	
 </div>
@@ -36,31 +49,31 @@
 			    	<div class="panel-heading">
 			        	<h3 class="panel-title">Detalhe</h3>
 			        </div>
-   					<form id="formDialogValoresProduto" style="margin-left: 15px;">
+   					<form id="formDialogCliente" style="margin-left: 15px;">
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
-								<label for="spanPerNome" cssClass="control-label">Nome</label><br>
+								<label for="spanPerNome" class="control-label">Nome</label><br>
 								<span id="spanPerNome"></span>									
 							</div>
 							<div class="col-lg-6">
-								<label for="spanUsuLogin" cssClass="control-label">Login</label><br>
-								<span id="spanUsuLogin"></span>									
+								<label for="spanPesDtNascimento" class="control-label">Data de nascimento</label><br>
+								<span id="spanPesDtNascimento"></span>									
 							</div>						
 						</div>
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
-								<label for="spanPesDataCadastro" cssClass="control-label">Data inclusão</label><br>
-								<span id="spanPesDataCadastro"></span>								
+								<label for="spanPesSexo" class="control-label">Sexo</label><br>
+								<span id="spanPesSexo"></span>								
 							</div>
 							<div class="col-lg-6">
-								<label for="spanPesDataAlteracao" cssClass="control-label">Data alteração</label><br>
-								<span id="spanPesDataAlteracao"></span>								
+								<label for="spanPesCPF" class="control-label">CPF</label><br>
+								<span id="spanPesCPF"></span>								
 							</div>						
 						</div>
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
-								<label for="spanPerfis" cssClass="control-label">Perfis:</label><br>
-								<span id="spanPerfis"></span>							
+								<label for="spanCliDataUltimaConsulta" class="control-label">Data última consulta</label><br>
+								<span id="spanCliDataUltimaConsulta"></span>							
 							</div>					
 						</div>						
 					</form>

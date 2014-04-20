@@ -46,6 +46,9 @@ public class ClienteVO implements Serializable {
 	}
 	
 	public String getCliDataUltimaConsulta() {
+		if (cliDataUltimaConsulta == null || this.cliDataUltimaConsulta.equals("")) {
+			return "Primeira visita.";
+		}
 		return cliDataUltimaConsulta;
 	}
 

@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="../resources/css/principal.css">
 	<link rel="stylesheet" type="text/css" href="../resources/semantic/css/semantic.css">
 	<link rel="stylesheet" type="text/css" href="../resources/bootstrap-3.0.3-dist/dist/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="../resources/css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../resources/css/datepicker.css" />
 	<link rel="stylesheet" type="text/css" href="../resources/css/bootstrap-combobox.css" />
 	<link rel="stylesheet" type="text/css" href="../resources/css/bootstrap-dialog.min.css" />	
 	
@@ -23,7 +23,7 @@
 	<script src="../resources/js/util.js"></script>	
 	<script src="../resources/bootstrap-3.0.3-dist/dist/js/bootstrap.min.js"></script>	
 	<script src="../resources/js/bootbox.js"></script>
-	<script src="../resources/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../resources/js/bootstrap-datepicker.js"></script>
 	<script src="../resources/js/bootstrap-combobox.js"></script>
 	<script src="../resources/js/bootstrap-dialog.min.js"></script>	
 </head>

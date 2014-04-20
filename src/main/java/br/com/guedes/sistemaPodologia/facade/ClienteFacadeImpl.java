@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.guedes.sistemaPodologia.dao.ClienteDao;
 import br.com.guedes.sistemaPodologia.dao.ContatoDao;
 import br.com.guedes.sistemaPodologia.dao.EnderecoDao;
+import br.com.guedes.sistemaPodologia.dao.PacienteDao;
+import br.com.guedes.sistemaPodologia.dao.PessoaDao;
 import br.com.guedes.sistemaPodologia.model.Contato;
 import br.com.guedes.sistemaPodologia.model.Estado;
 import br.com.guedes.sistemaPodologia.model.Paciente;
@@ -28,6 +30,12 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	
 	@Autowired
 	private ClienteDao clienteDao;
+	
+	@Autowired
+	private PacienteDao pacienteDao;	
+	
+	@Autowired
+	private PessoaDao pessoaDao;	
 	
 	@Autowired
 	private ContatoDao contatoDao;
@@ -78,7 +86,7 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			if (pessoa.getPesCodigo() == null || pessoa.getPesCodigo() == 0) {
 				List<Pessoa> lista = clienteDao.pesquisarPorCriterios(pessoaCond);
 				if (lista != null && !lista.isEmpty()) {
-					throw new BusinessException("Cliente j√° est√° cadastrado.");
+					throw new BusinessException("Cliente j· est· cadastrado.");
 				}
 			}
 			// salvar dados Pessoa.
@@ -101,7 +109,7 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			if (e instanceof BusinessException) {
 				throw new BusinessException(e.getMessage());
 			} else {
-				throw new IntegrationException("N√£o foi poss√≠vel salvar o Produto.");
+				throw new IntegrationException("N„o foi possÌvel salvar o Cliente.");
 			}
 		}
 	}
@@ -110,12 +118,16 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	 * (non-Javadoc)
 	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#obterPorId(br.com.guedes.sistemaPodologia.model.Pessoa, java.util.List, br.com.guedes.sistemaPodologia.model.Paciente)
 	 */
-	public void obterPorId(Pessoa pessoa, List<Contato> listaContatos, Paciente paciente) throws IntegrationException {
+	public Pessoa obterPorId(Pessoa pessoa, List<Contato> listaContatos, Paciente paciente) throws IntegrationException {
 		try {
-			
+			// dados pessoa.
+			pessoa = pessoaDao.obterPorId(pessoa.getPesCodigo());
+			// dados paciente.
+			pessoa.setPaciente(pacienteDao.obterPorIdPessoa(pessoa.getPesCodigo()));
+			return pessoa;
 		} catch (Exception e) {
 			LOGGER.error(e);
-			throw new IntegrationException("N√£o foi poss√≠vel salvar o Produto.");
+			throw new IntegrationException("N„o foi possÌvel obter dados do Cliente.");
 		}
 	}
 
@@ -149,5 +161,21 @@ public class ClienteFacadeImpl implements ClienteFacade {
 
 	public void setEnderecoDao(EnderecoDao enderecoDao) {
 		this.enderecoDao = enderecoDao;
+	}
+
+	public PessoaDao getPessoaDao() {
+		return pessoaDao;
+	}
+
+	public void setPessoaDao(PessoaDao pessoaDao) {
+		this.pessoaDao = pessoaDao;
+	}
+
+	public PacienteDao getPacienteDao() {
+		return pacienteDao;
+	}
+
+	public void setPacienteDao(PacienteDao pacienteDao) {
+		this.pacienteDao = pacienteDao;
 	}
 }

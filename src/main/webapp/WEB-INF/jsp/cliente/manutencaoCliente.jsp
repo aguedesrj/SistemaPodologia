@@ -27,37 +27,24 @@
 					<div class="row" style="margin-top: 10px;">
 						<div class="col-lg-6">
 							<s:label for="forCodigo" cssClass="control-label">Data de nascimento</s:label>
-							
-							<div class="well">
-  <div id="datetimepicker1" class="input-append date">
-    <input data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
-  </div>
-</div>
-							
 							<s:textfield placeholder="Data de nascimento" name="clienteVO.pessoaVO.pesDtNascimento" id="pesDtNascimento" maxlength="14" theme="simple" cssClass="form-control" cssStyle="width: 150px;"/>
 						</div>
 						<div class="col-lg-6">
 							<s:label for="catCodigo" cssClass="control-label">Sexo</s:label>
 							<div class="col-lg-2">
-					            <div class="input-group" style="width: 100px;">
+								<div class="input-group" style="width: 100px;">
 					               <span class="input-group-addon">
 					                  <s:radio name="clienteVO.pessoaVO.pesSexo" id="pacTabagismo" theme="simple" list="#{'F':''}"/>
 					               </span>
-					               <label class="form-control">Feminino</label>
-					            </div>
-					        </div>
-					        <div class="col-lg-2">
+					               <label class="form-control">Feminino</label>						
+								 </div>
 					            <div class="input-group" style="width: 100px;">
 					               <span class="input-group-addon">
 					                  <s:radio name="clienteVO.pessoaVO.pesSexo" id="pacTabagismo" theme="simple" list="#{'M':''}"/>
 					               </span>
 					               <label class="form-control">Masculino</label>
-					            </div>							
-							</div>
+					            </div>
+					        </div>
 						</div>
 					</div>
 					<div class="row" style="margin-top: 10px;">
@@ -66,8 +53,8 @@
 							<s:textfield placeholder="CPF" name="clienteVO.pessoaVO.pesCpf" id="pesCpf" maxlength="14" theme="simple" cssClass="form-control" cssStyle="width: 200px;"/>
 						</div>
 						<div class="col-lg-6">
-							<s:label for="catCodigo" cssClass="control-label">Data última consulta</s:label>
-							<s:label name="clienteVO.cliDataUltimaConsulta" id="cliDataUltimaConsulta"></s:label>
+							<s:label for="catCodigo" cssClass="control-label">Data última consulta</s:label><br>
+							<s:label cssStyle="font-weight: bold;" name="clienteVO.cliDataUltimaConsulta" id="cliDataUltimaConsulta"></s:label>
 						</div>
 					</div>
 					<div class="row" style="margin-top: 10px;">
