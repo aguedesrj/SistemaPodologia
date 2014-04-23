@@ -2,6 +2,10 @@
 	
 	$("#pesNome").focus();
 	
+	$('#pesCpf').numeric();
+	$('#pacPeso').numeric();
+	$('#pacNumeroCalcado').numeric();
+	
 	// Botão exibir modal de contatos..
     $("#btnNovoContato").button().click(function() {
     	exibeModalContato(true, null);
@@ -20,6 +24,7 @@
 				beforeSend: function(){
 					$("#divCarregando").css("visibility", "visible");
 					$("#divMensagemErro").css("display", "none");
+					$("#divMensagemSucesso").css("display", "none");
 				},
 				success: function(data, status, request){
 					$("#divCarregando").css("visibility", "hidden");
@@ -52,21 +57,23 @@
         if (isCamposFormularioCliente()) {                
         	$.ajax({
         		url: 'SistemaComercialGuedes/Produto/Salva',
-                data: $('#formProduto').serialize(),
+                data: $('#formCliente').serialize(),
                 type: 'POST',
                 cache: false,
                 dataType: "json",
                 beforeSend: function(){
     				$("#divCarregando").css("visibility", "visible");
     				$("#divMensagemErro").css("display", "none");
+    				$("#divMensagemSucesso").css("display", "none");
                 },
                 success: function(data, status, request){
                     if (status == "success" && data.mensagemUsuario == null) {
-                    	limparCampos();
+                    	preparaCamposNovoCliente();
                     	$("#divMensagemSucesso").css("display", "block");
-                    	$("#spanMsgSuccess").show().html("Produto cadastrado com sucesso!");
-                        $("#proNome").focus();
-                        $("#tabelaValores").jqGrid("clearGridData", true);
+                    	$("#spanMsgSuccess").show().html("Cliente cadastrado com sucesso!");
+                        $("#pesNome").focus();
+                        // limpa tabela de contatos.
+                        $(".tbodyTabelaContatos").html("");
                     } else {
     					$("#divCarregando").css("visibility", "hidden");
     					$("#divMensagemErro").css("display", "block");
@@ -95,6 +102,7 @@
 	        beforeSend: function(){
 				$("#divCarregando").css("visibility", "visible");
 				$("#divMensagemErro").css("display", "none");
+				$("#divMensagemSucesso").css("display", "none");
 	        },
 	        success: function(data, status, request){
 	        	$("#divCarregando").css("visibility", "hidden");
@@ -173,6 +181,7 @@ function alterarContato(conCodigo) {
 		beforeSend: function(){
 			$("#divCarregando").css("visibility", "visible");
 			$("#divMensagemErro").css("display", "none");
+			$("#divMensagemSucesso").css("display", "none");
 		},
 		success: function(data, status, request){
 			$("#divCarregando").css("visibility", "hidden");
@@ -209,6 +218,7 @@ function removerContato(conCodigo) {
     				beforeSend: function(){
     					$("#divCarregando").css("visibility", "visible");
     					$("#divMensagemErro").css("display", "none");
+    					$("#divMensagemSucesso").css("display", "none");
     				},
     				success: function(data, status, request){
     					$("#divCarregando").css("visibility", "hidden");
@@ -274,7 +284,7 @@ function isCamposFormularioCliente() {
 	pesNome.css("border", "1px solid #cccccc");
 	
 	// Validar campo nome do Cliente.
-	if (pesNome.val().trim() == "-1") {
+	if (pesNome.val().trim() == "") {
 		pesNome.css("border", "1px solid #ff4500");
 
 		$("#divMensagemErro").css("display", "block");
@@ -283,5 +293,37 @@ function isCamposFormularioCliente() {
 	}
 	
 	return true;	
+}
+
+function preparaCamposNovoCliente() {
+	// dados pessoais
+	$("#pesNome").val("");
+	$("#pesDtNascimento").val("");
+	$("#pesSexo").val("false");
+	$("#pesCpf").val("");
+	$("#cliDataUltimaConsulta").val("Primeira visita.");
+	// endereço
+	$("#endLogadouro").val("");
+	$("#endNumero").val("");
+	$("#endBairro").val("");
+	$("#endCidade").val("");
+	$("#estCodigo").val("-1");
+	$("#endCep").val("");
+	// paciente
+	$("#pacLabora").val("N");
+	$("#pacVisitaPedicuro").val("N");
+	$("#pacDiabetes").val("N");
+	$("#pacAndaDescalco").val("N");
+	$("#pacUnhaEngravada").val("N");
+	$("#pacTabagismo").val("N");
+	$("#pacHipertensao").val("N");
+	$("#pacCirurgiaPes").val("N");
+	$("#pacCirurgiaMotivo").val("");
+	$("#pacAlergicoMedicamentos").val("N");
+	$("#pacAlergicoQuais").val("");
+	$("#pacCalcadoUtiliza").val("");
+	$("#pacNumeroCalcado").val("");
+	$("#pacPeso").val("");
+	$("#pacAltura").val("");
 }
 

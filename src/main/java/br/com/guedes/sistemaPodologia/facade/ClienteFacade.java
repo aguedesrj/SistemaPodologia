@@ -2,9 +2,7 @@ package br.com.guedes.sistemaPodologia.facade;
 
 import java.util.List;
 
-import br.com.guedes.sistemaPodologia.model.Contato;
 import br.com.guedes.sistemaPodologia.model.Estado;
-import br.com.guedes.sistemaPodologia.model.Paciente;
 import br.com.guedes.sistemaPodologia.model.Pessoa;
 import br.com.guedes.sistemaPodologia.model.TipoContato;
 import br.com.guedes.sistemaPodologia.util.BusinessException;
@@ -41,12 +39,10 @@ public interface ClienteFacade {
 	 * Salvar Cliente.
 	 * 
 	 * @param pessoa Pessoa
-	 * @param listaContatos List<Contato>
-	 * @param paciente Paciente
 	 * @throws IntegrationException
 	 * @throws BusinessException
 	 */
-	public void salvar(final Pessoa pessoa, final List<Contato> listaContatos, final Paciente paciente) throws IntegrationException, BusinessException;
+	public void salvar(final Pessoa pessoa) throws IntegrationException, BusinessException;
 	
 	/**
 	 * 

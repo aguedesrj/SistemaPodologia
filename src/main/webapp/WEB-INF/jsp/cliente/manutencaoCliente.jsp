@@ -6,7 +6,7 @@
 	<div class="panel-heading">
     	<h3 class="panel-title" style="font-weight: bold;">Cadastro de Cliente</h3>
     </div>
-	<s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-top: 20px;">
+	<s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-left: 15px; margin-top: 15px;">
 		<s:hidden name="clienteVO.pessoaVO.pesCodigo" id="pesCodigo"></s:hidden>
 		<s:hidden name="clienteVO.pacCodigo" id="pacCodigo"></s:hidden>
 		<s:hidden name="clienteVO.enderecoVO.endCodigo" id="endCodigo"></s:hidden>
@@ -23,24 +23,25 @@
 						<div class="row" style="margin-top: 20px;">
 							<div class="col-lg-6">
 								<s:label for="pesNome" cssClass="control-label">Nome</s:label>
-								<s:textfield placeholder="Nome" name="clienteVO.pessoaVO.pesNome" id="pesNome" maxlength="80" theme="simple" required="true" cssClass="form-control" cssStyle="width: 500px;"/>
+								<s:textfield name="clienteVO.pessoaVO.pesNome" id="pesNome" maxlength="80" theme="simple" required="true" cssClass="form-control" cssStyle="width: 500px;"/>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
 								<s:label for="forCodigo" cssClass="control-label">Data de nascimento</s:label>
-								<s:textfield placeholder="Data de nascimento" name="clienteVO.pessoaVO.pesDtNascimento" id="pesDtNascimento" maxlength="14" theme="simple" cssClass="form-control" cssStyle="width: 150px;"/>
+								<s:textfield name="clienteVO.pessoaVO.pesDtNascimento" id="pesDtNascimento" maxlength="14" theme="simple" cssClass="form-control" cssStyle="width: 130px;"/>
 							</div>
 							<div class="col-lg-6">
 								<s:label for="catCodigo" cssClass="control-label">Sexo</s:label>
-								<input type="radio" name="clienteVO.pessoaVO.pesSexo" id="pacTabagismoF" value="F"/>Feminino
-								<input style="margin-left: 20px;" type="radio" name="clienteVO.pessoaVO.pesSexo" id="pacTabagismoF" value="M"/>Masculino
+								<br>
+								<input type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="F"/>Feminino
+								<input style="margin-left: 20px;" type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="M"/>Masculino
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
 								<s:label for="forCodigo" cssClass="control-label">CPF</s:label>
-								<s:textfield placeholder="CPF" name="clienteVO.pessoaVO.pesCpf" id="pesCpf" maxlength="14" theme="simple" cssClass="form-control" cssStyle="width: 200px;"/>
+								<s:textfield name="clienteVO.pessoaVO.pesCpf" id="pesCpf" maxlength="14" theme="simple" cssClass="form-control" cssStyle="width: 200px;"/>
 							</div>
 							<div class="col-lg-6">
 								<s:label for="catCodigo" cssClass="control-label">Data última consulta</s:label><br>
@@ -50,7 +51,7 @@
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
 								<s:label for="proNome" cssClass="control-label">Observação</s:label>
-								<s:textarea placeholder="Observação" name="clienteVO.pessoaVO.pesObs" id="pesObs" cols="90" theme="simple" cssClass="form-control"></s:textarea>
+								<s:textarea name="clienteVO.pessoaVO.pesObs" id="pesObs" cols="90" theme="simple" cssClass="form-control"></s:textarea>
 							</div>
 						</div>															
 					</div>
@@ -58,21 +59,21 @@
 						<div class="row" style="margin-top: 20px;">
 							<div class="col-lg-6">
 								<s:label for="forCodigo" cssClass="control-label">Logradouro</s:label>
-								<s:textfield placeholder="Logradouro" name="clienteVO.enderecoVO.endLogadouro" id="endLogadouro" maxlength="100" theme="simple" cssStyle="width: 350px;" cssClass="form-control"/>
+								<s:textfield name="clienteVO.enderecoVO.endLogadouro" id="endLogadouro" maxlength="100" theme="simple" cssStyle="width: 350px;" cssClass="form-control"/>
 							</div>
 							<div class="col-lg-6">
 								<s:label for="catCodigo" cssClass="control-label">Número</s:label>
-								<s:textfield placeholder="Número" name="clienteVO.enderecoVO.endNumero" id="endNumero" maxlength="8" theme="simple" cssStyle="width: 100px;" cssClass="form-control"/>
+								<s:textfield name="clienteVO.enderecoVO.endNumero" id="endNumero" maxlength="8" theme="simple" cssStyle="width: 100px;" cssClass="form-control"/>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
 								<s:label for="forCodigo" cssClass="control-label">Bairro</s:label>
-								<s:textfield placeholder="Bairro" name="clienteVO.enderecoVO.endBairro" id="endBairro" maxlength="60" theme="simple" cssStyle="width: 300px;" cssClass="form-control"/>
+								<s:textfield name="clienteVO.enderecoVO.endBairro" id="endBairro" maxlength="60" theme="simple" cssStyle="width: 300px;" cssClass="form-control"/>
 							</div>
 							<div class="col-lg-6">
 								<s:label for="catCodigo" cssClass="control-label">Cidade</s:label>
-								<s:textfield placeholder="Cidade" name="clienteVO.enderecoVO.endCidade" id="endCidade" maxlength="60" theme="simple" cssStyle="width: 300px;" cssClass="form-control"/>
+								<s:textfield name="clienteVO.enderecoVO.endCidade" id="endCidade" maxlength="60" theme="simple" cssStyle="width: 300px;" cssClass="form-control"/>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
@@ -98,7 +99,7 @@
 					</div>
 					<div class="tab-pane" id="Contatos">
 						<div class="row" style="margin-top: 20px; ">
-							<table id="tabelaContatos" class="ui celled table segment" style="width: 780px; padding-top: 20px; margin-left: 20px;">
+							<table id="tabelaContatos" class="ui celled table segment" style="width: 780px; padding-top: 20px; margin-left: 10px;">
 					  			<thead>
 					    			<tr>
 					    				<th width="150px">Tipo Contato</th>
@@ -186,7 +187,7 @@
 							</div>
 							<div class="col-lg-3">
 								<s:label for="pacCirurgiaMotivo" cssClass="control-label">Motivo da cirurgia</s:label>
-								<s:textfield placeholder="Motivo da cirurgia" name="clienteVO.pacCirurgiaMotivo" id="pacCirurgiaMotivo" maxlength="255" theme="simple" cssStyle="width: 220px;" cssClass="form-control"/>
+								<s:textfield name="clienteVO.pacCirurgiaMotivo" id="pacCirurgiaMotivo" maxlength="255" theme="simple" cssStyle="width: 220px;" cssClass="form-control"/>
 							</div>											
 						</div>
 						<div class="row" style="margin-top: 20px;">
@@ -200,7 +201,7 @@
 							</div>
 							<div class="col-lg-3">
 								<s:label for="pacAlergicoQuais" cssClass="control-label">Quais medicamentos</s:label>
-								<s:textfield placeholder="Quais medicamentos" name="clienteVO.pacAlergicoQuais" id="pacAlergicoQuais" maxlength="255" theme="simple" cssStyle="width: 220px;" cssClass="form-control"/>
+								<s:textfield name="clienteVO.pacAlergicoQuais" id="pacAlergicoQuais" maxlength="255" theme="simple" cssStyle="width: 220px;" cssClass="form-control"/>
 							</div>
 							<div class="col-lg-3">
 								<s:label for="pacCalcadoUtiliza" cssClass="control-label">Calçado que utiliza</s:label>
@@ -225,10 +226,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="panel-body" style="margin-top: 20px;">
-	    	<button id="btnSalvar" type="button" class="btn btn-primary">Salvar Cliente</button>
-		</div>	
 	</s:form>
+	<div class="panel-body" style="margin-top: 20px;">
+    	<button id="btnSalvar" type="button" class="btn btn-primary">Salvar Cliente</button>
+	</div>	
 </div>
 
 <!-- DIV do formulário contato -->

@@ -13,19 +13,19 @@ public class ClienteVO implements Serializable {
 	private String cliDataUltimaConsulta;
 	private String cliUltimoTratamento;
 	private Integer pacCodigo;
-	private String pacLabora;
-	private String pacAndaDescalco;	
-	private String pacUnhaEngravada;
-	private String pacCirurgiaPes;
+	private boolean pacLabora;
+	private boolean pacAndaDescalco;	
+	private boolean pacUnhaEngravada;
+	private boolean pacCirurgiaPes;
 	private String pacCirurgiaMotivo;
 	private String pacCalcadoUtiliza;
-	private String pacVisitaPedicuro;
+	private boolean pacVisitaPedicuro;
 	private String pacNumeroCalcado;
-	private String pacAlergicoMedicamentos;
+	private boolean pacAlergicoMedicamentos;
 	private String pacAlergicoQuais;
-	private String pacDiabetes;
-	private String pacHipertensao;
-	private String pacTabagismo;
+	private boolean pacDiabetes;
+	private boolean pacHipertensao;
+	private boolean pacTabagismo;
 	private Integer pacPeso;
 	private String pacAltura;
 	private ContatoVO contatoVO;
@@ -73,38 +73,6 @@ public class ClienteVO implements Serializable {
 		this.pacCodigo = pacCodigo;
 	}
 	
-	public String getPacLabora() {
-		return pacLabora;
-	}
-	
-	public void setPacLabora(String pacLabora) {
-		this.pacLabora = pacLabora;
-	}
-	
-	public String getPacAndaDescalco() {
-		return pacAndaDescalco;
-	}
-	
-	public void setPacAndaDescalco(String pacAndaDescalco) {
-		this.pacAndaDescalco = pacAndaDescalco;
-	}
-	
-	public String getPacUnhaEngravada() {
-		return pacUnhaEngravada;
-	}
-	
-	public void setPacUnhaEngravada(String pacUnhaEngravada) {
-		this.pacUnhaEngravada = pacUnhaEngravada;
-	}
-	
-	public String getPacCirurgiaPes() {
-		return pacCirurgiaPes;
-	}
-	
-	public void setPacCirurgiaPes(String pacCirurgiaPes) {
-		this.pacCirurgiaPes = pacCirurgiaPes;
-	}
-	
 	public String getPacCirurgiaMotivo() {
 		return pacCirurgiaMotivo;
 	}
@@ -121,14 +89,6 @@ public class ClienteVO implements Serializable {
 		this.pacCalcadoUtiliza = pacCalcadoUtiliza;
 	}
 	
-	public String getPacVisitaPedicuro() {
-		return pacVisitaPedicuro;
-	}
-	
-	public void setPacVisitaPedicuro(String pacVisitaPedicuro) {
-		this.pacVisitaPedicuro = pacVisitaPedicuro;
-	}
-	
 	public String getPacNumeroCalcado() {
 		return pacNumeroCalcado;
 	}
@@ -137,44 +97,12 @@ public class ClienteVO implements Serializable {
 		this.pacNumeroCalcado = pacNumeroCalcado;
 	}
 	
-	public String getPacAlergicoMedicamentos() {
-		return pacAlergicoMedicamentos;
-	}
-	
-	public void setPacAlergicoMedicamentos(String pacAlergicoMedicamentos) {
-		this.pacAlergicoMedicamentos = pacAlergicoMedicamentos;
-	}
-	
 	public String getPacAlergicoQuais() {
 		return pacAlergicoQuais;
 	}
 	
 	public void setPacAlergicoQuais(String pacAlergicoQuais) {
 		this.pacAlergicoQuais = pacAlergicoQuais;
-	}
-	
-	public String getPacDiabetes() {
-		return pacDiabetes;
-	}
-	
-	public void setPacDiabetes(String pacDiabetes) {
-		this.pacDiabetes = pacDiabetes;
-	}
-	
-	public String getPacHipertensao() {
-		return pacHipertensao;
-	}
-	
-	public void setPacHipertensao(String pacHipertensao) {
-		this.pacHipertensao = pacHipertensao;
-	}
-	
-	public String getPacTabagismo() {
-		return pacTabagismo;
-	}
-	
-	public void setPacTabagismo(String pacTabagismo) {
-		this.pacTabagismo = pacTabagismo;
 	}
 	
 	public Integer getPacPeso() {
@@ -215,5 +143,77 @@ public class ClienteVO implements Serializable {
 
 	public void setCliUltimoTratamento(String cliUltimoTratamento) {
 		this.cliUltimoTratamento = cliUltimoTratamento;
+	}
+
+	public boolean isPacLabora() {
+		return pacLabora;
+	}
+
+	public void setPacLabora(boolean pacLabora) {
+		this.pacLabora = pacLabora;
+	}
+
+	public boolean isPacAndaDescalco() {
+		return pacAndaDescalco;
+	}
+
+	public void setPacAndaDescalco(boolean pacAndaDescalco) {
+		this.pacAndaDescalco = pacAndaDescalco;
+	}
+
+	public boolean isPacUnhaEngravada() {
+		return pacUnhaEngravada;
+	}
+
+	public void setPacUnhaEngravada(boolean pacUnhaEngravada) {
+		this.pacUnhaEngravada = pacUnhaEngravada;
+	}
+
+	public boolean isPacCirurgiaPes() {
+		return pacCirurgiaPes;
+	}
+
+	public void setPacCirurgiaPes(boolean pacCirurgiaPes) {
+		this.pacCirurgiaPes = pacCirurgiaPes;
+	}
+
+	public boolean isPacVisitaPedicuro() {
+		return pacVisitaPedicuro;
+	}
+
+	public void setPacVisitaPedicuro(boolean pacVisitaPedicuro) {
+		this.pacVisitaPedicuro = pacVisitaPedicuro;
+	}
+
+	public boolean isPacAlergicoMedicamentos() {
+		return pacAlergicoMedicamentos;
+	}
+
+	public void setPacAlergicoMedicamentos(boolean pacAlergicoMedicamentos) {
+		this.pacAlergicoMedicamentos = pacAlergicoMedicamentos;
+	}
+
+	public boolean isPacDiabetes() {
+		return pacDiabetes;
+	}
+
+	public void setPacDiabetes(boolean pacDiabetes) {
+		this.pacDiabetes = pacDiabetes;
+	}
+
+	public boolean isPacHipertensao() {
+		return pacHipertensao;
+	}
+
+	public void setPacHipertensao(boolean pacHipertensao) {
+		this.pacHipertensao = pacHipertensao;
+	}
+
+	public boolean isPacTabagismo() {
+		return pacTabagismo;
+	}
+
+	public void setPacTabagismo(boolean pacTabagismo) {
+		this.pacTabagismo = pacTabagismo;
 	}
 }

@@ -5,28 +5,28 @@
 <div class="container">
 	<div class="panel panel-default">
     	<div class="panel-heading">
-        	<h3 class="panel-title">Pesquisar Clientes</h3>
+        	<h3 class="panel-title" style="font-weight: bold;">Pesquisar Clientes</h3>
         </div>
 	    <s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-left: 15px; margin-top: 15px;">
 	    	<s:hidden name="clienteVO.pessoaVO.pesCodigo" id="pesCodigo"/>
 	    	<div class="row">
 				<div class="col-lg-5">
 					<s:label for="proNome" cssClass="control-label">Nome do Cliente</s:label>
-					<s:textfield name="clienteVO.pessoaVO.pesNome" id="pesNome" maxlength="120" theme="simple" cssClass="form-control" cssStyle="width: 250px;" onkeypress="javascript:onChange();"/>
+					<s:textfield name="clienteVO.pessoaVO.pesNome" id="pesNome" maxlength="120" theme="simple" cssClass="form-control" cssStyle="width: 350px;" onkeypress="javascript:onChange();"/>
 				</div>
 			</div>	    	
 		</s:form>
 		<div class="panel-body">
 	    	<button id="btnPesquisar" type="button" class="btn btn-primary">Pesquisar</button>
-	    	<button style="margin-left: 10px;" id="btnNovo" type="button" class="btn btn-primary">Novo</button>
+	    	<button style="margin-left: 10px;" id="btnNovo" type="button" class="btn btn-primary">Novo Cliente</button>
 		</div>
 	</div>
 	<div class="panel panel-default">
     	<div class="panel-heading">
-        	<h3 class="panel-title">Listagem</h3>
+        	<h3 class="panel-title" style="font-weight: bold;">Lista de Clientes</h3>
         </div>
 		<div class="panel-body">
-			<table id="tabelaCliente" class="ui celled table segment" style="width: 780px; padding-top: 20px; margin-left: 20px;">
+			<table id="tabelaCliente" class="ui celled table segment" style="width: 780px; padding-top: 20px;">
 	  			<thead>
 	    			<tr>
 	    				<th width="350px;">Nome</th>

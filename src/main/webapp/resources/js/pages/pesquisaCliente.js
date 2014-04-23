@@ -9,6 +9,7 @@
 	
     // Botão novo produto.
     $("#btnNovo").button().click(function() {
+    	$("#divCarregando").css("visibility", "visible");
 		$("#formCliente").attr("action", "Novo");
 		$("#formCliente").submit();    	
     });
@@ -23,6 +24,7 @@
 			dataType: "json",
 			beforeSend: function(){
 				$("#divCarregando").css("visibility", "visible");
+				$("#divMensagemSucesso").css("display", "none");
 				$("#divMensagemErro").css("display", "none");
 			},
 			success: function(data, status, request){ 
@@ -55,6 +57,7 @@ function onChange() {
 			dataType: "json",
 			beforeSend: function(){
 				$("#divCarregando").css("visibility", "visible");
+				$("#divMensagemSucesso").css("display", "none");
 				$("#divMensagemErro").css("display", "none");
 			},
 			success: function(data, status, request){ 
@@ -107,6 +110,7 @@ function detalhar(pesCodigo) {
 		beforeSend: function(){
 			$("#divCarregando").css("visibility", "visible");
 			$("#divMensagemErro").css("display", "none");
+			$("#divMensagemSucesso").css("display", "none");
 		},
 		success: function(data, status, request){ 
 			$("#divCarregando").css("visibility", "hidden");

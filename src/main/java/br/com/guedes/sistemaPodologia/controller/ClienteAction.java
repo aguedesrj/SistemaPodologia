@@ -2,6 +2,7 @@ package br.com.guedes.sistemaPodologia.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -78,22 +79,21 @@ public class ClienteAction extends BasicAction {
 	@SuppressWarnings("unchecked")
 	public String salvar() {
 		try {
+			Pessoa pessoa = new Pessoa();
+			pessoa.setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
+			if (pessoa.getPesCodigo() != null && pessoa.getPesCodigo() > 0) {
+				pessoa = clienteFacade.obterPorId(pessoa);
+			} else {
+				pessoa.setPesDtCadastro(Calendar.getInstance());
+			}
 			// lista de contatos da sessão
 			getClienteVO().setListaContatos((List<ContatoVO>) this.getRequest().getSession().getAttribute(SESSION_LISTA_CONTATOS));
-			
-			Pessoa pessoa = new Pessoa();
-			List<Contato> listaContatos = new ArrayList<Contato>();
-			Paciente paciente = new Paciente();
-			
 			// de-para
-			populaDeParaSalvar(pessoa, listaContatos, paciente);
-			
+			populaDeParaSalvar(pessoa);
 	  		// salvar.
-	  		clienteFacade.salvar(pessoa, listaContatos, paciente);
-	  		
+	  		clienteFacade.salvar(pessoa);
 	  		// remove da session a lista.
 	  		this.getRequest().getSession().removeAttribute(SESSION_LISTA_CONTATOS);
-	  		
 	  		return SUCCESS;
 		} catch (Exception e) {
 			LOG.fatal(e.getMessage(), e);
@@ -273,61 +273,103 @@ public class ClienteAction extends BasicAction {
 	/**
 	 * 
 	 * @param pessoa Pessoa
-	 * @param listaContatos List<Contato>
-	 * @param paciente Paciente
 	 * @throws Exception
 	 */
-	private void populaDeParaSalvar(Pessoa pessoa, List<Contato> listaContatos, Paciente paciente) throws Exception {
+	private void populaDeParaSalvar(Pessoa pessoa) throws Exception {
 		// pessoa
-		pessoa.setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
 		pessoa.setPesNome(getClienteVO().getPessoaVO().getPesNome());
-		pessoa.setPesDtCadastro(Calendar.getInstance());
-		pessoa.setPesDtNascimento(Util.converterStringParaCalendar(getClienteVO().getPessoaVO().getPesDtNascimento()));
+		try {
+			pessoa.setPesDtNascimento(Util.converterStringParaCalendar(getClienteVO().getPessoaVO().getPesDtNascimento(), Util.SIMPLE_DATE_FORMAT_DATA));
+		} catch (Exception e) {
+			throw new BusinessException("Data de nascimento inválida.");
+		}
 		pessoa.setPesObs(getClienteVO().getPessoaVO().getPesObs());
 		pessoa.setPesSexo(getClienteVO().getPessoaVO().getPesSexo());
 		// endereço
-		pessoa.setEndereco(new Endereco());
+		if (pessoa.getEndereco() == null) {
+			pessoa.setEndereco(new Endereco());
+		}
 		pessoa.getEndereco().setEndBairro(getClienteVO().getEnderecoVO().getEndBairro());
 		pessoa.getEndereco().setEndCep(getClienteVO().getEnderecoVO().getEndCep());
 		pessoa.getEndereco().setEndCidade(getClienteVO().getEnderecoVO().getEndCidade());
 		pessoa.getEndereco().setEndCodigo(getClienteVO().getEnderecoVO().getEndCodigo());
 		pessoa.getEndereco().setEndLogadouro(getClienteVO().getEnderecoVO().getEndLogadouro());
 		pessoa.getEndereco().setEndNumero(getClienteVO().getEnderecoVO().getEndNumero());
-		pessoa.getEndereco().setEstado(new Estado());
-		pessoa.getEndereco().getEstado().setEstCodigo(getClienteVO().getEnderecoVO().getEstadoVO().getEstCodigo());
+		if (getClienteVO().getEnderecoVO().getEstadoVO().getEstCodigo() != -1) {
+			pessoa.getEndereco().setEstado(new Estado());
+			pessoa.getEndereco().getEstado().setEstCodigo(getClienteVO().getEnderecoVO().getEstadoVO().getEstCodigo());			
+		}
 		// lista de contatos
-		for (ContatoVO contatoVO: getClienteVO().getListaContatos()) {
-			Contato contato = new Contato();
-			if (contatoVO.isNovo()) {
-				contato.setConCodigo(null);
-			} else {
-				contato.setConCodigo(contatoVO.getConCodigo());
+		if (getClienteVO().getListaContatos() != null) {
+			if (pessoa.getListaContato() == null) {
+				pessoa.setListaContato(new HashSet<Contato>());
 			}
-			contato.setConDescricao(contatoVO.getConDescricao());
-			contato.setConResponsavel(contatoVO.getConResponsavel());
-			contato.setTipoContato(new TipoContato());
-			contato.getTipoContato().setTcoCodigo(contatoVO.getTipoContatoVO().getTcoCodigo());
-			contato.setPessoa(pessoa);
-			listaContatos.add(contato);
+			for (ContatoVO contatoVO: getClienteVO().getListaContatos()) {
+				Contato contato = new Contato();
+				if (contatoVO.isNovo()) {
+					contato.setConCodigo(null);
+				} else {
+					contato.setConCodigo(contatoVO.getConCodigo());
+				}
+				contato.setConDescricao(contatoVO.getConDescricao());
+				contato.setConResponsavel(contatoVO.getConResponsavel());
+				if (contatoVO.getTipoContatoVO().getTcoCodigo() == -1) {
+					throw new BusinessException("Tipo de contato deve ser informado.");
+				}
+				contato.setTipoContato(new TipoContato());
+				contato.getTipoContato().setTcoCodigo(contatoVO.getTipoContatoVO().getTcoCodigo());
+				contato.setPessoa(pessoa);
+				pessoa.getListaContato().add(contato);
+			}
 		}
 		// paciente
-		paciente.setPacAlergicoMedicamentos(getClienteVO().getPacAlergicoMedicamentos());
-		paciente.setPacAlergicoQuais(getClienteVO().getPacAlergicoQuais());
-		paciente.setPacAltura(getClienteVO().getPacAltura());
-		paciente.setPacAndaDescalco(getClienteVO().getPacAndaDescalco());
-		paciente.setPacCalcadoUtiliza(getClienteVO().getPacCalcadoUtiliza());
-		paciente.setPacCirurgiaMotivo(getClienteVO().getPacCirurgiaMotivo());
-		paciente.setPacCirurgiaPes(getClienteVO().getPacCirurgiaPes());
-		paciente.setPacCodigo(getClienteVO().getPacCodigo());
-		paciente.setPacDiabetes(getClienteVO().getPacDiabetes());
-		paciente.setPacHipertensao(getClienteVO().getPacHipertensao());
-		paciente.setPacLabora(getClienteVO().getPacLabora());
-		paciente.setPacNumeroCalcado(getClienteVO().getPacNumeroCalcado());
-		paciente.setPacPeso(getClienteVO().getPacPeso());
-		paciente.setPacTabagismo(getClienteVO().getPacTabagismo());
-		paciente.setPacUnhaEngravada(getClienteVO().getPacUnhaEngravada());
-		paciente.setPacVisitaPedicuro(getClienteVO().getPacVisitaPedicuro());
-		paciente.setPessoa(pessoa);
+		if (pessoa.getPaciente() == null) {
+			pessoa.setPaciente(new Paciente());
+		}
+		pessoa.getPaciente().setPacAlergicoMedicamentos("N");
+		if (getClienteVO().isPacAlergicoMedicamentos()) {
+			pessoa.getPaciente().setPacAlergicoMedicamentos("S");
+		}
+		pessoa.getPaciente().setPacAlergicoQuais(getClienteVO().getPacAlergicoQuais());
+		pessoa.getPaciente().setPacAltura(getClienteVO().getPacAltura());
+		pessoa.getPaciente().setPacAndaDescalco("N");
+		if (getClienteVO().isPacAndaDescalco()) {
+			pessoa.getPaciente().setPacAndaDescalco("S");
+		}
+		pessoa.getPaciente().setPacCalcadoUtiliza(getClienteVO().getPacCalcadoUtiliza());
+		pessoa.getPaciente().setPacCirurgiaMotivo(getClienteVO().getPacCirurgiaMotivo());
+		pessoa.getPaciente().setPacCirurgiaPes("N");
+		if (getClienteVO().isPacCirurgiaPes()) {
+			pessoa.getPaciente().setPacCirurgiaPes("S");
+		}
+		pessoa.getPaciente().setPacCodigo(getClienteVO().getPacCodigo());
+		pessoa.getPaciente().setPacDiabetes("N");
+		if (getClienteVO().isPacDiabetes()) {
+			pessoa.getPaciente().setPacDiabetes("S");
+		}
+		pessoa.getPaciente().setPacHipertensao("N");
+		if (getClienteVO().isPacHipertensao()) {
+			pessoa.getPaciente().setPacHipertensao("S");
+		}
+		pessoa.getPaciente().setPacLabora("N");
+		if (getClienteVO().isPacLabora()) {
+			pessoa.getPaciente().setPacLabora("S");
+		}
+		pessoa.getPaciente().setPacNumeroCalcado(getClienteVO().getPacNumeroCalcado());
+		pessoa.getPaciente().setPacPeso(getClienteVO().getPacPeso());
+		pessoa.getPaciente().setPacTabagismo("N");
+		if (getClienteVO().isPacTabagismo()) {
+			pessoa.getPaciente().setPacTabagismo("S");
+		}
+		pessoa.getPaciente().setPacUnhaEngravada("N");
+		if (getClienteVO().isPacUnhaEngravada()) {
+			pessoa.getPaciente().setPacUnhaEngravada("S");
+		}
+		pessoa.getPaciente().setPacVisitaPedicuro("N");
+		if (getClienteVO().isPacVisitaPedicuro()) {
+			pessoa.getPaciente().setPacVisitaPedicuro("S");
+		}
+		pessoa.getPaciente().setPessoa(pessoa);
 	}
 	
 	private void populaDePara(Pessoa pessoa) throws Exception {
@@ -366,22 +408,40 @@ public class ClienteAction extends BasicAction {
 			getClienteVO().getListaContatos().add(contatoVO);
 		}
 		// paciente
-		getClienteVO().setPacAlergicoMedicamentos(pessoa.getPaciente().getPacAlergicoMedicamentos());
+		if (pessoa.getPaciente().getPacAlergicoMedicamentos() != null && pessoa.getPaciente().getPacAlergicoMedicamentos().equals("S")) {
+			getClienteVO().setPacAlergicoMedicamentos(true);
+		}
 		getClienteVO().setPacAlergicoQuais(pessoa.getPaciente().getPacAlergicoQuais());
 		getClienteVO().setPacAltura(pessoa.getPaciente().getPacAltura());
-		getClienteVO().setPacAndaDescalco(pessoa.getPaciente().getPacAndaDescalco());
+		if (pessoa.getPaciente().getPacAndaDescalco() != null && pessoa.getPaciente().getPacAndaDescalco().equals("S")) {
+			getClienteVO().setPacAndaDescalco(true);
+		}
 		getClienteVO().setPacCalcadoUtiliza(pessoa.getPaciente().getPacCalcadoUtiliza());
 		getClienteVO().setPacCirurgiaMotivo(pessoa.getPaciente().getPacCirurgiaMotivo());
-		getClienteVO().setPacCirurgiaPes(pessoa.getPaciente().getPacCirurgiaPes());
+		if (pessoa.getPaciente().getPacCirurgiaPes() != null && pessoa.getPaciente().getPacCirurgiaPes().equals("S")) {
+			getClienteVO().setPacCirurgiaPes(true);
+		}
 		getClienteVO().setPacCodigo(pessoa.getPaciente().getPacCodigo());
-		getClienteVO().setPacDiabetes(pessoa.getPaciente().getPacDiabetes());
-		getClienteVO().setPacHipertensao(pessoa.getPaciente().getPacHipertensao());
-		getClienteVO().setPacLabora(pessoa.getPaciente().getPacLabora());
+		if (pessoa.getPaciente().getPacDiabetes() != null && pessoa.getPaciente().getPacDiabetes().equals("S")) {
+			getClienteVO().setPacDiabetes(true);
+		}
+		if (pessoa.getPaciente().getPacHipertensao() != null && pessoa.getPaciente().getPacHipertensao().equals("S")) {
+			getClienteVO().setPacHipertensao(true);
+		}
+		if (pessoa.getPaciente().getPacLabora() != null && pessoa.getPaciente().getPacLabora().equals("S")) {
+			getClienteVO().setPacLabora(true);
+		}
 		getClienteVO().setPacNumeroCalcado(pessoa.getPaciente().getPacNumeroCalcado());
 		getClienteVO().setPacPeso(pessoa.getPaciente().getPacPeso());
-		getClienteVO().setPacTabagismo(pessoa.getPaciente().getPacTabagismo());
-		getClienteVO().setPacUnhaEngravada(pessoa.getPaciente().getPacUnhaEngravada());
-		getClienteVO().setPacVisitaPedicuro(pessoa.getPaciente().getPacVisitaPedicuro());
+		if (pessoa.getPaciente().getPacTabagismo() != null && pessoa.getPaciente().getPacTabagismo().equals("S")) {
+			getClienteVO().setPacTabagismo(true);
+		}
+		if (pessoa.getPaciente().getPacUnhaEngravada() != null && pessoa.getPaciente().getPacUnhaEngravada().equals("S")) {
+			getClienteVO().setPacUnhaEngravada(true);
+		}
+		if (pessoa.getPaciente().getPacVisitaPedicuro() != null && pessoa.getPaciente().getPacVisitaPedicuro().equals("S")) {
+			getClienteVO().setPacVisitaPedicuro(true);
+		}
 	}	
 
 	public String getMensagemUsuario() {

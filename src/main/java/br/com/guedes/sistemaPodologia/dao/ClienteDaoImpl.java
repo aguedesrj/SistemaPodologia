@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import br.com.guedes.sistemaPodologia.model.Pessoa;
-import br.com.guedes.sistemaPodologia.util.BusinessException;
 import br.com.guedes.sistemaPodologia.util.IntegrationException;
 
 /**
@@ -40,17 +39,12 @@ public class ClienteDaoImpl extends HibernateDaoSupport implements ClienteDao {
 			sql.append("order by p.pes_nome ");
 			
 			SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql.toString());
-			if (query == null || query.list().isEmpty()) {
-				throw new BusinessException("Nenhum cliente encontrado.");
-			}		
-			
 			List<Pessoa> listaRetorno = new ArrayList<Pessoa>();
 			List<Object[]> entitys = query.list();
 			for (Object[] entity : entitys) {
 				Pessoa pessoaRetorno = new Pessoa();
 				pessoaRetorno.setPesCodigo((Integer) entity[0]);
 				pessoaRetorno.setPesNome((String) entity[1]);
-				
 				listaRetorno.add(pessoaRetorno);
 			}
 			return listaRetorno;

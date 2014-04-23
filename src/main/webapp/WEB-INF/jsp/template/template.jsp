@@ -25,7 +25,9 @@
 	<script src="../resources/js/bootbox.js"></script>
 	<script src="../resources/js/bootstrap-datepicker.js"></script>
 	<script src="../resources/js/bootstrap-combobox.js"></script>
-	<script src="../resources/js/bootstrap-dialog.min.js"></script>	
+	<script src="../resources/js/bootstrap-dialog.min.js"></script>
+	<script src="../resources/js/jquery.alphanumeric.js"></script>
+	<script src="../resources/js/jquery.maskedinput.js"></script>	
 </head>
 <body>
 	<div id="page-wrap">
@@ -33,7 +35,7 @@
 			<div class="ui text loader">carregando...</div>
 		</div>
 		<div id="tilesMenu"><tiles:insertAttribute name="menu"/></div>
-		<div id="tilesMensagem" style="padding-top: 100px;"><tiles:insertAttribute name="mensagem"/></div>
+		<div id="tilesMensagem" style="padding-top: 60px;"><tiles:insertAttribute name="mensagem"/></div>
 		<div id="tilesConteudo"><tiles:insertAttribute name="conteudo"/></div>	
 		<div id="tilesRodape"><tiles:insertAttribute name="rodape"/></div>
 	</div>

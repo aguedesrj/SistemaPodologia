@@ -109,10 +109,13 @@ public class Util {
 	 * @return Calendar
 	 * @throws Exception
 	 */
-	public static Calendar converterStringParaCalendar(final String valorData) throws Exception {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(SIMPLE_DATE_FORMAT_DATA_HORA.parse(valorData)); 
-		return calendar;
+	public static Calendar converterStringParaCalendar(final String valorData, final SimpleDateFormat formato) throws Exception {
+		if (valorData != null && !valorData.equals("")) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(formato.parse(valorData)); 
+			return calendar;
+		}
+		return null;
 	}
 	
 	/**

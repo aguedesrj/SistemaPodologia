@@ -17,7 +17,6 @@ import br.com.guedes.sistemaPodologia.dao.PacienteDao;
 import br.com.guedes.sistemaPodologia.dao.PessoaDao;
 import br.com.guedes.sistemaPodologia.model.Contato;
 import br.com.guedes.sistemaPodologia.model.Estado;
-import br.com.guedes.sistemaPodologia.model.Paciente;
 import br.com.guedes.sistemaPodologia.model.Pessoa;
 import br.com.guedes.sistemaPodologia.model.TipoContato;
 import br.com.guedes.sistemaPodologia.util.BusinessException;
@@ -78,10 +77,10 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	
 	/*
 	 * (non-Javadoc)
-	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#salvar(br.com.guedes.sistemaPodologia.model.Pessoa, java.util.List, br.com.guedes.sistemaPodologia.model.Paciente)
+	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#salvar(br.com.guedes.sistemaPodologia.model.Pessoa)
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = IntegrationException.class)
-	public void salvar(final Pessoa pessoa, final List<Contato> listaContatos, final Paciente paciente) throws IntegrationException, BusinessException {
+	public void salvar(final Pessoa pessoa) throws IntegrationException, BusinessException {
 		try {
 			// verifica se jÃ¡ existe algum Cliente com o mesmo nome.
 			Pessoa pessoaCond = new Pessoa();
@@ -93,10 +92,16 @@ public class ClienteFacadeImpl implements ClienteFacade {
 					throw new BusinessException("Cliente já está cadastrado.");
 				}
 			}
-			// salvar dados Pessoa.
+			
+			// salvar endereço.
+			sessionFactory.getCurrentSession().saveOrUpdate(pessoa.getEndereco());
+			sessionFactory.getCurrentSession().flush();
+			// salvar pessoa.
 			sessionFactory.getCurrentSession().saveOrUpdate(pessoa);
+			sessionFactory.getCurrentSession().flush();
 			// salvar dados Paciente.
-			sessionFactory.getCurrentSession().saveOrUpdate(paciente);
+			sessionFactory.getCurrentSession().saveOrUpdate(pessoa.getPaciente());
+			sessionFactory.getCurrentSession().flush();
 			// deletar contatos.
 			List<Contato> listaContatosDelete = contatoDao.listaContatosPorPessoa(pessoa);
 			for (Contato contatoDelete: listaContatosDelete) {
@@ -104,7 +109,7 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			}
 			sessionFactory.getCurrentSession().flush();
 			// salvar contatos.
-			for (Contato contato: listaContatos) {
+			for (Contato contato: pessoa.getListaContato()) {
 				sessionFactory.getCurrentSession().saveOrUpdate(contato);
 			}
 			sessionFactory.getCurrentSession().flush();

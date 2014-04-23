@@ -6,6 +6,24 @@ body {
 
 #page-wrap {
 	text-align: left;
-  	width: 850px;
+  	width: 970px;
   	margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .page-wrap {
+    width: 550px;
+  }
+}
+
+@media (min-width: 992px) {
+  .page-wrap {
+    width: 770px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .page-wrap {
+    width: 970px;
+  }
 }
