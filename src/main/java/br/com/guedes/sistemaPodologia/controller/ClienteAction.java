@@ -205,7 +205,7 @@ public class ClienteAction extends BasicAction {
     	try {
 			Pessoa pessoa = new Pessoa();
 			pessoa.setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
-    		pessoa = clienteFacade.obterPorId(pessoa, null, null);
+    		pessoa = clienteFacade.obterPorId(pessoa);
     		if (pessoa.getPesNome() == null) {
     			setMensagemUsuario("Cliente não encontrado.");
     			return ERROR;
@@ -219,6 +219,55 @@ public class ClienteAction extends BasicAction {
 			setMensagemUsuario("Erro ao detalhar Cliente.");
 			return ERROR;
 		}
+	}
+	
+	public String iniciarAlteracao() {
+    	try {
+    		// lista de tipos de contatos.
+    		List<TipoContato> listaTipoContatos = clienteFacade.listaTipoContatos();
+    		for (TipoContato tipoContato: listaTipoContatos) {
+    			TipoContatoVO tipoContatoVO = new TipoContatoVO();
+    			tipoContatoVO.setTcoCodigo(tipoContato.getTcoCodigo());
+    			tipoContatoVO.setTcoDescricao(tipoContato.getTcoDescricao());
+    			getClienteVO().getContatoVO().getListaTipoContatosVO().add(tipoContatoVO);
+    		}
+    		// lista de estados.
+    		List<Estado> listaEstados = clienteFacade.listaEstados();
+    		for (Estado estado: listaEstados) {
+    			EstadoVO estadoVO = new EstadoVO();
+    			estadoVO.setEstCodigo(estado.getEstCodigo());
+    			estadoVO.setEstNome(estado.getEstNome());
+    			estadoVO.setEstSigla(estado.getEstSigla());
+    			getClienteVO().getEnderecoVO().getListaEstadosVO().add(estadoVO);
+    		}    		
+    		// remove da session a lista.
+    		this.getRequest().getSession().removeAttribute(SESSION_LISTA_CONTATOS);
+    		Pessoa pessoa = new Pessoa();
+    		pessoa.setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
+    		pessoa = clienteFacade.obterPorId(pessoa);
+    		if (pessoa == null) {
+    			addActionError("Cliente não encontrado.");
+    			return ERROR;
+    		}
+    		populaDePara(pessoa);
+    		this.getRequest().getSession().setAttribute(SESSION_LISTA_CONTATOS, getClienteVO().getListaContatos());
+    		return SUCCESS;
+		} catch (Exception e) {
+			addActionError("Erro ao iniciar alteração do Cliente.");
+			return ERROR;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String buscarContatos() {
+    	try {
+    		setClienteVO(new ClienteVO());
+    		getClienteVO().setListaContatos((List<ContatoVO>) this.getRequest().getSession().getAttribute(SESSION_LISTA_CONTATOS));
+    		return SUCCESS;
+		} catch (Exception e) {
+			addActionError("Erro ao iniciar alteração do Cliente.");
+			return ERROR;
+		}		
 	}
 	
 	/**
@@ -288,6 +337,12 @@ public class ClienteAction extends BasicAction {
 		getClienteVO().getPessoaVO().setPesDtNascimento(Util.converterCalendarParaString(pessoa.getPesDtNascimento(), Util.SIMPLE_DATE_FORMAT_DATA));
 		getClienteVO().getPessoaVO().setPesObs(pessoa.getPesObs());
 		getClienteVO().getPessoaVO().setPesSexo(pessoa.getPesSexo());
+		if (pessoa.getPaciente().getConsulta() != null) {
+			getClienteVO().setCliDataUltimaConsulta(Util.converterDateParaString(pessoa.getPaciente().getConsulta().getCosDtConsulta(), Util.SIMPLE_DATE_FORMAT_DATA));
+			if (pessoa.getPaciente().getConsulta().getTratamento() != null) {
+				getClienteVO().setCliUltimoTratamento(pessoa.getPaciente().getConsulta().getTratamento().getTraDescricao());
+			}
+		}
 		// endereço
 		getClienteVO().getEnderecoVO().setEndBairro(pessoa.getEndereco().getEndBairro());
 		getClienteVO().getEnderecoVO().setEndCep(pessoa.getEndereco().getEndCep());
@@ -295,7 +350,9 @@ public class ClienteAction extends BasicAction {
 		getClienteVO().getEnderecoVO().setEndCodigo(pessoa.getEndereco().getEndCodigo());
 		getClienteVO().getEnderecoVO().setEndLogadouro(pessoa.getEndereco().getEndLogadouro());
 		getClienteVO().getEnderecoVO().setEndNumero(pessoa.getEndereco().getEndNumero());
-		getClienteVO().getEnderecoVO().getEstadoVO().setEstCodigo(pessoa.getEndereco().getEstado().getEstCodigo());
+		if (pessoa.getEndereco().getEstado() != null) {
+			getClienteVO().getEnderecoVO().getEstadoVO().setEstCodigo(pessoa.getEndereco().getEstado().getEstCodigo());
+		}
 		// lista de contatos
 		getClienteVO().setListaContatos(new ArrayList<ContatoVO>());
 		for (Contato contato: pessoa.getListaContato()) {
@@ -305,6 +362,7 @@ public class ClienteAction extends BasicAction {
 			contatoVO.setConDescricao(contato.getConDescricao());
 			contatoVO.setConResponsavel(contato.getConResponsavel());
 			contatoVO.getTipoContatoVO().setTcoCodigo(contato.getTipoContato().getTcoCodigo());
+			contatoVO.getTipoContatoVO().setTcoDescricao(contato.getTipoContato().getTcoDescricao());
 			getClienteVO().getListaContatos().add(contatoVO);
 		}
 		// paciente

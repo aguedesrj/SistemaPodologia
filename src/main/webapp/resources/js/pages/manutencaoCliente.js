@@ -2,10 +2,6 @@
 	
 	$("#pesNome").focus();
 	
-	$('#datetimepicker1').datetimepicker({
-		language: 'pt-BR'
-	});	
-
 	// Botão exibir modal de contatos..
     $("#btnNovoContato").button().click(function() {
     	exibeModalContato(true, null);
@@ -13,7 +9,7 @@
     
     // Inserir contato.
 	$("#btnInserir").button().click(function() {
-//		if (isCamposValoresValidos()) {
+		if (isCamposFormularioContato()) {
 			// ir no servidor...
 			$.ajax({
 				url: 'SistemaPodologia/Cliente/IncluiContato',
@@ -22,26 +18,27 @@
 				cache: false,
 				dataType: "json",
 				beforeSend: function(){
-					$("#loading").css("display", "block");
+					$("#divCarregando").css("visibility", "visible");
 					$("#divMensagemErro").css("display", "none");
 				},
 				success: function(data, status, request){
-					$("#loading").css("display", "none");
+					$("#divCarregando").css("visibility", "hidden");
 					if (status == "success" && data.mensagemUsuario == null) {
 						atualizaTabelaContato(data.clienteVO.listaContatos);
 						$("#modalContato").modal('hide');
 					} else {
+						$("#divCarregando").css("visibility", "hidden");
 						$("#divMensagemErro").css("display", "block");
-						$("#spanMsgError").show().html(data.mensagemUsuario);						
+						$("#spanMsgError").show().html(data.mensagemUsuario); 							
 					}
 				},
 				error: function (request, error) {
-					$("#loading").css("display", "none");
+					$("#divCarregando").css("visibility", "hidden");
 					$("#divMensagemErro").css("display", "block");
-					$("#spanMsgError").show().html("Sistema indisponível no momento.");
+					$("#spanMsgError").show().html("Sistema indisponível no momento."); 
 				}        
 			});                                
-//		}		
+		}		
     });    
     
     // Fechar modal do contato.
@@ -52,7 +49,7 @@
     // Botão gravar Produto.
     $("#btnSalvar").button().click(function() {
     	// Validar campos.
-        if (isCamposFormularioValidos()) {                
+        if (isCamposFormularioCliente()) {                
         	$.ajax({
         		url: 'SistemaComercialGuedes/Produto/Salva',
                 data: $('#formProduto').serialize(),
@@ -60,9 +57,8 @@
                 cache: false,
                 dataType: "json",
                 beforeSend: function(){
-					$("#loading").css("display", "block");
-					$("#divMensagemErro").css("display", "none");
-					$("#divMensagemSucesso").css("display", "none");
+    				$("#divCarregando").css("visibility", "visible");
+    				$("#divMensagemErro").css("display", "none");
                 },
                 success: function(data, status, request){
                     if (status == "success" && data.mensagemUsuario == null) {
@@ -72,22 +68,47 @@
                         $("#proNome").focus();
                         $("#tabelaValores").jqGrid("clearGridData", true);
                     } else {
-						$("#loading").css("display", "none");
-						$("#divMensagemErro").css("display", "block");
-						$("#spanMsgError").show().html(data.mensagemUsuario);                                               
+    					$("#divCarregando").css("visibility", "hidden");
+    					$("#divMensagemErro").css("display", "block");
+    					$("#spanMsgError").show().html(data.mensagemUsuario); 	                                              
                     }
                 },
     			complete : function () {
-    				$("#loading").css("display", "none");
+    				$("#divCarregando").css("visibility", "hidden");
     			},                
                 error: function (request, error) {
-					$("#loading").css("display", "none");
-					$("#divMensagemErro").css("display", "block");
-					$("#spanMsgError").show().html("Sistema indisponível no momento.");                                       
+    				$("#divCarregando").css("visibility", "hidden");
+    				$("#divMensagemErro").css("display", "block");
+    				$("#spanMsgError").show().html("Sistema indisponível no momento.");                                       
                 }
         	});                        
         }
-    });	    
+    });
+    
+	// verifica se está em alteração.
+	if ($("#pesCodigo").val() != null && $("#pesCodigo").val() > 0) {
+	    $.ajax({
+	    	url: 'SistemaPodologia/Cliente/BuscaContatos',
+	        type: 'POST',
+	        cache: false,
+	        dataType: "json",
+	        beforeSend: function(){
+				$("#divCarregando").css("visibility", "visible");
+				$("#divMensagemErro").css("display", "none");
+	        },
+	        success: function(data, status, request){
+	        	$("#divCarregando").css("visibility", "hidden");
+	            if (status == "success" && data.mensagemUsuario == undefined) {
+	            	atualizaTabelaContato(data.clienteVO.listaContatos);
+	            }
+	        },
+	        error: function (request, error) {
+				$("#divCarregando").css("visibility", "hidden");
+				$("#divMensagemErro").css("display", "block");
+				$("#spanMsgError").show().html("Sistema indisponível no momento."); 	                                      
+	        }
+	    });		
+	}    
 });
 
 function atualizaTabelaContato(listaContatos) {
@@ -97,7 +118,7 @@ function atualizaTabelaContato(listaContatos) {
 	}
 }
 
-function atualizaIncluiTabelaContato() {
+function atualizaIncluiTabelaContato(contatoVO) {
 	var html = "<tr><td>"+
 		contatoVO.tipoContatoVO.tcoDescricao+
 		"</td><td>"+contatoVO.conDescricao+
@@ -217,5 +238,50 @@ function removerContato(conCodigo) {
             }
         }]
     });	
+}
+
+function isCamposFormularioContato() {
+	var isValidos = false;
+	
+	var tcoCodigo    = $("#tcoCodigo"), 
+	    conDescricao = $("#conDescricao");	
+
+	tcoCodigo.css("border", "1px solid #cccccc");
+	conDescricao.css("border", "1px solid #cccccc");
+	
+	// Validar campo tipo de contato.
+	if (tcoCodigo.val().trim() == "-1") {
+		tcoCodigo.css("border", "1px solid #ff4500");
+		isValidos = true;
+	}
+	
+	// Validar campo descrição do contato.
+	if (conDescricao.val().trim() == "") {
+		conDescricao.css("border", "1px solid #ff4500");
+		isValidos = true;
+	}
+	
+	if (isValidos) {
+		return false;		
+	}
+	
+	return true;	
+}
+
+function isCamposFormularioCliente() {
+	var pesNome = $("#pesNome");
+	
+	pesNome.css("border", "1px solid #cccccc");
+	
+	// Validar campo nome do Cliente.
+	if (pesNome.val().trim() == "-1") {
+		pesNome.css("border", "1px solid #ff4500");
+
+		$("#divMensagemErro").css("display", "block");
+		$("#spanMsgError").show().html("O(s) campo(s) em vermelho(s) é obrigatório.");	
+		return false;
+	}
+	
+	return true;	
 }
 

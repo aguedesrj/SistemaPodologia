@@ -22,24 +22,24 @@
 			cache: false,
 			dataType: "json",
 			beforeSend: function(){
-//				$("#loading").css("display", "block");
-//				$("#divMensagemErro").css("display", "none");
-//				$("#divMensagemSucesso").css("display", "none");
+				$("#divCarregando").css("visibility", "visible");
+				$("#divMensagemErro").css("display", "none");
 			},
 			success: function(data, status, request){ 
-//				$("#loading").css("display", "none");
+				$("#divCarregando").css("visibility", "hidden");
 				if (status == "success" && data.mensagemUsuario == null) {
 					// atualiza lista na tabela.
 					atualizaTabelaCliente(data.listaPessoaVO);
 				} else {
-//					$("#divMensagemErro").css("display", "block");
-//					$("#spanMsgError").show().html(data.mensagemUsuario);  					
+					$("#divCarregando").css("visibility", "hidden");
+					$("#divMensagemErro").css("display", "block");
+					$("#spanMsgError").show().html(data.mensagemUsuario); 					
 				}
 			},
 			error: function (request, error) {
-//				$("#loading").css("display", "none");
-//				$("#divMensagemErro").css("display", "block");
-//				$("#spanMsgError").show().html("Sistema indisponível no momento.");  
+				$("#divCarregando").css("visibility", "hidden");
+				$("#divMensagemErro").css("display", "block");
+				$("#spanMsgError").show().html("Sistema indisponível no momento."); 
 			}
 		});			
 	});	    
@@ -90,8 +90,8 @@ function atualizaIncluiTabelaCliente(pessoaVO) {
 	var html = 
 		"<tr><td>" +pessoaVO.pesNome+
 		"</td><td>"+
-		"<span title='Clique aqui para detalhar o Cliente.' class='large glyphicon glyphicon-pencil' onclick='javascript:detalhar("+pessoaVO.pesCodigo+");' style='cursor:pointer;'></span>"+
-		"<span title='Clique aqui para alterar o Cliente.' class='large glyphicon glyphicon-remove-sign' onclick='javascript:alterar("+pessoaVO.pesCodigo+");' style='cursor:pointer; margin-left: 20px;'></span>"+
+		"<span title='Clique aqui para detalhar o Cliente.' class='large glyphicon glyphicon-zoom-in' onclick='javascript:detalhar("+pessoaVO.pesCodigo+");' style='cursor:pointer;'></span>"+
+		"<span title='Clique aqui para alterar o Cliente.' class='large glyphicon glyphicon-cog' onclick='javascript:alterar("+pessoaVO.pesCodigo+");' style='cursor:pointer; margin-left: 20px;'></span>"+
 		"</td></tr>";
 	$(".tbodyTabelaCliente").append(html);	
 }
@@ -127,30 +127,33 @@ function detalhar(pesCodigo) {
 }
 
 function exibirModalDetalhe(clienteVO) {
+	// dados pessoais
 	$("#spanPerNome").html(clienteVO.pessoaVO.pesNome);
 	$("#spanPesDtNascimento").html(clienteVO.pessoaVO.pesDtNascimento);
-	$("#spanPesSexo").html(clienteVO.pessoaVO.pesSexo);
+	$("#spanPesSexo").html(clienteVO.pessoaVO.pesSexoFormat);
 	$("#spanPesCPF").html(clienteVO.pessoaVO.pesCpf);
-	$("#spanCliDataUltimaConsulta").html(clienteVO.cliDataUltimaConsulta);
-	
-//	if (data.produto.fornecedor != undefined) {
-//		$("#spanForNome").html(data.produto.fornecedor.genDescricao);
-//	}	
-//	if (data.produto.categoria != undefined) {
-//		$("#spanCatDescricao").html(data.produto.categoria.genDescricao);
-//	}
-//	$("#spanProQuantidadeMinima").html(data.produto.proQuantidadeMinima);
-//	$("#spanProQuantidadeMaxima").html(data.produto.proQuantidadeMaxima);
-//	$("#spanProObs").html(data.produto.proObs);
-//
-//	
-//	// exibir os valores.
-//	$("#spanValoresProduto").html("");
-//	for (var i = 0; data.produto.listaValoresProduto.length > i; i++) {
-//		$("#spanValoresProduto").append(data.produto.listaValoresProduto[i].vvpValorProduto+"<br>");
-//	}
-	
-    // exibir modal.
+	if (clienteVO.cliUltimoTratamento != null) {
+		$("#spanCliDataUltimaConsulta").html(clienteVO.cliDataUltimaConsulta + " (Tratamento: " + clienteVO.cliUltimoTratamento + ")");
+	} else {
+		$("#spanCliDataUltimaConsulta").html(clienteVO.cliDataUltimaConsulta);
+	}
+	$("#spanPesObs").html(clienteVO.pessoaVO.pesObs);
+	// endereço
+	$("#spanEndLogadouro").html(clienteVO.enderecoVO.endLogadouro);
+	$("#spanEndNumero").html(clienteVO.enderecoVO.endNumero);
+	$("#spanEndBairro").html(clienteVO.enderecoVO.endBairro);
+	$("#spanEndCidade").html(clienteVO.enderecoVO.endCidade);
+	$("#spanEstNome").html(clienteVO.enderecoVO.estadoVO.estNome);
+	$("#spanEndCep").html(clienteVO.enderecoVO.endCep);
+	// contatos
+	atualizaTabelaContato(clienteVO.listaContatos);
+	// paciente
+	$("#spanPacAlergicoQuais").html(clienteVO.pacAlergicoQuais);
+	$("#spanPacCalcadoUtiliza").html(clienteVO.pacCalcadoUtiliza);
+	$("#spanPacNumeroCalcado").html(clienteVO.pacNumeroCalcado);
+	$("#spanPacPeso").html(clienteVO.pacPeso);
+	$("#spanPacAltura").html(clienteVO.pacAltura);
+	// exibir modal.
 	$("#modalDetalhe").modal({ // wire up the actual modal functionality and show the dialog
    		 "backdrop" : "static",
    		 "keyboard" : true,
@@ -158,6 +161,25 @@ function exibirModalDetalhe(clienteVO) {
 	});		
 }
 
+function atualizaTabelaContato(listaContatos) {
+	$(".tbodyTabelaContatos").html("");
+	for (var i = 0; listaContatos.length > i; i++) {
+		atualizaIncluiTabelaContato(listaContatos[i]);
+	}
+}
+
+function atualizaIncluiTabelaContato(contatoVO) {
+	var html = "<tr><td>"+
+		contatoVO.tipoContatoVO.tcoDescricao+
+		"</td><td>"+contatoVO.conDescricao+
+		"</td><td>"+contatoVO.conResponsavel+
+		"</td><tr>";
+	$(".tbodyTabelaContatos").append(html);	
+}
+
 function alterar(pesCodigo) {
-	
+	$("#divCarregando").css("visibility", "visible");
+	$("#pesCodigo").val(pesCodigo);
+	$("#formCliente").attr("action", "InicioAlteracao");
+	$("#formCliente").submit();	
 }

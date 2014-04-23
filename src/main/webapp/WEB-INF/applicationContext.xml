@@ -22,6 +22,7 @@
     	<property name="enderecoDao" ref="enderecoDaoImpl" />
     	<property name="pessoaDao" ref="pessoaDaoImpl" />
     	<property name="pacienteDao" ref="pacienteDaoImpl" />
+    	<property name="consultaDao" ref="consultaDaoImpl" />
     	<property name="sessionFactory" ref="sessionFactory" />  
    	</bean>
    	
@@ -49,6 +50,9 @@
    	<!-- Implementacao da interface PacienteDaoImpl -->  
    	<bean id="pacienteDaoImpl" class="br.com.guedes.sistemaPodologia.dao.PacienteDaoImpl" parent="baseSessionFactory"/>   										
       
+   	<!-- Implementacao da interface ConsultaDaoImpl -->  
+   	<bean id="consultaDaoImpl" class="br.com.guedes.sistemaPodologia.dao.ConsultaDaoImpl" parent="baseSessionFactory"/>    	
+   	
    	<!-- Bean abstrato para evitar repetição de código -->  
    	<bean id="baseSessionFactory" abstract="true">  
       	<property name="sessionFactory" ref="sessionFactory" />  

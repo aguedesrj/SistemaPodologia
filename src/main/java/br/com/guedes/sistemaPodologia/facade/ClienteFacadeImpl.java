@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.guedes.sistemaPodologia.dao.ClienteDao;
+import br.com.guedes.sistemaPodologia.dao.ConsultaDao;
 import br.com.guedes.sistemaPodologia.dao.ContatoDao;
 import br.com.guedes.sistemaPodologia.dao.EnderecoDao;
 import br.com.guedes.sistemaPodologia.dao.PacienteDao;
@@ -42,6 +43,9 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	
 	@Autowired
 	private EnderecoDao enderecoDao;	
+	
+	@Autowired
+	private ConsultaDao consultaDao;
 	
 	@Autowired  
     private SessionFactory sessionFactory;	
@@ -118,12 +122,14 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	 * (non-Javadoc)
 	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#obterPorId(br.com.guedes.sistemaPodologia.model.Pessoa, java.util.List, br.com.guedes.sistemaPodologia.model.Paciente)
 	 */
-	public Pessoa obterPorId(Pessoa pessoa, List<Contato> listaContatos, Paciente paciente) throws IntegrationException {
+	public Pessoa obterPorId(Pessoa pessoa) throws IntegrationException {
 		try {
 			// dados pessoa.
 			pessoa = pessoaDao.obterPorId(pessoa.getPesCodigo());
 			// dados paciente.
 			pessoa.setPaciente(pacienteDao.obterPorIdPessoa(pessoa.getPesCodigo()));
+			// obter dados da última consulta.
+			pessoa.getPaciente().setConsulta(consultaDao.obterUltimaConsulta(pessoa.getPaciente()));
 			return pessoa;
 		} catch (Exception e) {
 			LOGGER.error(e);
@@ -177,5 +183,13 @@ public class ClienteFacadeImpl implements ClienteFacade {
 
 	public void setPacienteDao(PacienteDao pacienteDao) {
 		this.pacienteDao = pacienteDao;
+	}
+
+	public ConsultaDao getConsultaDao() {
+		return consultaDao;
+	}
+
+	public void setConsultaDao(ConsultaDao consultaDao) {
+		this.consultaDao = consultaDao;
 	}
 }

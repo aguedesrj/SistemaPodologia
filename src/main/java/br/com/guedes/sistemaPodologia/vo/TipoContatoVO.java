@@ -18,6 +18,9 @@ public class TipoContatoVO implements Serializable {
 	}
 	
 	public String getTcoDescricao() {
+		if (this.tcoDescricao == null) {
+			return "";
+		}
 		return tcoDescricao;
 	}
 	

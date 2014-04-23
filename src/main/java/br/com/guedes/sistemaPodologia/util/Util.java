@@ -80,6 +80,19 @@ public class Util {
 	}	
 	
 	/**
+	 * 
+	 * @param data
+	 * @param format
+	 * @return
+	 */
+	public static String converterDateParaString(final Date data, final SimpleDateFormat format) {
+		if (data != null) {
+			return format.format(data);
+		}
+		return "";
+	}	
+	
+	/**
 	 * Formatar data no formato "yyyy-MM-dd"
 	 * 
 	 * @param data String

@@ -107,7 +107,27 @@
 					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO,listaPessoaVO
 				</param>            
             </result>		    
-        </action>        
+        </action>
+        
+        <action name="InicioAlteracao" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="iniciarAlteracao">
+            <result name="success" type="tiles">cliente.novo</result>
+            <result name="error" type="tiles">error.tiles</result>
+        </action>
+        
+        <action name="BuscaContatos" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="buscarContatos">
+            <result name="success" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
+				</param>            
+            </result>
+            <result name="error" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
+				</param>            
+            </result>
+        </action>         		
         
     </package>	
 </struts>

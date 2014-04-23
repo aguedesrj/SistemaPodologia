@@ -33,6 +33,16 @@ public class PessoaVO implements Serializable {
 		return pesSexo;
 	}
 	
+	public String getPesSexoFormat() {
+		if (this.pesSexo != null) {
+			if (this.pesSexo.equals("F")) {
+				return "Feminino";
+			}
+			return "Masculino";
+		}
+		return pesSexo;
+	}	
+	
 	public void setPesSexo(String pesSexo) {
 		this.pesSexo = pesSexo;
 	}

@@ -37,6 +37,9 @@ public class ContatoVO implements Serializable {
 	}
 	
 	public String getConResponsavel() {
+		if (this.conResponsavel == null) {
+			return "";
+		}
 		return conResponsavel;
 	}
 	

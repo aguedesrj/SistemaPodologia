@@ -11,6 +11,7 @@ public class ClienteVO implements Serializable {
 	private PessoaVO pessoaVO;
 	private EnderecoVO enderecoVO;
 	private String cliDataUltimaConsulta;
+	private String cliUltimoTratamento;
 	private Integer pacCodigo;
 	private String pacLabora;
 	private String pacAndaDescalco;	
@@ -206,5 +207,13 @@ public class ClienteVO implements Serializable {
 	
 	public void setListaContatos(List<ContatoVO> listaContatos) {
 		this.listaContatos = listaContatos;
+	}
+
+	public String getCliUltimoTratamento() {
+		return cliUltimoTratamento;
+	}
+
+	public void setCliUltimoTratamento(String cliUltimoTratamento) {
+		this.cliUltimoTratamento = cliUltimoTratamento;
 	}
 }

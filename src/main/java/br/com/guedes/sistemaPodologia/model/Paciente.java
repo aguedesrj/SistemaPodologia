@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -80,6 +81,9 @@ public class Paciente implements Serializable {
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="PRO_CODIGO")
 	private Profissao profissao;
+	
+	@Transient
+	private Consulta consulta;
 
 	public Integer getPacCodigo() {
 		return pacCodigo;
@@ -223,5 +227,13 @@ public class Paciente implements Serializable {
 
 	public void setProfissao(Profissao profissao) {
 		this.profissao = profissao;
+	}
+
+	public Consulta getConsulta() {
+		return consulta;
+	}
+
+	public void setConsulta(Consulta consulta) {
+		this.consulta = consulta;
 	}	
 }
