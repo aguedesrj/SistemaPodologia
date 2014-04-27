@@ -71,11 +71,6 @@ public class ClienteAction extends BasicAction {
 		}
 	}
 	
-	public String iniciarPesquisa() {
-		setClienteVO(new ClienteVO());
-		return SUCCESS;
-	}
-	
 	@SuppressWarnings("unchecked")
 	public String salvar() {
 		try {
@@ -174,6 +169,11 @@ public class ClienteAction extends BasicAction {
 			setMensagemUsuario("Erro ao excluir contato.");
 			return ERROR;
 		}		
+	}
+	
+	public String iniciarPesquisa() {
+		setClienteVO(new ClienteVO());
+		return SUCCESS;
 	}
 	
 	public String executarPesquisa() {
@@ -285,6 +285,7 @@ public class ClienteAction extends BasicAction {
 		}
 		pessoa.setPesObs(getClienteVO().getPessoaVO().getPesObs());
 		pessoa.setPesSexo(getClienteVO().getPessoaVO().getPesSexo());
+		pessoa.setPesCPF(getClienteVO().getPessoaVO().getPesCpf());
 		// endereço
 		if (pessoa.getEndereco() == null) {
 			pessoa.setEndereco(new Endereco());
@@ -301,9 +302,8 @@ public class ClienteAction extends BasicAction {
 		}
 		// lista de contatos
 		if (getClienteVO().getListaContatos() != null) {
-			if (pessoa.getListaContato() == null) {
-				pessoa.setListaContato(new HashSet<Contato>());
-			}
+			pessoa.setListaContato(new HashSet<Contato>());
+			// insere novos contatos.
 			for (ContatoVO contatoVO: getClienteVO().getListaContatos()) {
 				Contato contato = new Contato();
 				if (contatoVO.isNovo()) {
@@ -379,6 +379,7 @@ public class ClienteAction extends BasicAction {
 		getClienteVO().getPessoaVO().setPesDtNascimento(Util.converterCalendarParaString(pessoa.getPesDtNascimento(), Util.SIMPLE_DATE_FORMAT_DATA));
 		getClienteVO().getPessoaVO().setPesObs(pessoa.getPesObs());
 		getClienteVO().getPessoaVO().setPesSexo(pessoa.getPesSexo());
+		getClienteVO().getPessoaVO().setPesCpf(pessoa.getPesCPF());
 		if (pessoa.getPaciente().getConsulta() != null) {
 			getClienteVO().setCliDataUltimaConsulta(Util.converterDateParaString(pessoa.getPaciente().getConsulta().getCosDtConsulta(), Util.SIMPLE_DATE_FORMAT_DATA));
 			if (pessoa.getPaciente().getConsulta().getTratamento() != null) {
@@ -394,6 +395,7 @@ public class ClienteAction extends BasicAction {
 		getClienteVO().getEnderecoVO().setEndNumero(pessoa.getEndereco().getEndNumero());
 		if (pessoa.getEndereco().getEstado() != null) {
 			getClienteVO().getEnderecoVO().getEstadoVO().setEstCodigo(pessoa.getEndereco().getEstado().getEstCodigo());
+			getClienteVO().getEnderecoVO().getEstadoVO().setEstNome(pessoa.getEndereco().getEstado().getEstNome());
 		}
 		// lista de contatos
 		getClienteVO().setListaContatos(new ArrayList<ContatoVO>());

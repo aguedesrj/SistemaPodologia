@@ -48,6 +48,9 @@ public class Pessoa implements Serializable {
 	@Column(name="PES_DTCADASTRO")
 	private Calendar pesDtCadastro;
 	
+	@Column(name="PES_CPF")
+	private String pesCPF;
+	
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="END_CODIGO")
 	private Endereco endereco;
@@ -128,5 +131,13 @@ public class Pessoa implements Serializable {
 
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+
+	public String getPesCPF() {
+		return pesCPF;
+	}
+
+	public void setPesCPF(String pesCPF) {
+		this.pesCPF = pesCPF;
 	}
 }

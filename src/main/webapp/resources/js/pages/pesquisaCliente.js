@@ -152,16 +152,44 @@ function exibirModalDetalhe(clienteVO) {
 	// contatos
 	atualizaTabelaContato(clienteVO.listaContatos);
 	// paciente
+	if (clienteVO.pacLabora) {
+		$('#pacLabora').prop('checked', true);
+	}
+	if (clienteVO.pacVisitaPedicuro) {
+		$('#pacVisitaPedicuro').prop('checked', true);
+	}
+	if (clienteVO.pacDiabetes) {
+		$('#pacDiabetes').prop('checked', true);
+	}
+	if (clienteVO.pacAndaDescalco) {
+		$('#pacAndaDescalco').prop('checked', true);
+	}	
+	if (clienteVO.pacUnhaEngravada) {
+		$('#pacUnhaEngravada').prop('checked', true);
+	}
+	if (clienteVO.pacTabagismo) {
+		$('#pacTabagismo').prop('checked', true);
+	}
+	if (clienteVO.pacHipertensao) {
+		$('#pacHipertensao').prop('checked', true);
+	}
+	if (clienteVO.pacCirurgiaPes) {
+		$('#pacCirurgiaPes').prop('checked', true);
+	}
+	if (clienteVO.pacAlergicoMedicamentos) {
+		$('#pacAlergicoMedicamentos').prop('checked', true);
+	}
+	$("#spanPacCirurgiaMotivo").html(clienteVO.pacCirurgiaMotivo);
 	$("#spanPacAlergicoQuais").html(clienteVO.pacAlergicoQuais);
 	$("#spanPacCalcadoUtiliza").html(clienteVO.pacCalcadoUtiliza);
 	$("#spanPacNumeroCalcado").html(clienteVO.pacNumeroCalcado);
 	$("#spanPacPeso").html(clienteVO.pacPeso);
 	$("#spanPacAltura").html(clienteVO.pacAltura);
 	// exibir modal.
-	$("#modalDetalhe").modal({ // wire up the actual modal functionality and show the dialog
+	$("#modalDetalhe").modal({ 
    		 "backdrop" : "static",
    		 "keyboard" : true,
-   		 "show" : true // ensure the modal is shown immediately
+   		 "show" : true
 	});		
 }
 

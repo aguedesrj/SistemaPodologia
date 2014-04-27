@@ -6,7 +6,7 @@
 	<div class="panel-heading">
     	<h3 class="panel-title" style="font-weight: bold;">Cadastro de Cliente</h3>
     </div>
-	<s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-left: 15px; margin-top: 15px;">
+	<s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-left: 20px; margin-top: 15px;">
 		<s:hidden name="clienteVO.pessoaVO.pesCodigo" id="pesCodigo"></s:hidden>
 		<s:hidden name="clienteVO.pacCodigo" id="pacCodigo"></s:hidden>
 		<s:hidden name="clienteVO.enderecoVO.endCodigo" id="endCodigo"></s:hidden>
@@ -34,8 +34,14 @@
 							<div class="col-lg-6">
 								<s:label for="catCodigo" cssClass="control-label">Sexo</s:label>
 								<br>
-								<input type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="F"/>Feminino
-								<input style="margin-left: 20px;" type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="M"/>Masculino
+								<s:if test='clienteVO.pessoaVO.pesSexo == "F"'>
+									<input type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="F" checked="checked"/><span style="margin-left: 5px;">Feminino</span>
+									<input style="margin-left: 20px;" type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="M"/><span style="margin-left: 5px;">Masculino</span>	
+								</s:if>
+								<s:elseif test='clienteVO.pessoaVO.pesSexo == "M"'>
+									<input type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="F"/><span style="margin-left: 5px;">Feminino</span>
+									<input style="margin-left: 20px;" type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="M" checked="checked"/><span style="margin-left: 5px;">Masculino</span>								
+								</s:elseif>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
@@ -93,7 +99,7 @@
 							</div>
 							<div class="col-lg-6">
 								<s:label for="catCodigo" cssClass="control-label">CEP</s:label>
-								<s:textfield placeholder="CEP" name="clienteVO.enderecoVO.endCep" id="endCep" maxlength="12" theme="simple" cssStyle="width: 150px;" cssClass="form-control"/>
+								<s:textfield name="clienteVO.enderecoVO.endCep" id="endCep" maxlength="12" theme="simple" cssStyle="width: 150px;" cssClass="form-control"/>
 							</div>
 						</div>															
 					</div>

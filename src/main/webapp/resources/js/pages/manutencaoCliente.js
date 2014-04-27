@@ -299,8 +299,9 @@ function preparaCamposNovoCliente() {
 	// dados pessoais
 	$("#pesNome").val("");
 	$("#pesDtNascimento").val("");
-	$("#pesSexo").val("false");
+	$('#pesSexo').prop('checked', false);
 	$("#pesCpf").val("");
+	$("#pesObs").val("");
 	$("#cliDataUltimaConsulta").val("Primeira visita.");
 	// endereço
 	$("#endLogadouro").val("");
@@ -310,16 +311,16 @@ function preparaCamposNovoCliente() {
 	$("#estCodigo").val("-1");
 	$("#endCep").val("");
 	// paciente
-	$("#pacLabora").val("N");
-	$("#pacVisitaPedicuro").val("N");
-	$("#pacDiabetes").val("N");
-	$("#pacAndaDescalco").val("N");
-	$("#pacUnhaEngravada").val("N");
-	$("#pacTabagismo").val("N");
-	$("#pacHipertensao").val("N");
-	$("#pacCirurgiaPes").val("N");
+	$('#pacLabora').prop('checked', false);
+	$('#pacVisitaPedicuro').prop('checked', false);
+	$('#pacDiabetes').prop('checked', false);
+	$('#pacAndaDescalco').prop('checked', false);
+	$('#pacUnhaEngravada').prop('checked', false);
+	$('#pacTabagismo').prop('checked', false);
+	$('#pacHipertensao').prop('checked', false);
+	$('#pacCirurgiaPes').prop('checked', false);
+	$('#pacAlergicoMedicamentos').prop('checked', false);
 	$("#pacCirurgiaMotivo").val("");
-	$("#pacAlergicoMedicamentos").val("N");
 	$("#pacAlergicoQuais").val("");
 	$("#pacCalcadoUtiliza").val("");
 	$("#pacNumeroCalcado").val("");

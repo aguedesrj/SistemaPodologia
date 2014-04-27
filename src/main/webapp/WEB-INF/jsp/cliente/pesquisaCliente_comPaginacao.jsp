@@ -1,40 +1,47 @@
 <%@ taglib prefix="s"  uri="/struts-tags" %>
 
+		<link rel="stylesheet" type="text/css" href="../resources/DataTables example_files/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="../resources/DataTables example_files/DT_bootstrap.css">
+
+		<script type="text/javascript" charset="utf-8" language="javascript" src="../resources/DataTables example_files/jquery.dataTables.js"></script>
+		<script type="text/javascript" charset="utf-8" language="javascript" src="../resources/DataTables example_files/DT_bootstrap.js"></script>
+
 <script src="../resources/js/pages/pesquisaCliente.js"></script>
 
+						<script type="text/javascript">
+							$("#divCarregando").css("visibility", "visible");
+						</script>
+
 <div class="container">
-	<div class="panel panel-default">
-    	<div class="panel-heading">
-        	<h3 class="panel-title" style="font-weight: bold;">Pesquisar Clientes</h3>
-        </div>
-	    <s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-left: 15px; margin-top: 15px;">
-	    	<s:hidden name="clienteVO.pessoaVO.pesCodigo" id="pesCodigo"/>
-	    	<div class="row">
-				<div class="col-lg-5">
-					<s:label for="proNome" cssClass="control-label">Nome do Cliente</s:label>
-					<s:textfield name="clienteVO.pessoaVO.pesNome" id="pesNome" maxlength="120" theme="simple" cssClass="form-control" cssStyle="width: 350px;" onkeypress="javascript:onChange();"/>
-				</div>
-			</div>	    	
-		</s:form>
-		<div class="panel-body">
-	    	<button id="btnPesquisar" type="button" class="btn btn-primary">Pesquisar</button>
-	    	<button style="margin-left: 10px;" id="btnNovo" type="button" class="btn btn-primary">Novo Cliente</button>
-		</div>
-	</div>
 	<div class="panel panel-default">
     	<div class="panel-heading">
         	<h3 class="panel-title" style="font-weight: bold;">Lista de Clientes</h3>
         </div>
 		<div class="panel-body">
-			<table id="tabelaCliente" class="ui celled table segment" style="width: 780px; padding-top: 20px;">
-	  			<thead>
-	    			<tr>
-	    				<th width="350px;">Nome</th>
-	    				<th width="50px">Ação</th>
-	  				</tr>
-	  			</thead>
-	  			<tbody class="tbodyTabelaCliente"></tbody>
-			</table>		
+			<div class="container">
+
+				<table class="table table-striped table-bordered dataTable" id="example" aria-describedby="example_info">
+					<thead>
+						<tr role="row">
+							<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 350px;">Nome</th>
+							<th class="sorting" role="columnheader" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 50px;">Ação</th>
+						</tr>
+					</thead>
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+						<s:iterator value="listaPessoaVO" status="stat">
+							<tr>  
+							    <td>  
+							        <s:property value="listaPessoaVO[#stat.index].pesNome"/>  
+							    </td>  
+							    <td>  
+									<span title='Clique aqui para detalhar o Cliente.' class='large glyphicon glyphicon-zoom-in' onclick='javascript:detalhar("<s:property value="listaPessoaVO[#stat.index].pesCodigo"/>");' style='cursor:pointer;'></span>
+									<span title='Clique aqui para alterar o Cliente.' class='large glyphicon glyphicon-cog' onclick='javascript:alterar("<s:property value="listaPessoaVO[#stat.index].pesCodigo"/>");' style='cursor:pointer; margin-left: 20px;'></span>
+							    </td>    
+							</tr>  						
+						</s:iterator>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>   	
 </div>
@@ -49,10 +56,9 @@
 			    	<div class="panel-heading">
 			        	<h3 class="panel-title">Detalhe</h3>
 			        </div>
-			        <s:form namespace="Cliente" id="formModalCliente" name="formModalCliente" theme="simple" cssStyle="margin-left: 20px; margin-top: 15px;">
 					<div class="container">
 						<div id="content">
-							<ul id="tabs" class="nav nav-tabs" data-tabs="tabs" style="width: 800px;">
+							<ul id="tabs" class="nav nav-tabs" data-tabs="tabs" style="width: 800px; margin-left: 15px; margin-top: 15px;">
 								<li class="active"><a href="#DadosPessoais" data-toggle="tab">Dados pessoais</a></li>
 								<li><a href="#Endereco" data-toggle="tab">Endereço</a></li>
 								<li><a href="#Contatos" data-toggle="tab">Contatos</a></li>
@@ -144,7 +150,7 @@
 										<div class="col-lg-3">
 										    <div class="input-group">
 										    	<span class="input-group-addon">
-										    		<input type="checkbox" name="clienteVO.pacLabora" id="pacLabora" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacLabora" id="pacLabora" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Labora</label>
 										    </div>
@@ -152,7 +158,7 @@
 										<div class="col-lg-3">
 											<div class="input-group">
 										    	<span class="input-group-addon">
-										    		<input type="checkbox" name="clienteVO.pacVisitaPedicuro" id="pacVisitaPedicuro" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacVisitaPedicuro" id="pacVisitaPedicuro" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Visita pedicuro</label>
 										    </div>					
@@ -160,7 +166,7 @@
 										<div class="col-lg-3">
 										    <div class="input-group">
 										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacDiabetes" id="pacDiabetes" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacDiabetes" id="pacDiabetes" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Diabético</label>
 										    </div>					
@@ -170,7 +176,7 @@
 										<div class="col-lg-3">
 										    <div class="input-group">
 										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacAndaDescalco" id="pacAndaDescalco" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacAndaDescalco" id="pacAndaDescalco" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Anda descalço</label>
 										    </div>
@@ -178,7 +184,7 @@
 										<div class="col-lg-3">
 										    <div class="input-group">
 										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacUnhaEngravada" id="pacUnhaEngravada" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacUnhaEngravada" id="pacUnhaEngravada" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Unha encravada</label>
 										    </div>						
@@ -186,7 +192,7 @@
 										<div class="col-lg-3">
 										    <div class="input-group">
 										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacTabagismo" id="pacTabagismo" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacTabagismo" id="pacTabagismo" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Tabagismo</label>
 										    </div>						
@@ -196,7 +202,7 @@
 										<div class="col-lg-3">
 										    <div class="input-group">
 										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacHipertensao" id="pacHipertensao" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacHipertensao" id="pacHipertensao" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Hipertensão</label>
 										    </div>						
@@ -204,21 +210,21 @@
 										<div class="col-lg-3">
 										    <div class="input-group">
 										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacCirurgiaPes" id="pacCirurgiaPes" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacCirurgiaPes" id="pacCirurgiaPes" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Cirurgia nos pés</label>
 										    </div>
 										</div>
 										<div class="col-lg-3">
 											<label for="pacCirurgiaMotivo" class="control-label">Motivo da cirurgia</label><br>
-											<span id="spanPacCirurgiaMotivo"></span>
+											<s:textfield placeholder="Motivo da cirurgia" name="clienteVO.pacCirurgiaMotivo" id="pacCirurgiaMotivo" maxlength="255" theme="simple" cssStyle="width: 220px;" cssClass="form-control"/>
 										</div>											
 									</div>
 									<div class="row" style="margin-top: 20px;">
 										<div class="col-lg-3">
 										    <div class="input-group">
 										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacAlergicoMedicamentos" id="pacAlergicoMedicamentos" disabled="disabled"/>
+										        	<s:checkbox name="clienteVO.pacAlergicoMedicamentos" id="pacAlergicoMedicamentos" theme="simple" disabled="disabled"/>
 										      	</span>
 										      	<label class="form-control">Alérgico a medicamentos</label>
 										    </div>
@@ -249,8 +255,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					</s:form>			        
+					</div>			        
 					<div class="panel-body" style="margin-top: 10px;">
 				    	<button id="btnFechar" type="button" class="btn btn-primary">Fechar</button>	    	
 					</div>									        
@@ -259,3 +264,7 @@
 		</div>
 	</div>
 </div>
+
+						<script type="text/javascript">
+						$("#divCarregando").css("visibility", "hidden");
+						</script>	

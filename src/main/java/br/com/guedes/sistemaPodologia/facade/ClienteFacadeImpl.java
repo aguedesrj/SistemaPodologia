@@ -110,7 +110,7 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			sessionFactory.getCurrentSession().flush();
 			// salvar contatos.
 			for (Contato contato: pessoa.getListaContato()) {
-				sessionFactory.getCurrentSession().saveOrUpdate(contato);
+				sessionFactory.getCurrentSession().merge(contato);
 			}
 			sessionFactory.getCurrentSession().flush();
 		} catch (Exception e) {
