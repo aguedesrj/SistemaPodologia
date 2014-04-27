@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <package name="Tratamento" namespace="/Tratamento" extends="default, json-default">
+        
+		<result-types>
+    		<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+    	</result-types>        
+
+		<action name="Pesquisa" class="br.com.guedes.sistemaPodologia.controller.TratamentoAction" method="iniciarPesquisa">
+            <result name="success" type="tiles">tratamento.pesquisa</result>
+        </action>
+        
+        <action name="ExecutaPesquisa" class="br.com.guedes.sistemaPodologia.controller.TratamentoAction" method="executarPesquisa">
+            <result name="success" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+				</param>            
+            </result>
+            <result name="error" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+				</param>            
+            </result>
+        </action>
+        
+        <action name="Detalha" class="br.com.guedes.sistemaPodologia.controller.TratamentoAction" method="detalhar">
+            <result name="success" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaTratamentoVO
+				</param>            
+            </result>
+            <result name="error" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaTratamentoVO
+				</param>            
+            </result>
+        </action>        
+        
+		<action name="Novo" class="br.com.guedes.sistemaPodologia.controller.TratamentoAction" method="iniciarCadastro">
+            <result name="success" type="tiles">tratamento.novo</result>
+        </action>        		
+        
+        <action name="Salva" class="br.com.guedes.sistemaPodologia.controller.TratamentoAction" method="salvar">
+            <result name="success" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaTratamentoVO
+				</param>            
+            </result>
+            <result name="error" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaTratamentoVO
+				</param>            
+            </result>		    
+        </action>
+        
+        <action name="InicioAlteracao" class="br.com.guedes.sistemaPodologia.controller.TratamentoAction" method="iniciarAlteracao">
+            <result name="success" type="tiles">tratamento.novo</result>
+            <result name="error" type="tiles">error.tiles</result>
+        </action>         		
+        
+    </package>	
+</struts>

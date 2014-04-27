@@ -30,7 +30,13 @@
    	<bean id="usuarioFacadeImpl" class="br.com.guedes.sistemaPodologia.facade.UsuarioFacadeImpl">  
     	<property name="usuarioDao" ref="usuarioDaoImpl" />
     	<property name="sessionFactory" ref="sessionFactory" />  
-   	</bean>   				
+   	</bean>   
+   	
+   	<!-- Bean que implementa a classe TratamentoFacadeImpl -->  
+   	<bean id="tratamentoFacadeImpl" class="br.com.guedes.sistemaPodologia.facade.TratamentoFacadeImpl">  
+    	<property name="tratamentoDao" ref="tratamentoDaoImpl" />
+    	<property name="sessionFactory" ref="sessionFactory" />  
+   	</bean>   					
       
    	<!-- Implementacao da interface ClienteDaoImpl -->  
    	<bean id="clienteDaoImpl" class="br.com.guedes.sistemaPodologia.dao.ClienteDaoImpl" parent="baseSessionFactory"/>   
@@ -51,7 +57,10 @@
    	<bean id="pacienteDaoImpl" class="br.com.guedes.sistemaPodologia.dao.PacienteDaoImpl" parent="baseSessionFactory"/>   										
       
    	<!-- Implementacao da interface ConsultaDaoImpl -->  
-   	<bean id="consultaDaoImpl" class="br.com.guedes.sistemaPodologia.dao.ConsultaDaoImpl" parent="baseSessionFactory"/>    	
+   	<bean id="consultaDaoImpl" class="br.com.guedes.sistemaPodologia.dao.ConsultaDaoImpl" parent="baseSessionFactory"/>    
+   	
+   	<!-- Implementacao da interface TratamentoDaoImpl -->  
+   	<bean id="tratamentoDaoImpl" class="br.com.guedes.sistemaPodologia.dao.TratamentoDaoImpl" parent="baseSessionFactory"/>     		
    	
    	<!-- Bean abstrato para evitar repetição de código -->  
    	<bean id="baseSessionFactory" abstract="true">  

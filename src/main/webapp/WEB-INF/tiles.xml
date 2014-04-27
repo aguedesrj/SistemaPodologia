@@ -60,6 +60,14 @@
     </definition>
    	<definition name="cliente.pesquisa" extends="template.index">
         <put-attribute name="conteudo" value="/WEB-INF/jsp/cliente/pesquisaCliente.jsp"/>
-    </definition>   	
+    </definition>   
+    
+    <!-- Tratamento -->
+   	<definition name="tratamento.novo" extends="template.index">
+        <put-attribute name="conteudo" value="/WEB-INF/jsp/tratamento/manutencaoTratamento.jsp"/>
+    </definition>
+   	<definition name="tratamento.pesquisa" extends="template.index">
+        <put-attribute name="conteudo" value="/WEB-INF/jsp/tratamento/pesquisaTratamento.jsp"/>
+    </definition>    		
 
 </tiles-definitions>
