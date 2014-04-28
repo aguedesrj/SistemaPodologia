@@ -34,7 +34,6 @@ public class UsuarioDaoImpl extends HibernateDaoSupport implements UsuarioDao {
 			if(listaUsuarios != null && !listaUsuarios.isEmpty()) {
 				return listaUsuarios.get(0);
 			}
-			
 			throw new BusinessException("Login ou senha inválidos.");
 		} catch (Exception e) {
 			LOGGER.error(e);

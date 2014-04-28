@@ -56,7 +56,7 @@
     	// Validar campos.
         if (isCamposFormularioCliente()) {                
         	$.ajax({
-        		url: 'SistemaComercialGuedes/Produto/Salva',
+        		url: 'SistemaPodologia/Cliente/Salva',
                 data: $('#formCliente').serialize(),
                 type: 'POST',
                 cache: false,

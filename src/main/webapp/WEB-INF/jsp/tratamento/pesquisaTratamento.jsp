@@ -1,39 +1,39 @@
 <%@ taglib prefix="s"  uri="/struts-tags" %>
 
-<script src="../resources/js/pages/pesquisaCliente.js"></script>
+<script src="../resources/js/pages/pesquisaTratamento.js"></script>
 
 <div class="container">
 	<div class="panel panel-default">
     	<div class="panel-heading">
-        	<h3 class="panel-title" style="font-weight: bold;">Pesquisar Clientes</h3>
+        	<h3 class="panel-title" style="font-weight: bold;">Pesquisar Tratamentos</h3>
         </div>
-	    <s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-left: 15px; margin-top: 15px;">
-	    	<s:hidden name="clienteVO.pessoaVO.pesCodigo" id="pesCodigo"/>
+	    <s:form namespace="Tratamento" id="formTratamento" name="formTratamento" theme="simple" cssStyle="margin-left: 15px; margin-top: 15px;">
+	    	<s:hidden name="tratamentoVO.traCodigo" id="traCodigo"/>
 	    	<div class="row">
 				<div class="col-lg-5">
-					<s:label for="proNome" cssClass="control-label">Nome do Cliente</s:label>
-					<s:textfield name="clienteVO.pessoaVO.pesNome" id="pesNome" maxlength="120" theme="simple" cssClass="form-control" cssStyle="width: 350px;" onkeypress="javascript:onChange();"/>
+					<s:label for="traDescricao" cssClass="control-label">Descrição do Tratamento</s:label>
+					<s:textfield name="tratamentoVO.traDescricao" id="traDescricao" maxlength="120" theme="simple" cssClass="form-control" cssStyle="width: 350px;" onkeypress="javascript:onChange();"/>
 				</div>
 			</div>	    	
 		</s:form>
 		<div class="panel-body">
 	    	<button id="btnPesquisar" type="button" class="btn btn-primary">Pesquisar</button>
-	    	<button style="margin-left: 10px;" id="btnNovo" type="button" class="btn btn-primary">Novo Cliente</button>
+	    	<button style="margin-left: 10px;" id="btnNovo" type="button" class="btn btn-primary">Novo Tratamento</button>
 		</div>
 	</div>
 	<div class="panel panel-default">
     	<div class="panel-heading">
-        	<h3 class="panel-title" style="font-weight: bold;">Lista de Clientes</h3>
+        	<h3 class="panel-title" style="font-weight: bold;">Lista de Tratamentos</h3>
         </div>
 		<div class="panel-body">
-			<table id="tabelaCliente" class="ui celled table segment" style="width: 780px; padding-top: 20px;">
+			<table id="tabelaTratamento" class="ui celled table segment" style="width: 780px; padding-top: 20px;">
 	  			<thead>
 	    			<tr>
-	    				<th width="350px;">Nome</th>
+	    				<th width="350px;">Descrição</th>
 	    				<th width="50px">Ação</th>
 	  				</tr>
 	  			</thead>
-	  			<tbody class="tbodyTabelaCliente"></tbody>
+	  			<tbody class="tbodyTabelaTratamento"></tbody>
 			</table>		
 		</div>
 	</div>   	
@@ -41,7 +41,7 @@
 
 <!-- DIV do detalhamento -->
 <div id="modalDetalhe" class="modal fade">
-	<div class="modal-dialog" style="width: 880px;">
+	<div class="modal-dialog" style="width: 550px;">
 		<div class="modal-content">
 			<div class="modal-body">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -49,211 +49,45 @@
 			    	<div class="panel-heading">
 			        	<h3 class="panel-title">Detalhe</h3>
 			        </div>
-			        <s:form namespace="Cliente" id="formModalCliente" name="formModalCliente" theme="simple" cssStyle="margin-left: 20px; margin-top: 15px;">
-					<div class="container">
-						<div id="content">
-							<ul id="tabs" class="nav nav-tabs" data-tabs="tabs" style="width: 800px;">
-								<li class="active"><a href="#DadosPessoais" data-toggle="tab">Dados pessoais</a></li>
-								<li><a href="#Endereco" data-toggle="tab">Endereço</a></li>
-								<li><a href="#Contatos" data-toggle="tab">Contatos</a></li>
-								<li><a href="#Informacoes" data-toggle="tab">Informações</a></li>
-							</ul>
-							<div id="my-tab-content" class="tab-content">
-								<div class="tab-pane active" id="DadosPessoais">
-									<div class="row" style="margin-top: 20px;">
-										<div class="col-lg-6">
-											<label for="spanPerNome" class="control-label">Nome</label><br>
-											<span id="spanPerNome"></span>								
-										</div>
-									</div>
-									<div class="row" style="margin-top: 10px;">
-										<div class="col-lg-6">
-											<label for="spanPesDtNascimento" class="control-label">Data de nascimento</label><br>
-											<span id="spanPesDtNascimento"></span>							
-										</div>
-										<div class="col-lg-6">
-											<label for="spanPesSexo" class="control-label">Sexo</label><br>
-											<span id="spanPesSexo"></span>	
-										</div>
-									</div>
-									<div class="row" style="margin-top: 10px;">
-										<div class="col-lg-6">
-											<label for="spanPesCPF" class="control-label">CPF</label><br>
-											<span id="spanPesCPF"></span>
-										</div>
-										<div class="col-lg-6">
-											<label for="spanCliDataUltimaConsulta" class="control-label">Data última consulta</label><br>
-											<span id="spanCliDataUltimaConsulta"></span>
-										</div>
-									</div>
-									<div class="row" style="margin-top: 10px;">
-										<div class="col-lg-6">
-											<label for="spanPesObs" class="control-label">Observação</label><br>
-											<span id="spanPesObs"></span>							
-										</div>
-									</div>															
-								</div>
-								<div class="tab-pane" id="Endereco">
-									<div class="row" style="margin-top: 20px;">
-										<div class="col-lg-6">
-											<label for="spanEndLogadouro" class="control-label">Logradouro</label><br>
-											<span id="spanEndLogadouro"></span>							
-										</div>
-										<div class="col-lg-6">
-											<label for="spanEndNumero" class="control-label">Número</label><br>
-											<span id="spanEndNumero"></span>							
-										</div>
-									</div>
-									<div class="row" style="margin-top: 10px;">
-										<div class="col-lg-6">
-											<label for="spanEndBairro" class="control-label">Bairro</label><br>
-											<span id="spanEndBairro"></span>							
-										</div>
-										<div class="col-lg-6">
-											<label for="spanEndCidade" class="control-label">Cidade</label><br>
-											<span id="spanEndCidade"></span>							
-										</div>
-									</div>
-									<div class="row" style="margin-top: 10px;">
-										<div class="col-lg-6">
-											<label for="spanEstNome" class="control-label">Estado</label><br>
-											<span id="spanEstNome"></span>
-										</div>
-										<div class="col-lg-6">
-											<label for="spanEndCep" class="control-label">CEP</label><br>
-											<span id="spanEndCep"></span>							
-										</div>
-									</div>															
-								</div>
-								<div class="tab-pane" id="Contatos">
-									<div class="row" style="margin-top: 20px; ">
-										<table id="tabelaContatos" class="ui celled table segment" style="width: 780px; padding-top: 20px; margin-left: 20px;">
-								  			<thead>
-								    			<tr>
-								    				<th width="150px">Tipo Contato</th>
-								    				<th width="200px">Descrição</th>
-								    				<th width="200px">Responsável</th>
-								  				</tr>
-								  			</thead>
-								  			<tbody class="tbodyTabelaContatos"></tbody>
-										</table>
-									</div>
-								</div>
-								<div class="tab-pane" id="Informacoes">
-									<div class="row" style="margin-top: 20px;">
-										<div class="col-lg-3">
-										    <div class="input-group">
-										    	<span class="input-group-addon">
-										    		<input type="checkbox" name="clienteVO.pacLabora" id="pacLabora" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Labora</label>
-										    </div>
-										</div>
-										<div class="col-lg-3">
-											<div class="input-group">
-										    	<span class="input-group-addon">
-										    		<input type="checkbox" name="clienteVO.pacVisitaPedicuro" id="pacVisitaPedicuro" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Visita pedicuro</label>
-										    </div>					
-										</div>
-										<div class="col-lg-3">
-										    <div class="input-group">
-										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacDiabetes" id="pacDiabetes" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Diabético</label>
-										    </div>					
-										</div>
-									</div>
-									<div class="row" style="margin-top: 20px;">
-										<div class="col-lg-3">
-										    <div class="input-group">
-										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacAndaDescalco" id="pacAndaDescalco" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Anda descalço</label>
-										    </div>
-										</div>
-										<div class="col-lg-3">
-										    <div class="input-group">
-										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacUnhaEngravada" id="pacUnhaEngravada" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Unha encravada</label>
-										    </div>						
-										</div>
-										<div class="col-lg-3">
-										    <div class="input-group">
-										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacTabagismo" id="pacTabagismo" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Tabagismo</label>
-										    </div>						
-										</div>						
-									</div>
-									<div class="row" style="margin-top: 20px;">
-										<div class="col-lg-3">
-										    <div class="input-group">
-										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacHipertensao" id="pacHipertensao" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Hipertensão</label>
-										    </div>						
-										</div>
-										<div class="col-lg-3">
-										    <div class="input-group">
-										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacCirurgiaPes" id="pacCirurgiaPes" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Cirurgia nos pés</label>
-										    </div>
-										</div>
-										<div class="col-lg-3">
-											<label for="pacCirurgiaMotivo" class="control-label">Motivo da cirurgia</label><br>
-											<span id="spanPacCirurgiaMotivo"></span>
-										</div>											
-									</div>
-									<div class="row" style="margin-top: 20px;">
-										<div class="col-lg-3">
-										    <div class="input-group">
-										      	<span class="input-group-addon">
-										      		<input type="checkbox" name="clienteVO.pacAlergicoMedicamentos" id="pacAlergicoMedicamentos" disabled="disabled"/>
-										      	</span>
-										      	<label class="form-control">Alérgico a medicamentos</label>
-										    </div>
-										</div>
-										<div class="col-lg-3">
-											<label for="pacAlergicoQuais" class="control-label">Quais medicamentos</label><br>
-											<span id="spanPacAlergicoQuais"></span>	
-										</div>
-										<div class="col-lg-3">
-											<label for="pacCalcadoUtiliza" class="control-label">Calçado que utiliza</label><br>
-											<span id="spanPacCalcadoUtiliza"></span>	
-										</div>												
-									</div>	
-									<div class="row" style="margin-top: 20px;">
-										<div class="col-lg-3">
-											<label for="pacNumeroCalcado" class="control-label">Número do calçado</label><br>
-											<span id="spanPacNumeroCalcado"></span>	
-										</div>
-										<div class="col-lg-3">
-											<label for="spanPacPeso" class="control-label">Peso</label><br>
-											<span id="spanPacPeso"></span>
-										</div>	
-										<div class="col-lg-3">
-											<label for="pacAltura" class="control-label">Altura</label><br>
-											<span id="spanPacAltura"></span>
-										</div>																							
-									</div>																			
+			        <s:form namespace="Tratamento" id="formModalTratamento" name="formModalTratamento" theme="simple">
+			        	<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-6">
+									<label for="spanTraDescricao" class="control-label">Descrição</label><br>
+									<span id="spanTraDescricao"></span>								
 								</div>
 							</div>
-						</div>
-					</div>
-					</s:form>			        
-					<div class="panel-body" style="margin-top: 10px;">
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-lg-6">
+									<label for="spanTraTempo" class="control-label">Tempo (em minutos)</label><br>
+									<span id="spanTraTempo"></span>							
+								</div>
+								<div class="col-lg-6">
+									<label for="spanTraPreco" class="control-label">Preço</label><br>
+									<span id="spanTraPreco"></span>	
+								</div>								
+							</div>	
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-lg-6" style="width: 500px;">
+								    <div class="input-group">
+								      	<span class="input-group-addon">
+								      		<input type="checkbox" id="traFlag" disabled="disabled"/>
+								      	</span>
+								      	<label class="form-control">Tratamento possa ser feito 2 vezes no mesmo horário.</label>
+								    </div>																
+								</div>								
+							</div>
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-lg-6" style="width: 500px;">
+									<label for="spanTraObs" class="control-label">Observação</label><br>
+									<span id="spanTraObs"></span>							
+								</div>								
+							</div>
+						</div>							        
+			        </s:form>
+					<div class="panel-body">
 				    	<button id="btnFechar" type="button" class="btn btn-primary">Fechar</button>	    	
-					</div>									        
+					</div>								        
 			    </div>				
 			</div>
 		</div>

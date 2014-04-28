@@ -64,7 +64,7 @@ public class TratamentoFacadeImpl implements TratamentoFacade {
 			return tratamentoDao.pesquisarPorCriterios(tratamento).get(0);
 		} catch (Exception e) {
 			LOGGER.error(e);
-			throw new IntegrationException("Não foi possível obter dados do Cliente.");
+			throw new IntegrationException("Não foi possível obter dados do Tratamento.");
 		}
 	}
 

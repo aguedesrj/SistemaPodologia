@@ -43,8 +43,8 @@
 	            	<h3 class="panel-title" style="font-weight: bold;">Efetuar Login</h3>
 	            </div>
 	            <div class="panel-body">
-					<s:textfield name="usuario.usuLogin" id="usuLogin" size="10" maxlength="10" theme="simple" required="true" placeholder="Login" cssClass="form-control"></s:textfield>
-					<s:password cssStyle="margin-top: 10px;" name="usuario.usuSenha" id="usuSenha" size="15" maxlength="10" theme="simple" required="true" placeholder="Senha" cssClass="form-control"></s:password>	            
+					<s:textfield name="usuarioVO.usuLogin" id="usuLogin" size="10" maxlength="10" theme="simple" required="true" placeholder="Login" cssClass="form-control"></s:textfield>
+					<s:password cssStyle="margin-top: 10px;" name="usuarioVO.usuSenha" id="usuSenha" size="15" maxlength="10" theme="simple" required="true" placeholder="Senha" cssClass="form-control"></s:password>	            
 	            	<div style="margin-top: 15px;">
 	              		<button id="btnEntrar" type="button" class="btn btn-primary">Entrar</button>
 	              	</div>

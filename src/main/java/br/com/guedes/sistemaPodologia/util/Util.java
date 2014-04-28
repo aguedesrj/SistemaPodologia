@@ -135,7 +135,10 @@ public class Util {
 	 * @return String
 	 */
 	public static String converterBigDecimalParaStringDecimal(BigDecimal valor) {
-		DecimalFormat decimalFormat = new DecimalFormat("R$ #,##0.00"); 
-		return decimalFormat.format(valor);
+		if (valor != null) {
+			DecimalFormat decimalFormat = new DecimalFormat("R$ #,##0.00"); 
+			return decimalFormat.format(valor);
+		}
+		return "R$ 0,00";
 	}	
 }

@@ -27,7 +27,8 @@
 	<script src="../resources/js/bootstrap-combobox.js"></script>
 	<script src="../resources/js/bootstrap-dialog.min.js"></script>
 	<script src="../resources/js/jquery.alphanumeric.js"></script>
-	<script src="../resources/js/jquery.maskedinput.js"></script>	
+	<script src="../resources/js/jquery.maskedinput.js"></script>
+	<script src="../resources/js/jquery.maskMoney.js"></script>	
 </head>
 <body>
 	<div id="page-wrap">

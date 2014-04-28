@@ -1,7 +1,6 @@
 package br.com.guedes.sistemaPodologia.vo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class TratamentoVO implements Serializable {
 
@@ -10,9 +9,9 @@ public class TratamentoVO implements Serializable {
 	private Integer traCodigo;
 	private String traDescricao;
 	private Integer traTempo;
-	private BigDecimal traPreco;
+	private String traPreco;
 	private String traObs;
-	private String traFlag;
+	private boolean traFlag;
 	
 	public Integer getTraCodigo() {
 		return traCodigo;
@@ -38,11 +37,11 @@ public class TratamentoVO implements Serializable {
 		this.traTempo = traTempo;
 	}
 	
-	public BigDecimal getTraPreco() {
+	public String getTraPreco() {
 		return traPreco;
 	}
 	
-	public void setTraPreco(BigDecimal traPreco) {
+	public void setTraPreco(String traPreco) {
 		this.traPreco = traPreco;
 	}
 	
@@ -53,12 +52,12 @@ public class TratamentoVO implements Serializable {
 	public void setTraObs(String traObs) {
 		this.traObs = traObs;
 	}
-	
-	public String getTraFlag() {
+
+	public boolean isTraFlag() {
 		return traFlag;
 	}
-	
-	public void setTraFlag(String traFlag) {
+
+	public void setTraFlag(boolean traFlag) {
 		this.traFlag = traFlag;
 	}
 }

@@ -26,7 +26,7 @@ public class UsuarioFacadeImpl implements UsuarioFacade {
 
 	public Usuario efetuarLogin(final String login, final String senha) throws BusinessException, IntegrationException {
 		LOGGER.info("Efetuar login.");
-		return null;
+		return usuarioDao.efetuarLogin(login, senha);
 	}
 
 	public UsuarioDao getUsuarioDao() {

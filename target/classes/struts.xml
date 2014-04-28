@@ -12,19 +12,17 @@
 
     <package name="default" namespace="/" extends="struts-default">
         
-        <!--
 		<interceptors>  
 			<interceptor 
-			    name="interceptorOPermission" class="br.com.guedes.sistemacomercial.controller.SistemaComercialGuedesInterceptor">
+			    name="interceptorOPermission" class="br.com.guedes.sistemaPodologia.util.SistemaPodologiaInterceptor">
 			</interceptor>  
-			<interceptor-stack name="stackSistemaComercial">  
+			<interceptor-stack name="stackSistemaPodologia">  
 				<interceptor-ref name="interceptorOPermission" />
 				<interceptor-ref name="defaultStack" />  
 			</interceptor-stack>   
 		</interceptors>
 		
-		<default-interceptor-ref name="stackSistemaComercial"/>
-		-->
+		<default-interceptor-ref name="stackSistemaPodologia"/>
 		
         <default-action-ref name="index" />
 
@@ -40,5 +38,6 @@
     
     <include file="struts-usuario.xml"/>
     <include file="struts-cliente.xml"/>
+    <include file="struts-tratamento.xml"/>
 
 </struts>

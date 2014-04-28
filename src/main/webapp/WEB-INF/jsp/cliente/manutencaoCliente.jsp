@@ -56,7 +56,7 @@
 						</div>
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
-								<s:label for="proNome" cssClass="control-label">Observação</s:label>
+								<s:label for="pesObs" cssClass="control-label">Observação</s:label>
 								<s:textarea name="clienteVO.pessoaVO.pesObs" id="pesObs" cols="90" theme="simple" cssClass="form-control"></s:textarea>
 							</div>
 						</div>															
