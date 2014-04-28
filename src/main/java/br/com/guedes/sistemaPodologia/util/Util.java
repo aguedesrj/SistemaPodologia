@@ -85,12 +85,19 @@ public class Util {
 	 * @param format
 	 * @return
 	 */
-	public static String converterDateParaString(final Date data, final SimpleDateFormat format) {
+	public static String converterDateParaString(final Date data) {
 		if (data != null) {
-			return format.format(data);
+			return SIMPLE_DATE_FORMAT_DATA.format(data);
 		}
 		return "";
 	}	
+	
+	public static java.sql.Date converterStringParaDate(final String data) throws Exception {
+		if (data != null) {
+			return (java.sql.Date) SIMPLE_DATE_FORMAT_DATA.parse(data);
+		}
+		return null;
+	}
 	
 	/**
 	 * Formatar data no formato "yyyy-MM-dd"

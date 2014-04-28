@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.guedes.sistemaPodologia.dao.ClienteDao;
 import br.com.guedes.sistemaPodologia.dao.ConsultaDao;
 import br.com.guedes.sistemaPodologia.dao.ContatoDao;
 import br.com.guedes.sistemaPodologia.dao.EnderecoDao;
@@ -27,9 +26,6 @@ import br.com.guedes.sistemaPodologia.util.IntegrationException;
 public class ClienteFacadeImpl implements ClienteFacade {
 	
 	private static final Logger LOGGER = Logger.getLogger(ClienteFacadeImpl.class);
-	
-	@Autowired
-	private ClienteDao clienteDao;
 	
 	@Autowired
 	private PacienteDao pacienteDao;	
@@ -72,7 +68,7 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#pesquisarPorCriterios(br.com.guedes.sistemaPodologia.model.Pessoa)
 	 */
 	public List<Pessoa> pesquisarPorCriterios(final Pessoa pessoa) throws IntegrationException {
-		return clienteDao.pesquisarPorCriterios(pessoa);
+		return pessoaDao.pesquisarPorCriterios(pessoa);
 	}
 	
 	/*
@@ -82,18 +78,18 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = IntegrationException.class)
 	public void salvar(final Pessoa pessoa) throws IntegrationException, BusinessException {
 		try {
-			// verifica se jÃ¡ existe algum Cliente com o mesmo nome.
+			// verifica se jï¿½ï¿½ existe algum Cliente com o mesmo nome.
 			Pessoa pessoaCond = new Pessoa();
 			pessoaCond.setPesNome(pessoa.getPesNome());
-			// verifica se estÃ¡ sendo alterado.
+			// verifica se estï¿½ï¿½ sendo alterado.
 			if (pessoa.getPesCodigo() == null || pessoa.getPesCodigo() == 0) {
-				List<Pessoa> lista = clienteDao.pesquisarPorCriterios(pessoaCond);
+				List<Pessoa> lista = pessoaDao.pesquisarPorCriterios(pessoaCond);
 				if (lista != null && !lista.isEmpty()) {
-					throw new BusinessException("Cliente já está cadastrado.");
+					throw new BusinessException("Cliente jï¿½ estï¿½ cadastrado.");
 				}
 			}
 			
-			// salvar endereço.
+			// salvar endereï¿½o.
 			sessionFactory.getCurrentSession().saveOrUpdate(pessoa.getEndereco());
 			sessionFactory.getCurrentSession().flush();
 			// salvar pessoa.
@@ -118,7 +114,7 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			if (e instanceof BusinessException) {
 				throw new BusinessException(e.getMessage());
 			} else {
-				throw new IntegrationException("Não foi possível salvar o Cliente.");
+				throw new IntegrationException("Nï¿½o foi possï¿½vel salvar o Cliente.");
 			}
 		}
 	}
@@ -133,21 +129,13 @@ public class ClienteFacadeImpl implements ClienteFacade {
 			pessoa = pessoaDao.obterPorId(pessoa.getPesCodigo());
 			// dados paciente.
 			pessoa.setPaciente(pacienteDao.obterPorIdPessoa(pessoa.getPesCodigo()));
-			// obter dados da última consulta.
+			// obter dados da ï¿½ltima consulta.
 			pessoa.getPaciente().setConsulta(consultaDao.obterUltimaConsulta(pessoa.getPaciente()));
 			return pessoa;
 		} catch (Exception e) {
 			LOGGER.error(e);
-			throw new IntegrationException("Não foi possível obter dados do Cliente.");
+			throw new IntegrationException("Nï¿½o foi possï¿½vel obter dados do Cliente.");
 		}
-	}
-
-	public ClienteDao getClienteDao() {
-		return clienteDao;
-	}
-
-	public void setClienteDao(ClienteDao clienteDao) {
-		this.clienteDao = clienteDao;
 	}
 
 	public ContatoDao getContatoDao() {
