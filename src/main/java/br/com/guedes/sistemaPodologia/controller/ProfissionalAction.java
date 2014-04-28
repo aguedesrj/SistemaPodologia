@@ -176,12 +176,9 @@ public class ProfissionalAction extends BasicAction {
 	
 	public String executarPesquisa() {
     	try {
-    		Profissional profissionalParam = new Profissional();
-    		profissionalParam.setPessoa(new Pessoa()); 
-    		profissionalParam.getPessoa().setPesNome(getProfissionalVO().getPessoaVO().getPesNome());
-    		List<Profissional> listaProfissional = profissionalFacade.pesquisarPorCriterios(profissionalParam);
+    		List<Profissional> listaProfissional = profissionalFacade.pesquisarPorCriterios(new Profissional());
     		if (listaProfissional == null || listaProfissional.isEmpty()) {
-    			setMensagemUsuario("Profissional não encontrado.");
+    			setMensagemUsuario("Nenhum Profissional encontrado.");
     			return ERROR;
     		} else {
     			setListaProfissionalVO(new ArrayList<ProfissionalVO>());

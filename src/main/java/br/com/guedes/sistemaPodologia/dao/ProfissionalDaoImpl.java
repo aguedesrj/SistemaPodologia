@@ -28,12 +28,8 @@ public class ProfissionalDaoImpl extends HibernateDaoSupport implements Profissi
 		try {
 			StringBuilder hql = new StringBuilder();
 			hql.append("from Profissional ");
-			hql.append(" where prfCodigo > 0 ");
-			if (profissional.getPessoa() != null && profissional.getPessoa().getPesNome() != null) {
-				hql.append(" and upper(pessoa.pesNome) like upper('%" + profissional.getPessoa().getPesNome().trim() + "%') ");
-			}
-			if (profissional.getPrfCodigo() != null && profissional.getPrfCodigo() > 0) {
-				hql.append("and prfCodigo = " + profissional.getPrfCodigo());
+			if (profissional != null && profissional.getPrfCodigo() != null && profissional.getPrfCodigo() > 0) {
+				hql.append("where prfCodigo = " + profissional.getPrfCodigo());
 			}
 			return (ArrayList<Profissional>) getHibernateTemplate().find(hql.toString());
 		} catch (Exception e) {
