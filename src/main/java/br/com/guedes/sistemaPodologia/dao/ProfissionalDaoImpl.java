@@ -27,9 +27,12 @@ public class ProfissionalDaoImpl extends HibernateDaoSupport implements Profissi
 	public List<Profissional> pesquisarPorCriterios(final Profissional profissional) throws IntegrationException {
 		try {
 			StringBuilder hql = new StringBuilder();
-			hql.append("from Profissional ");
+			hql.append("from Profissional where prfCodigo > 0 ");
 			if (profissional != null && profissional.getPrfCodigo() != null && profissional.getPrfCodigo() > 0) {
-				hql.append("where prfCodigo = " + profissional.getPrfCodigo());
+				hql.append("and prfCodigo = " + profissional.getPrfCodigo());
+			}
+			if (profissional.getPessoa() != null && profissional.getPessoa().getPesNome() != null) {
+				hql.append("and upper(pessoa.pes_nome) like upper('%" + profissional.getPessoa().getPesNome().trim() + "%') ");
 			}
 			return (ArrayList<Profissional>) getHibernateTemplate().find(hql.toString());
 		} catch (Exception e) {

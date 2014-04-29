@@ -1,12 +1,13 @@
 package br.com.guedes.sistemaPodologia.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfissionalVO implements Serializable {
 
+	private static final long serialVersionUID = 2160665437884137506L;
+	
 	private Integer prfCodigo;
 	private String prfDtFormacao;
 	private String prfDescricaoFormacao;

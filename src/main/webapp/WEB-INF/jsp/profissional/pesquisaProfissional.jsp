@@ -8,15 +8,18 @@
         	<h3 class="panel-title" style="font-weight: bold;">Lista de Profissionais</h3>
         </div>
 		<div class="panel-body">
-			<table id="tabelaProfissional" class="ui celled table segment" style="width: 780px; padding-top: 20px;">
-	  			<thead>
-	    			<tr>
-	    				<th width="350px;">Nome</th>
-	    				<th width="50px">Ação</th>
-	  				</tr>
-	  			</thead>
-	  			<tbody class="tbodyTabelaProfissional"></tbody>
-			</table>		
+			<s:form namespace="Profissional" id="formProfissional" name="formProfissional" theme="simple">
+				<s:hidden name="profissionalVO.prfCodigo" id="prfCodigo"></s:hidden>
+				<table id="tabelaProfissional" class="ui celled table segment" style="width: 780px; padding-top: 20px;">
+		  			<thead>
+		    			<tr>
+		    				<th width="350px;">Nome</th>
+		    				<th width="50px">Ação</th>
+		  				</tr>
+		  			</thead>
+		  			<tbody class="tbodyTabelaProfissional"></tbody>
+				</table>
+			</s:form>		
 		</div>
 	</div>   	
 </div>
@@ -31,7 +34,7 @@
 			    	<div class="panel-heading">
 			        	<h3 class="panel-title">Detalhe</h3>
 			        </div>
-			        <s:form namespace="Profissional" id="formModalProfissional" name="formModalProfissional" theme="simple" cssStyle="margin-left: 20px; margin-top: 15px;">
+			        <s:form namespace="Profissional" id="formModalProfissional" name="formModalProfissional" theme="simple" cssStyle="margin-left: 10px; margin-top: 15px;">
 					<div class="container">
 						<div id="content">
 							<ul id="tabs" class="nav nav-tabs" data-tabs="tabs" style="width: 800px;">
@@ -39,9 +42,9 @@
 								<li><a href="#Endereco" data-toggle="tab">Endereço</a></li>
 								<li><a href="#Contatos" data-toggle="tab">Contatos</a></li>
 							</ul>
-							<div id="my-tab-content" class="tab-content">
+							<div id="my-tab-content" class="tab-content" style="margin-left: 10px;">
 								<div class="tab-pane active" id="DadosPessoais">
-									<div class="row" style="margin-top: 20px;">
+									<div class="row" style="margin-top: 10px;">
 										<div class="col-lg-6">
 											<label for="spanPerNome" class="control-label">Nome</label><br>
 											<span id="spanPerNome"></span>								
@@ -81,7 +84,7 @@
 									</div>															
 								</div>
 								<div class="tab-pane" id="Endereco">
-									<div class="row" style="margin-top: 20px;">
+									<div class="row" style="margin-top: 10px;">
 										<div class="col-lg-6">
 											<label for="spanEndLogadouro" class="control-label">Logradouro</label><br>
 											<span id="spanEndLogadouro"></span>							
@@ -113,8 +116,8 @@
 									</div>															
 								</div>
 								<div class="tab-pane" id="Contatos">
-									<div class="row" style="margin-top: 20px; ">
-										<table id="tabelaContatos" class="ui celled table segment" style="width: 780px; padding-top: 20px; margin-left: 20px;">
+									<div class="row" style="margin-top: 10px; ">
+										<table id="tabelaContatos" class="ui celled table segment" style="width: 780px; padding-top: 30px; margin-left: 15px;">
 								  			<thead>
 								    			<tr>
 								    				<th width="150px">Tipo Contato</th>

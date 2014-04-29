@@ -381,7 +381,7 @@ public class ClienteAction extends BasicAction {
 		getClienteVO().getPessoaVO().setPesSexo(pessoa.getPesSexo());
 		getClienteVO().getPessoaVO().setPesCpf(pessoa.getPesCPF());
 		if (pessoa.getPaciente().getConsulta() != null) {
-			getClienteVO().setCliDataUltimaConsulta(Util.converterDateParaString(pessoa.getPaciente().getConsulta().getCosDtConsulta(), Util.SIMPLE_DATE_FORMAT_DATA));
+			getClienteVO().setCliDataUltimaConsulta(Util.converterDateParaString(pessoa.getPaciente().getConsulta().getCosDtConsulta()));
 			if (pessoa.getPaciente().getConsulta().getTratamento() != null) {
 				getClienteVO().setCliUltimoTratamento(pessoa.getPaciente().getConsulta().getTratamento().getTraDescricao());
 			}

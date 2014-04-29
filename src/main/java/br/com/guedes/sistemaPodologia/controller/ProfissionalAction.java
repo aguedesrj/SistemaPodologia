@@ -29,6 +29,7 @@ import br.com.guedes.sistemaPodologia.vo.TipoContatoVO;
 @Scope("request")
 public class ProfissionalAction extends BasicAction {
 
+	private static final long serialVersionUID = -2569049796065036014L;
 	private static final Logger LOGGER = Logger.getLogger(ProfissionalAction.class);
 	private static final String SESSION_LISTA_CONTATOS = "SESSION_LISTA_CONTATOS";
 
@@ -201,8 +202,7 @@ public class ProfissionalAction extends BasicAction {
 	public String detalhar() {
     	try {
     		Profissional profissional = new Profissional();
-    		profissional.setPessoa(new Pessoa());
-    		profissional.getPessoa().setPesCodigo(getProfissionalVO().getPessoaVO().getPesCodigo());
+    		profissional.setPrfCodigo(getProfissionalVO().getPrfCodigo());
     		profissional = profissionalFacade.obterPorId(profissional);
     		if (profissional.getPessoa().getPesNome() == null) {
     			setMensagemUsuario("Profissional não encontrado.");
@@ -278,7 +278,7 @@ public class ProfissionalAction extends BasicAction {
 		// profissional
 		profissional.setPrfDescricaoFormacao(getProfissionalVO().getPrfDescricaoFormacao());
 		try {
-			profissional.setPrfDtFormacao(Util.converterStringParaDate(getProfissionalVO().getPrfDescricaoFormacao()));
+			profissional.setPrfDtFormacao(Util.converterStringParaDate(getProfissionalVO().getPrfDtFormacao()));
 		} catch (Exception e) {
 			LOGGER.fatal("Data de formação inválida.", e);
 			throw new BusinessException("Data de formação inválida.");

@@ -22,8 +22,12 @@
 						<div class="row" style="margin-top: 20px;">
 							<div class="col-lg-6">
 								<s:label for="pesNome" cssClass="control-label">Nome</s:label>
-								<s:textfield name="profissionalVO.pessoaVO.pesNome" id="pesNome" maxlength="80" theme="simple" required="true" cssClass="form-control" cssStyle="width: 500px;"/>
+								<s:textfield name="profissionalVO.pessoaVO.pesNome" id="pesNome" maxlength="80" theme="simple" required="true" cssClass="form-control" cssStyle="width: 400px;"/>
 							</div>
+							<div class="col-lg-6">
+								<s:label for="forCodigo" cssClass="control-label">CPF</s:label>
+								<s:textfield name="profissionalVO.pessoaVO.pesCpf" id="pesCpf" maxlength="14" theme="simple" cssClass="form-control" cssStyle="width: 200px;"/>
+							</div>							
 						</div>
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-lg-6">
@@ -32,7 +36,7 @@
 							</div>
 							<div class="col-lg-6">
 								<s:label for="prfDescricaoFormacao" cssClass="control-label">Formação</s:label><br>
-								<s:textfield name="profissionalVO.prfDescricaoFormacao" id="prfDescricaoFormacao" maxlength="255" theme="simple" cssClass="form-control" cssStyle="width: 200px;"/>
+								<s:textfield name="profissionalVO.prfDescricaoFormacao" id="prfDescricaoFormacao" maxlength="255" theme="simple" cssClass="form-control" cssStyle="width: 350px;"/>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
@@ -51,12 +55,6 @@
 									<input type="radio" name="profissionalVO.pessoaVO.pesSexo" id="pesSexo" value="F"/><span style="margin-left: 5px;">Feminino</span>
 									<input style="margin-left: 20px;" type="radio" name="profissionalVO.pessoaVO.pesSexo" id="pesSexo" value="M" checked="checked"/><span style="margin-left: 5px;">Masculino</span>								
 								</s:elseif>
-							</div>
-						</div>
-						<div class="row" style="margin-top: 10px;">
-							<div class="col-lg-6">
-								<s:label for="forCodigo" cssClass="control-label">CPF</s:label>
-								<s:textfield name="profissionalVO.pessoaVO.pesCpf" id="pesCpf" maxlength="14" theme="simple" cssClass="form-control" cssStyle="width: 200px;"/>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">

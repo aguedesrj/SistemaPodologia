@@ -92,9 +92,9 @@ public class Util {
 		return "";
 	}	
 	
-	public static java.sql.Date converterStringParaDate(final String data) throws Exception {
-		if (data != null) {
-			return (java.sql.Date) SIMPLE_DATE_FORMAT_DATA.parse(data);
+	public static Date converterStringParaDate(final String data) throws Exception {
+		if (data != null && !data.equals("")) {
+			return (Date) SIMPLE_DATE_FORMAT_DATA.parse(data);
 		}
 		return null;
 	}

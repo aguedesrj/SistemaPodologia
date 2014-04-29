@@ -84,11 +84,12 @@ public class ProfissionalFacadeImpl implements ProfissionalFacade {
 	public void salvar(final Profissional profissional) throws IntegrationException, BusinessException {
 		try {
 			// verifica se já existe algum Profissional com o mesmo nome.
-			Pessoa pessoaCond = new Pessoa();
-			pessoaCond.setPesNome(profissional.getPessoa().getPesNome());
+			Profissional profissionalCond = new Profissional();
+			profissionalCond.setPessoa(new Pessoa());
+			profissionalCond.getPessoa().setPesNome(profissional.getPessoa().getPesNome());
 			// verifica se est?? sendo alterado.
 			if (profissional.getPrfCodigo() == null || profissional.getPrfCodigo() == 0) {
-				List<Pessoa> lista = pessoaDao.pesquisarPorCriterios(pessoaCond);
+				List<Profissional> lista = profissionalDao.pesquisarPorCriterios(profissionalCond);
 				if (lista != null && !lista.isEmpty()) {
 					throw new BusinessException("Profissional já está cadastrado.");
 				}
@@ -98,6 +99,9 @@ public class ProfissionalFacadeImpl implements ProfissionalFacade {
 			sessionFactory.getCurrentSession().saveOrUpdate(profissional.getPessoa().getEndereco());
 			sessionFactory.getCurrentSession().flush();
 			// salvar pessoa.
+			sessionFactory.getCurrentSession().saveOrUpdate(profissional.getPessoa());
+			sessionFactory.getCurrentSession().flush();
+			// salvar profissional.
 			sessionFactory.getCurrentSession().saveOrUpdate(profissional);
 			sessionFactory.getCurrentSession().flush();
 			// deletar contatos.

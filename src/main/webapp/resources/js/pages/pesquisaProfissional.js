@@ -60,8 +60,10 @@ function atualizaIncluiTabelaProfissional(profissionalVO) {
 }
 
 function detalhar(prfCodigo) {
+	$("#prfCodigo").val(prfCodigo);
 	$.ajax({
-		url: 'SistemaPodologia/Profissional/Detalha?profissionalVO.prfCodigo='+prfCodigo,
+		url: 'SistemaPodologia/Profissional/Detalha',
+		data: $('#formProfissional').serialize(),
 		type: 'POST',
 		cache: false,
 		dataType: "json",
