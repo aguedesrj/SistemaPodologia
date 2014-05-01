@@ -3,6 +3,7 @@ package br.com.guedes.sistemaPodologia.facade;
 import java.util.List;
 
 import br.com.guedes.sistemaPodologia.model.Estado;
+import br.com.guedes.sistemaPodologia.model.Paciente;
 import br.com.guedes.sistemaPodologia.model.Pessoa;
 import br.com.guedes.sistemaPodologia.model.TipoContato;
 import br.com.guedes.sistemaPodologia.util.BusinessException;
@@ -29,11 +30,11 @@ public interface ClienteFacade {
 	/**
 	 * Pesquisar por critérios.
 	 * 
-	 * @param pessoa Pessoa
-	 * @return List<Pessoa>
+	 * @param paciente Paciente
+	 * @return List<Paciente>
 	 * @throws IntegrationException
 	 */
-	public List<Pessoa> pesquisarPorCriterios(final Pessoa pessoa) throws IntegrationException;
+	public List<Paciente> pesquisar(final Paciente paciente) throws IntegrationException;
 	
 	/**
 	 * Salvar Cliente.
@@ -45,10 +46,11 @@ public interface ClienteFacade {
 	public void salvar(final Pessoa pessoa) throws IntegrationException, BusinessException;
 	
 	/**
+	 * Obter todos os dados do Cliente pelo seu ID.
 	 * 
-	 * @param pessoa Pessoa
-	 * @return Pessoa
+	 * @param paciente Paciente
+	 * @return Paciente
 	 * @throws IntegrationException
 	 */
-	public Pessoa obterPorId(Pessoa pessoa) throws IntegrationException;
+	public Paciente obterPorId(Paciente paciente) throws IntegrationException;
 }

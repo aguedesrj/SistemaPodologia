@@ -76,6 +76,14 @@
     </definition>
    	<definition name="profissional.pesquisa" extends="template.index">
         <put-attribute name="conteudo" value="/WEB-INF/jsp/profissional/pesquisaProfissional.jsp"/>
-    </definition> 		
+    </definition> 
+    
+    <!-- Consulta -->
+   	<definition name="consulta.novo" extends="template.index">
+        <put-attribute name="conteudo" value="/WEB-INF/jsp/consulta/manutencaoConsulta.jsp"/>
+    </definition>
+   	<definition name="consulta.pesquisa" extends="template.index">
+        <put-attribute name="conteudo" value="/WEB-INF/jsp/consulta/pesquisaConsulta.jsp"/>
+    </definition>    			
 
 </tiles-definitions>

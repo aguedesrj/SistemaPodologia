@@ -131,6 +131,12 @@ function detalhar(traCodigo) {
 }
 
 function exibirModalDetalhe(tratamentoVO) {
+	// limpar campos.
+	$("#spanTraDescricao").html("");
+	$("#spanTraTempo").html("");
+	$("#spanTraPreco").html("");
+	$('#traFlag').prop('checked', false);
+	$("#spanTraObs").html("");	
 	// dados pessoais
 	$("#spanTraDescricao").html(tratamentoVO.traDescricao);
 	$("#spanTraTempo").html(tratamentoVO.traTempo);

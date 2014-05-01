@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.guedes.sistemaPodologia.dao.ContatoDao;
 import br.com.guedes.sistemaPodologia.dao.EnderecoDao;
-import br.com.guedes.sistemaPodologia.dao.PessoaDao;
 import br.com.guedes.sistemaPodologia.dao.ProfissionalDao;
 import br.com.guedes.sistemaPodologia.model.Contato;
 import br.com.guedes.sistemaPodologia.model.Estado;
@@ -32,9 +31,6 @@ public class ProfissionalFacadeImpl implements ProfissionalFacade {
 	
 	@Autowired
 	private ContatoDao contatoDao;
-	
-	@Autowired
-	private PessoaDao pessoaDao;
 	
 	@Autowired
 	private EnderecoDao enderecoDao;	
@@ -65,15 +61,15 @@ public class ProfissionalFacadeImpl implements ProfissionalFacade {
 	 * @see br.com.guedes.sistemaPodologia.facade.ProfissionalFacade#obterPorId(br.com.guedes.sistemaPodologia.model.Profissional)
 	 */
 	public Profissional obterPorId(final Profissional profissional) throws IntegrationException {
-		return profissionalDao.pesquisarPorCriterios(profissional).get(0);
+		return profissionalDao.obterPorId(profissional.getPrfCodigo());
 	}
 	
 	/*
 	 * (non-Javadoc)
-	 * @see br.com.guedes.sistemaPodologia.facade.ProfissionalFacade#pesquisarPorCriterios(br.com.guedes.sistemaPodologia.model.Profissional)
+	 * @see br.com.guedes.sistemaPodologia.facade.ProfissionalFacade#pesquisar(br.com.guedes.sistemaPodologia.model.Profissional)
 	 */
-	public List<Profissional> pesquisarPorCriterios(final Profissional profissional) throws IntegrationException {
-		return profissionalDao.pesquisarPorCriterios(profissional);
+	public List<Profissional> pesquisar(final Profissional profissional) throws IntegrationException {
+		return profissionalDao.pesquisar(profissional);
 	}
 	
 	/*
@@ -89,7 +85,7 @@ public class ProfissionalFacadeImpl implements ProfissionalFacade {
 			profissionalCond.getPessoa().setPesNome(profissional.getPessoa().getPesNome());
 			// verifica se est?? sendo alterado.
 			if (profissional.getPrfCodigo() == null || profissional.getPrfCodigo() == 0) {
-				List<Profissional> lista = profissionalDao.pesquisarPorCriterios(profissionalCond);
+				List<Profissional> lista = profissionalDao.pesquisar(profissionalCond);
 				if (lista != null && !lista.isEmpty()) {
 					throw new BusinessException("Profissional já está cadastrado.");
 				}
@@ -155,13 +151,5 @@ public class ProfissionalFacadeImpl implements ProfissionalFacade {
 
 	public void setProfissionalDao(ProfissionalDao profissionalDao) {
 		this.profissionalDao = profissionalDao;
-	}
-
-	public PessoaDao getPessoaDao() {
-		return pessoaDao;
-	}
-
-	public void setPessoaDao(PessoaDao pessoaDao) {
-		this.pessoaDao = pessoaDao;
 	}
 }

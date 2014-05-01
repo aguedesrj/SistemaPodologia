@@ -30,7 +30,7 @@ public class TratamentoFacadeImpl implements TratamentoFacade {
 	 * (non-Javadoc)
 	 * @see br.com.guedes.sistemaPodologia.facade.TratamentoFacade#pesquisarPorCriterios(br.com.guedes.sistemaPodologia.model.Tratamento)
 	 */
-	public List<Tratamento> pesquisarPorCriterios(final Tratamento tratamento) throws IntegrationException {
+	public List<Tratamento> pesquisar(final Tratamento tratamento) throws IntegrationException {
 		return tratamentoDao.pesquisarPorCriterios(tratamento);
 	}
 	

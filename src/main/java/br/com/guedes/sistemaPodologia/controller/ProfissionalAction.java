@@ -177,7 +177,7 @@ public class ProfissionalAction extends BasicAction {
 	
 	public String executarPesquisa() {
     	try {
-    		List<Profissional> listaProfissional = profissionalFacade.pesquisarPorCriterios(new Profissional());
+    		List<Profissional> listaProfissional = profissionalFacade.pesquisar(new Profissional());
     		if (listaProfissional == null || listaProfissional.isEmpty()) {
     			setMensagemUsuario("Nenhum Profissional encontrado.");
     			return ERROR;

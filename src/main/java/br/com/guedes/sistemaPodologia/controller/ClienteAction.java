@@ -23,7 +23,6 @@ import br.com.guedes.sistemaPodologia.util.Util;
 import br.com.guedes.sistemaPodologia.vo.ClienteVO;
 import br.com.guedes.sistemaPodologia.vo.ContatoVO;
 import br.com.guedes.sistemaPodologia.vo.EstadoVO;
-import br.com.guedes.sistemaPodologia.vo.PessoaVO;
 import br.com.guedes.sistemaPodologia.vo.TipoContatoVO;
 
 @Controller
@@ -40,7 +39,6 @@ public class ClienteAction extends BasicAction {
 	private String mensagemUsuario;
 	private ClienteVO clienteVO;
 	private List<ClienteVO> listaClienteVO;
-	private List<PessoaVO> listaPessoaVO;
 
 	public String iniciarCadastro() {
 		try {
@@ -77,7 +75,7 @@ public class ClienteAction extends BasicAction {
 			Pessoa pessoa = new Pessoa();
 			pessoa.setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
 			if (pessoa.getPesCodigo() != null && pessoa.getPesCodigo() > 0) {
-				pessoa = clienteFacade.obterPorId(pessoa);
+				//pessoa = clienteFacade.obterPorId(new Paciente());
 			} else {
 				pessoa.setPesDtCadastro(Calendar.getInstance());
 			}
@@ -178,19 +176,21 @@ public class ClienteAction extends BasicAction {
 	
 	public String executarPesquisa() {
     	try {
-    		Pessoa pessoaParam = new Pessoa();
-    		pessoaParam.setPesNome(getClienteVO().getPessoaVO().getPesNome());
-    		List<Pessoa> listaPessoa = clienteFacade.pesquisarPorCriterios(pessoaParam);
-    		if (listaPessoa == null || listaPessoa.isEmpty()) {
+    		Paciente pacienteParam = new Paciente();
+    		pacienteParam.setPessoa(new Pessoa());
+    		pacienteParam.getPessoa().setPesNome(getClienteVO().getPessoaVO().getPesNome());
+    		List<Paciente> listaPaciente = clienteFacade.pesquisar(pacienteParam);
+    		if (listaPaciente == null || listaPaciente.isEmpty()) {
     			setMensagemUsuario("Cliente não encontrado.");
     			return ERROR;
     		} else {
-    			setListaPessoaVO(new ArrayList<PessoaVO>());
-    			for (Pessoa pessoa: listaPessoa) {
-    				PessoaVO pessoaVO = new PessoaVO();
-    				pessoaVO.setPesCodigo(pessoa.getPesCodigo());
-    				pessoaVO.setPesNome(pessoa.getPesNome());
-    				getListaPessoaVO().add(pessoaVO);
+    			setListaClienteVO(new ArrayList<ClienteVO>());
+    			for (Paciente paciente: listaPaciente) {
+    				ClienteVO clienteVO = new ClienteVO();
+    				clienteVO.setPacCodigo(paciente.getPacCodigo());
+    				clienteVO.getPessoaVO().setPesCodigo(paciente.getPessoa().getPesCodigo());
+    				clienteVO.getPessoaVO().setPesNome(paciente.getPessoa().getPesNome());
+    				getListaClienteVO().add(clienteVO);
     			}
     		}
     		return SUCCESS;
@@ -203,15 +203,16 @@ public class ClienteAction extends BasicAction {
 	
 	public String detalhar() {
     	try {
-			Pessoa pessoa = new Pessoa();
-			pessoa.setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
-    		pessoa = clienteFacade.obterPorId(pessoa);
-    		if (pessoa.getPesNome() == null) {
+			Paciente paciente = new Paciente();
+			paciente.setPessoa(new Pessoa());
+			paciente.getPessoa().setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
+			paciente = clienteFacade.obterPorId(paciente);
+    		if (paciente.getPessoa().getPesNome() == null) {
     			setMensagemUsuario("Cliente não encontrado.");
     			return ERROR;
     		} else {
-    			// seta dados do Produto.
-    			populaDePara(pessoa);
+    			// seta dados do Cliente.
+    			populaDePara(paciente);
     		}
     		return SUCCESS;
 		} catch (Exception e) {
@@ -242,14 +243,15 @@ public class ClienteAction extends BasicAction {
     		}    		
     		// remove da session a lista.
     		this.getRequest().getSession().removeAttribute(SESSION_LISTA_CONTATOS);
-    		Pessoa pessoa = new Pessoa();
-    		pessoa.setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
-    		pessoa = clienteFacade.obterPorId(pessoa);
-    		if (pessoa == null) {
+    		Paciente paciente = new Paciente();
+    		paciente.setPessoa(new Pessoa());
+    		paciente.getPessoa().setPesCodigo(getClienteVO().getPessoaVO().getPesCodigo());
+    		paciente = clienteFacade.obterPorId(paciente);
+    		if (paciente == null) {
     			addActionError("Cliente não encontrado.");
     			return ERROR;
     		}
-    		populaDePara(pessoa);
+    		populaDePara(paciente);
     		this.getRequest().getSession().setAttribute(SESSION_LISTA_CONTATOS, getClienteVO().getListaContatos());
     		return SUCCESS;
 		} catch (Exception e) {
@@ -372,34 +374,34 @@ public class ClienteAction extends BasicAction {
 		pessoa.getPaciente().setPessoa(pessoa);
 	}
 	
-	private void populaDePara(Pessoa pessoa) throws Exception {
+	private void populaDePara(Paciente paciente) throws Exception {
 		// pessoa
-		getClienteVO().getPessoaVO().setPesCodigo(pessoa.getPesCodigo());
-		getClienteVO().getPessoaVO().setPesNome(pessoa.getPesNome());
-		getClienteVO().getPessoaVO().setPesDtNascimento(Util.converterCalendarParaString(pessoa.getPesDtNascimento(), Util.SIMPLE_DATE_FORMAT_DATA));
-		getClienteVO().getPessoaVO().setPesObs(pessoa.getPesObs());
-		getClienteVO().getPessoaVO().setPesSexo(pessoa.getPesSexo());
-		getClienteVO().getPessoaVO().setPesCpf(pessoa.getPesCPF());
-		if (pessoa.getPaciente().getConsulta() != null) {
-			getClienteVO().setCliDataUltimaConsulta(Util.converterDateParaString(pessoa.getPaciente().getConsulta().getCosDtConsulta()));
-			if (pessoa.getPaciente().getConsulta().getTratamento() != null) {
-				getClienteVO().setCliUltimoTratamento(pessoa.getPaciente().getConsulta().getTratamento().getTraDescricao());
+		getClienteVO().getPessoaVO().setPesCodigo(paciente.getPessoa().getPesCodigo());
+		getClienteVO().getPessoaVO().setPesNome(paciente.getPessoa().getPesNome());
+		getClienteVO().getPessoaVO().setPesDtNascimento(Util.converterCalendarParaString(paciente.getPessoa().getPesDtNascimento(), Util.SIMPLE_DATE_FORMAT_DATA));
+		getClienteVO().getPessoaVO().setPesObs(paciente.getPessoa().getPesObs());
+		getClienteVO().getPessoaVO().setPesSexo(paciente.getPessoa().getPesSexo());
+		getClienteVO().getPessoaVO().setPesCpf(paciente.getPessoa().getPesCPF());
+		if (paciente.getConsulta() != null) {
+			getClienteVO().setCliDataUltimaConsulta(Util.converterDateParaString(paciente.getConsulta().getCosDtConsulta()));
+			if (paciente.getConsulta().getTratamento() != null) {
+				getClienteVO().setCliUltimoTratamento(paciente.getConsulta().getTratamento().getTraDescricao());
 			}
 		}
 		// endereço
-		getClienteVO().getEnderecoVO().setEndBairro(pessoa.getEndereco().getEndBairro());
-		getClienteVO().getEnderecoVO().setEndCep(pessoa.getEndereco().getEndCep());
-		getClienteVO().getEnderecoVO().setEndCidade(pessoa.getEndereco().getEndCidade());
-		getClienteVO().getEnderecoVO().setEndCodigo(pessoa.getEndereco().getEndCodigo());
-		getClienteVO().getEnderecoVO().setEndLogadouro(pessoa.getEndereco().getEndLogadouro());
-		getClienteVO().getEnderecoVO().setEndNumero(pessoa.getEndereco().getEndNumero());
-		if (pessoa.getEndereco().getEstado() != null) {
-			getClienteVO().getEnderecoVO().getEstadoVO().setEstCodigo(pessoa.getEndereco().getEstado().getEstCodigo());
-			getClienteVO().getEnderecoVO().getEstadoVO().setEstNome(pessoa.getEndereco().getEstado().getEstNome());
+		getClienteVO().getEnderecoVO().setEndBairro(paciente.getPessoa().getEndereco().getEndBairro());
+		getClienteVO().getEnderecoVO().setEndCep(paciente.getPessoa().getEndereco().getEndCep());
+		getClienteVO().getEnderecoVO().setEndCidade(paciente.getPessoa().getEndereco().getEndCidade());
+		getClienteVO().getEnderecoVO().setEndCodigo(paciente.getPessoa().getEndereco().getEndCodigo());
+		getClienteVO().getEnderecoVO().setEndLogadouro(paciente.getPessoa().getEndereco().getEndLogadouro());
+		getClienteVO().getEnderecoVO().setEndNumero(paciente.getPessoa().getEndereco().getEndNumero());
+		if (paciente.getPessoa().getEndereco().getEstado() != null) {
+			getClienteVO().getEnderecoVO().getEstadoVO().setEstCodigo(paciente.getPessoa().getEndereco().getEstado().getEstCodigo());
+			getClienteVO().getEnderecoVO().getEstadoVO().setEstNome(paciente.getPessoa().getEndereco().getEstado().getEstNome());
 		}
 		// lista de contatos
 		getClienteVO().setListaContatos(new ArrayList<ContatoVO>());
-		for (Contato contato: pessoa.getListaContato()) {
+		for (Contato contato: paciente.getPessoa().getListaContato()) {
 			ContatoVO contatoVO = new ContatoVO();
 			contatoVO.setNovo(false);
 			contatoVO.setConCodigo(contato.getConCodigo());
@@ -410,38 +412,38 @@ public class ClienteAction extends BasicAction {
 			getClienteVO().getListaContatos().add(contatoVO);
 		}
 		// paciente
-		if (pessoa.getPaciente().getPacAlergicoMedicamentos() != null && pessoa.getPaciente().getPacAlergicoMedicamentos().equals("S")) {
+		if (paciente.getPacAlergicoMedicamentos() != null && paciente.getPacAlergicoMedicamentos().equals("S")) {
 			getClienteVO().setPacAlergicoMedicamentos(true);
 		}
-		getClienteVO().setPacAlergicoQuais(pessoa.getPaciente().getPacAlergicoQuais());
-		getClienteVO().setPacAltura(pessoa.getPaciente().getPacAltura());
-		if (pessoa.getPaciente().getPacAndaDescalco() != null && pessoa.getPaciente().getPacAndaDescalco().equals("S")) {
+		getClienteVO().setPacAlergicoQuais(paciente.getPacAlergicoQuais());
+		getClienteVO().setPacAltura(paciente.getPacAltura());
+		if (paciente.getPacAndaDescalco() != null && paciente.getPacAndaDescalco().equals("S")) {
 			getClienteVO().setPacAndaDescalco(true);
 		}
-		getClienteVO().setPacCalcadoUtiliza(pessoa.getPaciente().getPacCalcadoUtiliza());
-		getClienteVO().setPacCirurgiaMotivo(pessoa.getPaciente().getPacCirurgiaMotivo());
-		if (pessoa.getPaciente().getPacCirurgiaPes() != null && pessoa.getPaciente().getPacCirurgiaPes().equals("S")) {
+		getClienteVO().setPacCalcadoUtiliza(paciente.getPacCalcadoUtiliza());
+		getClienteVO().setPacCirurgiaMotivo(paciente.getPacCirurgiaMotivo());
+		if (paciente.getPacCirurgiaPes() != null && paciente.getPacCirurgiaPes().equals("S")) {
 			getClienteVO().setPacCirurgiaPes(true);
 		}
-		getClienteVO().setPacCodigo(pessoa.getPaciente().getPacCodigo());
-		if (pessoa.getPaciente().getPacDiabetes() != null && pessoa.getPaciente().getPacDiabetes().equals("S")) {
+		getClienteVO().setPacCodigo(paciente.getPacCodigo());
+		if (paciente.getPacDiabetes() != null && paciente.getPacDiabetes().equals("S")) {
 			getClienteVO().setPacDiabetes(true);
 		}
-		if (pessoa.getPaciente().getPacHipertensao() != null && pessoa.getPaciente().getPacHipertensao().equals("S")) {
+		if (paciente.getPacHipertensao() != null && paciente.getPacHipertensao().equals("S")) {
 			getClienteVO().setPacHipertensao(true);
 		}
-		if (pessoa.getPaciente().getPacLabora() != null && pessoa.getPaciente().getPacLabora().equals("S")) {
+		if (paciente.getPacLabora() != null && paciente.getPacLabora().equals("S")) {
 			getClienteVO().setPacLabora(true);
 		}
-		getClienteVO().setPacNumeroCalcado(pessoa.getPaciente().getPacNumeroCalcado());
-		getClienteVO().setPacPeso(pessoa.getPaciente().getPacPeso());
-		if (pessoa.getPaciente().getPacTabagismo() != null && pessoa.getPaciente().getPacTabagismo().equals("S")) {
+		getClienteVO().setPacNumeroCalcado(paciente.getPacNumeroCalcado());
+		getClienteVO().setPacPeso(paciente.getPacPeso());
+		if (paciente.getPacTabagismo() != null && paciente.getPacTabagismo().equals("S")) {
 			getClienteVO().setPacTabagismo(true);
 		}
-		if (pessoa.getPaciente().getPacUnhaEngravada() != null && pessoa.getPaciente().getPacUnhaEngravada().equals("S")) {
+		if (paciente.getPacUnhaEngravada() != null && paciente.getPacUnhaEngravada().equals("S")) {
 			getClienteVO().setPacUnhaEngravada(true);
 		}
-		if (pessoa.getPaciente().getPacVisitaPedicuro() != null && pessoa.getPaciente().getPacVisitaPedicuro().equals("S")) {
+		if (paciente.getPacVisitaPedicuro() != null && paciente.getPacVisitaPedicuro().equals("S")) {
 			getClienteVO().setPacVisitaPedicuro(true);
 		}
 	}	
@@ -468,13 +470,5 @@ public class ClienteAction extends BasicAction {
 
 	public void setListaClienteVO(List<ClienteVO> listaClienteVO) {
 		this.listaClienteVO = listaClienteVO;
-	}
-
-	public List<PessoaVO> getListaPessoaVO() {
-		return listaPessoaVO;
-	}
-
-	public void setListaPessoaVO(List<PessoaVO> listaPessoaVO) {
-		this.listaPessoaVO = listaPessoaVO;
 	}
 }

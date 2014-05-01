@@ -5,126 +5,126 @@
 
 <struts>
 
-    <package name="Cliente" namespace="/Cliente" extends="default, json-default">
+    <package name="Consulta" namespace="/Consulta" extends="default, json-default">
         
 		<result-types>
     		<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
     	</result-types>        
 
-		<action name="Pesquisa" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="iniciarPesquisa">
-            <result name="success" type="tiles">cliente.pesquisa</result>
+		<action name="Pesquisa" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="iniciarPesquisa">
+            <result name="success" type="tiles">consulta.pesquisa</result>
         </action>
         
-        <action name="ExecutaPesquisa" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="executarPesquisa">
+        <action name="ExecutaPesquisa" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="executarPesquisa">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaConsultaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaConsultaVO
 				</param>            
             </result>
         </action>
         
-        <action name="Detalha" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="detalhar">
+        <action name="Detalha" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="detalhar">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
         </action>        
         
-		<action name="Novo" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="iniciarCadastro">
-            <result name="success" type="tiles">cliente.novo</result>
+		<action name="Novo" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="iniciarCadastro">
+            <result name="success" type="tiles">consulta.novo</result>
         </action>        		
         
-        <action name="IncluiContato" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="inserirContato">
+        <action name="IncluiContato" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="inserirContato">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
         </action>
         
-        <action name="AlteraContato" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="alterarContato">
+        <action name="AlteraContato" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="alterarContato">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
         </action>        
         
-        <action name="ExcluiContato" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="excluirContato">
+        <action name="ExcluiContato" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="excluirContato">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
         </action>        
         
-		<action name="Salva" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="salvar">
+		<action name="Salva" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="salvar">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaConsultaVO,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaConsultaVO,listaPessoaVO
 				</param>            
             </result>		    
         </action>
         
-        <action name="InicioAlteracao" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="iniciarAlteracao">
-            <result name="success" type="tiles">cliente.novo</result>
+        <action name="InicioAlteracao" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="iniciarAlteracao">
+            <result name="success" type="tiles">consulta.novo</result>
             <result name="error" type="tiles">error.tiles</result>
         </action>
         
-        <action name="BuscaContatos" class="br.com.guedes.sistemaPodologia.controller.ClienteAction" method="buscarContatos">
+        <action name="BuscaContatos" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="buscarContatos">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaClienteVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaPessoaVO
 				</param>            
             </result>
         </action>         		

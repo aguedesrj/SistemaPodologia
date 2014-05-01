@@ -8,7 +8,6 @@
         	<h3 class="panel-title" style="font-weight: bold;">Pesquisar Clientes</h3>
         </div>
 	    <s:form namespace="Cliente" id="formCliente" name="formCliente" theme="simple" cssStyle="margin-left: 15px; margin-top: 15px;">
-	    	<s:hidden name="clienteVO.pacCodigo" id="pacCodigo"/>
 	    	<s:hidden name="clienteVO.pessoaVO.pesCodigo" id="pesCodigo"/>
 	    	<div class="row">
 				<div class="col-lg-5">

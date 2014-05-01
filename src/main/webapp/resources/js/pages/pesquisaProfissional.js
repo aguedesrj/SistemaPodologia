@@ -91,6 +91,8 @@ function detalhar(prfCodigo) {
 }
 
 function exibirModalDetalhe(profissionalVO) {
+	// limpar campos
+	limparCampos();
 	// dados pessoais
 	$("#spanPrfDtFormacao").html(profissionalVO.prfDtFormacao);
 	$("#spanPrfDescricaoFormacao").html(profissionalVO.prfDescricaoFormacao);
@@ -114,6 +116,26 @@ function exibirModalDetalhe(profissionalVO) {
    		 "keyboard" : true,
    		 "show" : true
 	});		
+}
+
+function limparCampos() {
+	// limpar campos
+	$("#spanPrfDtFormacao").html("");
+	$("#spanPrfDescricaoFormacao").html("");
+	$("#spanPerNome").html("");
+	$("#spanPesDtNascimento").html("");
+	$("#spanPesSexo").html("");
+	$("#spanPesCPF").html("");
+	$("#spanPesObs").html("");
+	// endereço
+	$("#spanEndLogadouro").html("");
+	$("#spanEndNumero").html("");
+	$("#spanEndBairro").html("");
+	$("#spanEndCidade").html("");
+	$("#spanEstNome").html("");
+	$("#spanEndCep").html("");
+	// contatos
+	$(".tbodyTabelaContatos").html("");	
 }
 
 function atualizaTabelaContato(listaContatos) {

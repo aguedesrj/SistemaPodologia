@@ -70,7 +70,7 @@ public class TratamentoAction extends BasicAction {
     	try {
     		Tratamento tratamentoParam = new Tratamento();
     		tratamentoParam.setTraDescricao(getTratamentoVO().getTraDescricao());
-    		List<Tratamento> listaTratamento = tratamentoFacade.pesquisarPorCriterios(tratamentoParam);
+    		List<Tratamento> listaTratamento = tratamentoFacade.pesquisar(tratamentoParam);
     		if (listaTratamento == null || listaTratamento.isEmpty()) {
     			setMensagemUsuario("Tratamento não encontrado.");
     			return ERROR;

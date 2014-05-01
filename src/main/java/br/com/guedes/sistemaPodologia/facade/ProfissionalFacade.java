@@ -3,7 +3,6 @@ package br.com.guedes.sistemaPodologia.facade;
 import java.util.List;
 
 import br.com.guedes.sistemaPodologia.model.Estado;
-import br.com.guedes.sistemaPodologia.model.Pessoa;
 import br.com.guedes.sistemaPodologia.model.Profissional;
 import br.com.guedes.sistemaPodologia.model.TipoContato;
 import br.com.guedes.sistemaPodologia.util.BusinessException;
@@ -34,7 +33,7 @@ public interface ProfissionalFacade {
 	 * @return List<Profissional>
 	 * @throws IntegrationException
 	 */
-	public List<Profissional> pesquisarPorCriterios(final Profissional profissional) throws IntegrationException;
+	public List<Profissional> pesquisar(final Profissional profissional) throws IntegrationException;
 	
 	/**
 	 * Salvar Profissional.

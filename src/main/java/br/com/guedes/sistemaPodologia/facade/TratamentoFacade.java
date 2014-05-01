@@ -15,7 +15,7 @@ public interface TratamentoFacade {
 	 * @return List<Tratamento>
 	 * @throws IntegrationException
 	 */
-	public List<Tratamento> pesquisarPorCriterios(final Tratamento tratamento) throws IntegrationException;
+	public List<Tratamento> pesquisar(final Tratamento tratamento) throws IntegrationException;
 	
 	/**
 	 * Salvar Cliente.

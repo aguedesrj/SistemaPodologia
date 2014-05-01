@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.guedes.sistemaPodologia.dao.ClienteDao;
 import br.com.guedes.sistemaPodologia.dao.ConsultaDao;
 import br.com.guedes.sistemaPodologia.dao.ContatoDao;
 import br.com.guedes.sistemaPodologia.dao.EnderecoDao;
-import br.com.guedes.sistemaPodologia.dao.PacienteDao;
-import br.com.guedes.sistemaPodologia.dao.PessoaDao;
 import br.com.guedes.sistemaPodologia.model.Contato;
 import br.com.guedes.sistemaPodologia.model.Estado;
+import br.com.guedes.sistemaPodologia.model.Paciente;
 import br.com.guedes.sistemaPodologia.model.Pessoa;
 import br.com.guedes.sistemaPodologia.model.TipoContato;
 import br.com.guedes.sistemaPodologia.util.BusinessException;
@@ -28,10 +28,7 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	private static final Logger LOGGER = Logger.getLogger(ClienteFacadeImpl.class);
 	
 	@Autowired
-	private PacienteDao pacienteDao;	
-	
-	@Autowired
-	private PessoaDao pessoaDao;	
+	private ClienteDao clienteDao;	
 	
 	@Autowired
 	private ContatoDao contatoDao;
@@ -65,10 +62,10 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	
 	/*
 	 * (non-Javadoc)
-	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#pesquisarPorCriterios(br.com.guedes.sistemaPodologia.model.Pessoa)
+	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#pesquisar(br.com.guedes.sistemaPodologia.model.Paciente)
 	 */
-	public List<Pessoa> pesquisarPorCriterios(final Pessoa pessoa) throws IntegrationException {
-		return pessoaDao.pesquisarPorCriterios(pessoa);
+	public List<Paciente> pesquisar(final Paciente paciente) throws IntegrationException {
+		return clienteDao.pesquisar(paciente);
 	}
 	
 	/*
@@ -78,14 +75,15 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = IntegrationException.class)
 	public void salvar(final Pessoa pessoa) throws IntegrationException, BusinessException {
 		try {
-			// verifica se j�� existe algum Cliente com o mesmo nome.
-			Pessoa pessoaCond = new Pessoa();
-			pessoaCond.setPesNome(pessoa.getPesNome());
-			// verifica se est�� sendo alterado.
+			// verifica se já existe algum Cliente com o mesmo nome.
+			Paciente pacienteCond = new Paciente();
+			pacienteCond.setPessoa(new Pessoa());
+			pacienteCond.getPessoa().setPesNome(pessoa.getPesNome());
+			// verifica se está sendo alterado.
 			if (pessoa.getPesCodigo() == null || pessoa.getPesCodigo() == 0) {
-				List<Pessoa> lista = pessoaDao.pesquisarPorCriterios(pessoaCond);
+				List<Paciente> lista = clienteDao.pesquisar(pacienteCond);
 				if (lista != null && !lista.isEmpty()) {
-					throw new BusinessException("Cliente j� est� cadastrado.");
+					throw new BusinessException("Cliente já está cadastrado.");
 				}
 			}
 			
@@ -121,20 +119,17 @@ public class ClienteFacadeImpl implements ClienteFacade {
 	
 	/*
 	 * (non-Javadoc)
-	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#obterPorId(br.com.guedes.sistemaPodologia.model.Pessoa, java.util.List, br.com.guedes.sistemaPodologia.model.Paciente)
+	 * @see br.com.guedes.sistemaPodologia.facade.ClienteFacade#obterPorId(br.com.guedes.sistemaPodologia.model.Paciente)
 	 */
-	public Pessoa obterPorId(Pessoa pessoa) throws IntegrationException {
+	public Paciente obterPorId(Paciente paciente) throws IntegrationException {
 		try {
-			// dados pessoa.
-			pessoa = pessoaDao.obterPorId(pessoa.getPesCodigo());
-			// dados paciente.
-			pessoa.setPaciente(pacienteDao.obterPorIdPessoa(pessoa.getPesCodigo()));
-			// obter dados da �ltima consulta.
-			pessoa.getPaciente().setConsulta(consultaDao.obterUltimaConsulta(pessoa.getPaciente()));
-			return pessoa;
+			paciente = clienteDao.obterPorId(paciente.getPessoa().getPesCodigo());
+			// obter dados da última consulta.
+			paciente.setConsulta(consultaDao.obterUltimaConsulta(paciente));
+			return paciente;
 		} catch (Exception e) {
 			LOGGER.error(e);
-			throw new IntegrationException("N�o foi poss�vel obter dados do Cliente.");
+			throw new IntegrationException("Não foi possível obter dados do Cliente.");
 		}
 	}
 
@@ -162,27 +157,19 @@ public class ClienteFacadeImpl implements ClienteFacade {
 		this.enderecoDao = enderecoDao;
 	}
 
-	public PessoaDao getPessoaDao() {
-		return pessoaDao;
-	}
-
-	public void setPessoaDao(PessoaDao pessoaDao) {
-		this.pessoaDao = pessoaDao;
-	}
-
-	public PacienteDao getPacienteDao() {
-		return pacienteDao;
-	}
-
-	public void setPacienteDao(PacienteDao pacienteDao) {
-		this.pacienteDao = pacienteDao;
-	}
-
 	public ConsultaDao getConsultaDao() {
 		return consultaDao;
 	}
 
 	public void setConsultaDao(ConsultaDao consultaDao) {
 		this.consultaDao = consultaDao;
+	}
+
+	public ClienteDao getClienteDao() {
+		return clienteDao;
+	}
+
+	public void setClienteDao(ClienteDao clienteDao) {
+		this.clienteDao = clienteDao;
 	}
 }

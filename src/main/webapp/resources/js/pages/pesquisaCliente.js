@@ -31,7 +31,7 @@
 				$("#divCarregando").css("visibility", "hidden");
 				if (status == "success" && data.mensagemUsuario == null) {
 					// atualiza lista na tabela.
-					atualizaTabelaCliente(data.listaPessoaVO);
+					atualizaTabelaCliente(data.listaClienteVO);
 				} else {
 					$("#divCarregando").css("visibility", "hidden");
 					$("#divMensagemErro").css("display", "block");
@@ -64,7 +64,7 @@ function onChange() {
 				$("#divCarregando").css("visibility", "hidden");
 				if (status == "success" && data.mensagemUsuario == null) {
 					// atualiza lista na tabela.
-					atualizaTabelaCliente(data.listaPessoaVO);
+					atualizaTabelaCliente(data.listaClienteVO);
 				} else {
 					$("#divCarregando").css("visibility", "hidden");
 					$("#divMensagemErro").css("display", "block");
@@ -82,19 +82,19 @@ function onChange() {
 	}
 }
 
-function atualizaTabelaCliente(listaPessoaVO) {
+function atualizaTabelaCliente(listaClienteVO) {
 	$(".tbodyTabelaCliente").html("");
-	for (var i = 0; listaPessoaVO.length > i; i++) {
-		atualizaIncluiTabelaCliente(listaPessoaVO[i]);
+	for (var i = 0; listaClienteVO.length > i; i++) {
+		atualizaIncluiTabelaCliente(listaClienteVO[i]);
 	}
 }
 
-function atualizaIncluiTabelaCliente(pessoaVO) {
+function atualizaIncluiTabelaCliente(clienteVO) {
 	var html = 
-		"<tr><td>" +pessoaVO.pesNome+
+		"<tr><td>" +clienteVO.pessoaVO.pesNome+
 		"</td><td>"+
-		"<span title='Clique aqui para detalhar o Cliente.' class='large glyphicon glyphicon-zoom-in' onclick='javascript:detalhar("+pessoaVO.pesCodigo+");' style='cursor:pointer;'></span>"+
-		"<span title='Clique aqui para alterar o Cliente.' class='large glyphicon glyphicon-cog' onclick='javascript:alterar("+pessoaVO.pesCodigo+");' style='cursor:pointer; margin-left: 20px;'></span>"+
+		"<span title='Clique aqui para detalhar o Cliente.' class='large glyphicon glyphicon-zoom-in' onclick='javascript:detalhar("+clienteVO.pessoaVO.pesCodigo+");' style='cursor:pointer;'></span>"+
+		"<span title='Clique aqui para alterar o Cliente.' class='large glyphicon glyphicon-cog' onclick='javascript:alterar("+clienteVO.pessoaVO.pesCodigo+");' style='cursor:pointer; margin-left: 20px;'></span>"+
 		"</td></tr>";
 	$(".tbodyTabelaCliente").append(html);	
 }
@@ -131,6 +131,8 @@ function detalhar(pesCodigo) {
 }
 
 function exibirModalDetalhe(clienteVO) {
+	//limpar campos.
+	preparaCampos();
 	// dados pessoais
 	$("#spanPerNome").html(clienteVO.pessoaVO.pesNome);
 	$("#spanPesDtNascimento").html(clienteVO.pessoaVO.pesDtNascimento);
@@ -191,6 +193,41 @@ function exibirModalDetalhe(clienteVO) {
    		 "keyboard" : true,
    		 "show" : true
 	});		
+}
+
+function preparaCampos() {
+	// dados pessoais
+	$("#spanPerNome").html("");
+	$("#spanPesDtNascimento").html("");
+	$("#spanPesSexo").html("");
+	$("#spanPesCPF").html("");
+	$("#spanCliDataUltimaConsulta").html("");
+	$("#spanPesObs").html("");
+	// endereço
+	$("#spanEndLogadouro").html("");
+	$("#spanEndNumero").html("");
+	$("#spanEndBairro").html("");
+	$("#spanEndCidade").html("");
+	$("#spanEstNome").html("");
+	$("#spanEndCep").html("");
+	// contatos
+	$(".tbodyTabelaContatos").html("");
+	// paciente
+	$('#pacLabora').prop('checked', false);
+	$('#pacVisitaPedicuro').prop('checked', false);
+	$('#pacDiabetes').prop('checked', false);
+	$('#pacAndaDescalco').prop('checked', false);
+	$('#pacUnhaEngravada').prop('checked', false);
+	$('#pacTabagismo').prop('checked', false);
+	$('#pacHipertensao').prop('checked', false);
+	$('#pacCirurgiaPes').prop('checked', false);
+	$('#pacAlergicoMedicamentos').prop('checked', false);
+	$("#spanPacCirurgiaMotivo").html("");
+	$("#spanPacAlergicoQuais").html("");
+	$("#spanPacCalcadoUtiliza").html("");
+	$("#spanPacNumeroCalcado").html("");
+	$("#spanPacPeso").html("");
+	$("#spanPacAltura").html("");
 }
 
 function atualizaTabelaContato(listaContatos) {

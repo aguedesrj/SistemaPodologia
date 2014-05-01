@@ -19,8 +19,7 @@
    	<bean id="clienteFacadeImpl" class="br.com.guedes.sistemaPodologia.facade.ClienteFacadeImpl">  
     	<property name="contatoDao" ref="contatoDaoImpl" />
     	<property name="enderecoDao" ref="enderecoDaoImpl" />
-    	<property name="pessoaDao" ref="pessoaDaoImpl" />
-    	<property name="pacienteDao" ref="pacienteDaoImpl" />
+    	<property name="clienteDao" ref="clienteDaoImpl" />
     	<property name="consultaDao" ref="consultaDaoImpl" />
     	<property name="sessionFactory" ref="sessionFactory" />  
    	</bean>
@@ -29,7 +28,6 @@
    	<bean id="profissionalFacadeImpl" class="br.com.guedes.sistemaPodologia.facade.ProfissionalFacadeImpl">  
     	<property name="contatoDao" ref="contatoDaoImpl" />
     	<property name="enderecoDao" ref="enderecoDaoImpl" />
-    	<property name="pessoaDao" ref="pessoaDaoImpl" />
     	<property name="profissionalDao" ref="profissionalDaoImpl" />
     	<property name="sessionFactory" ref="sessionFactory" />  
    	</bean>
@@ -58,12 +56,6 @@
    	<!-- Implementacao da interface EnderecoDaoImpl -->  
    	<bean id="enderecoDaoImpl" class="br.com.guedes.sistemaPodologia.dao.EnderecoDaoImpl" parent="baseSessionFactory"/> 
    	
-   	<!-- Implementacao da interface PessoaDaoImpl -->  
-   	<bean id="pessoaDaoImpl" class="br.com.guedes.sistemaPodologia.dao.PessoaDaoImpl" parent="baseSessionFactory"/>
-   	
-   	<!-- Implementacao da interface PacienteDaoImpl -->  
-   	<bean id="pacienteDaoImpl" class="br.com.guedes.sistemaPodologia.dao.PacienteDaoImpl" parent="baseSessionFactory"/>   										
-      
    	<!-- Implementacao da interface ConsultaDaoImpl -->  
    	<bean id="consultaDaoImpl" class="br.com.guedes.sistemaPodologia.dao.ConsultaDaoImpl" parent="baseSessionFactory"/>    
    	

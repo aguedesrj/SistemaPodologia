@@ -24,7 +24,14 @@
 	                	<li><a href="/SistemaPodologia/Profissional/Novo">Cadastrar</a></li>
 	                	<li><a href="/SistemaPodologia/Profissional/Pesquisa">Pesquisar</a></li>
 	              	</ul>  
-	            </li>	                      	           	
+	            </li>
+            	<li class="dropdown">
+	              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Marcação de Consulta<b class="caret"></b></a>
+	              	<ul class="dropdown-menu">
+	                	<li><a href="/SistemaPodologia/Consulta/Novo">Marcar</a></li>
+	                	<li><a href="/SistemaPodologia/Consulta/Pesquisa">Pesquisar</a></li>
+	              	</ul>  
+	            </li>	            	                      	           	
 			</ul>
         </div>
 	</div>

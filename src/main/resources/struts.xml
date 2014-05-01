@@ -40,5 +40,6 @@
     <include file="struts-cliente.xml"/>
     <include file="struts-tratamento.xml"/>
     <include file="struts-profissional.xml"/>
+    <include file="struts-consulta.xml"/>
 
 </struts>
