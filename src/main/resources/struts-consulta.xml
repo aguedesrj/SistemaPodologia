@@ -15,17 +15,17 @@
             <result name="success" type="tiles">consulta.pesquisa</result>
         </action>
         
-        <action name="ExecutaPesquisa" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="executarPesquisa">
+        <action name="ExibeTabelaConsulta" class="br.com.guedes.sistemaPodologia.controller.ConsultaAction" method="montarTabelaConsulta">
             <result name="success" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaConsultaVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
 				</param>            
             </result>
             <result name="error" type="json">
 				<param name="excludeNullProperties">true</param>		
 				<param name="excludeProperties">
-					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts,listaConsultaVO
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
 				</param>            
             </result>
         </action>

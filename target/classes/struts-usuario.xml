@@ -35,5 +35,20 @@
             </result>            
         </action>
         
+        <action name="Backup" class="br.com.guedes.sistemaPodologia.controller.UsuarioAction" method="efetuarBackupEnvioEmail">
+            <result name="success" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+				</param>            
+            </result>
+            <result name="error" type="json">
+				<param name="excludeNullProperties">true</param>		
+				<param name="excludeProperties">
+					request,fieldErrors,errors,actionErrors,actionMessages,	errorMessages,locale,texts
+				</param>            
+            </result>            
+        </action>        
+        
     </package>	
 </struts>

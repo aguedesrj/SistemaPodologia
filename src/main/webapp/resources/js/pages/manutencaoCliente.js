@@ -32,7 +32,6 @@
 						atualizaTabelaContato(data.clienteVO.listaContatos);
 						$("#modalContato").modal('hide');
 					} else {
-						$("#divCarregando").css("visibility", "hidden");
 						$("#divMensagemErro").css("display", "block");
 						$("#spanMsgError").show().html(data.mensagemUsuario); 							
 					}

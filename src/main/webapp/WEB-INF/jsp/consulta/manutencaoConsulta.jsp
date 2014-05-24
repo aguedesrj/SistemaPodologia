@@ -23,7 +23,21 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-6">
-						<s:label for="pacCodigo" cssClass="control-label">Cliente</s:label>
+						<s:label for="prfCodigo" cssClass="control-label" cssStyle="font-weight: bold;">Profissional</s:label>
+						<s:select  cssClass="form-control"
+							cssStyle="width: 300px;"
+							theme="simple"
+							headerKey="-1" 
+							headerValue="::: Selecione :::"
+							list="consultaVO.listaProfissionalVO" 
+							name="clienteVO.profissionalVO.prfCodigo"
+							listKey="prfCodigo"
+							listValue="pessoaVO.pesNome"
+							id="prfCodigo">
+						</s:select>					
+					</div>
+					<div class="col-lg-6" style="margin-top: 10px;">
+						<s:label for="pacCodigo" cssClass="control-label" cssStyle="font-weight: bold;">Cliente</s:label>
 						<s:select  cssClass="form-control"
 							cssStyle="width: 300px;"
 							theme="simple"
@@ -35,23 +49,9 @@
 							listValue="pessoaVO.pesNome"
 							id="pacCodigo">
 						</s:select>
-					</div>
-					<div class="col-lg-6" style="margin-top: 10px;">
-						<s:label for="prfCodigo" cssClass="control-label">Profissional</s:label>
-						<s:select  cssClass="form-control"
-							cssStyle="width: 300px;"
-							theme="simple"
-							headerKey="-1" 
-							headerValue="::: Selecione :::"
-							list="consultaVO.listaProfissionalVO" 
-							name="clienteVO.profissionalVO.prfCodigo"
-							listKey="prfCodigo"
-							listValue="pessoaVO.pesNome"
-							id="prfCodigo">
-						</s:select>
 					</div>	
 					<div class="col-lg-6" style="margin-top: 10px;">
-						<s:label for="traCodigo" cssClass="control-label">Tratamento</s:label>
+						<s:label for="traCodigo" cssClass="control-label" cssStyle="font-weight: bold;">Tratamento</s:label>
 						<s:select  cssClass="form-control"
 							cssStyle="width: 300px;"
 							theme="simple"
@@ -63,8 +63,25 @@
 							listValue="traDescricao"
 							id="traCodigo">
 						</s:select>
+					</div>
+					<div class="col-lg-6" style="margin-top: 10px;">
+						<label for="spanDataMarcacaoConsulta" class="control-label" style="font-weight: bold;">Data da selecionada</label><br>
+						<span id="spanDataMarcacaoConsulta"></span>					
 					</div>									
 				</div>				
+			</div>
+			<div class="row">
+				<table id="tabelaConsulta" class="ui celled table segment" style="width: 780px; padding-left: 20px;">
+		  			<thead>
+		    			<tr>
+		    				<th width="50px">Horário</th>
+		    				<th width="350px;">Paciente</th>
+		    				<th width="350px;">Tratamento</th>
+		    				<th width="100px;">Preço</th>
+		  				</tr>
+		  			</thead>
+		  			<tbody class="tbodyTabelaConsulta"></tbody>
+				</table>			
 			</div>
 		</div>	
 	</s:form>

@@ -9,6 +9,7 @@ import br.com.guedes.sistemaPodologia.facade.UsuarioFacade;
 import br.com.guedes.sistemaPodologia.model.Usuario;
 import br.com.guedes.sistemaPodologia.util.BusinessException;
 import br.com.guedes.sistemaPodologia.util.Constantes;
+import br.com.guedes.sistemaPodologia.util.JobsTask;
 import br.com.guedes.sistemaPodologia.vo.UsuarioVO;
 
 @Controller
@@ -36,15 +37,28 @@ public class UsuarioAction extends BasicAction {
 			this.getRequest().getSession().setAttribute(Constantes.KEY_USUARIO_SESSION, usuario);
 			return SUCCESS;				
 		} catch (BusinessException e) {
-			LOG.error(e.getMessage(), e);
+			LOGGER.error(e.getMessage(), e);
 			setMensagemUsuario(e.getMessage());
 			return ERROR;
 		} catch (Exception e) {
-			LOG.fatal(e.getMessage(), e);
+			LOGGER.fatal(e.getMessage(), e);
 			setMensagemUsuario("Serviço de Login indisponível.");
 			return ERROR;
 		}
-	}	
+	}
+	
+	public String efetuarBackupEnvioEmail() {
+		try {
+			JobsTask jobsTask = new JobsTask();
+			jobsTask.efetuarBackupEnvioEmail();
+			setMensagemUsuario("Backup realizado com sucesso.");
+			return SUCCESS;
+		} catch (Exception e) {
+			LOGGER.fatal(e.getMessage(), e);
+			setMensagemUsuario("Problema ao efetuar backup.");
+			return ERROR;
+		}
+	}
 	
 	public String exibirTelaHome() {
 		return SUCCESS;

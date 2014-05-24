@@ -9,9 +9,50 @@
 		});
 		
 	});
+	
+	// montar tabela consulta
+    $.ajax({
+    	url: 'SistemaPodologia/Consulta/ExibeTabelaConsulta',
+        type: 'POST',
+        cache: false,
+        dataType: "json",
+        beforeSend: function(){
+			$("#divCarregando").css("visibility", "visible");
+			$("#divMensagemErro").css("display", "none");
+			$("#divMensagemSucesso").css("display", "none");
+        },
+        success: function(data, status, request){
+        	$("#divCarregando").css("visibility", "hidden");
+            if (status == "success" && data.mensagemUsuario == undefined) {
+            	atualizaTabelaConsulta(data.listaHoraMarcarConsultaVO);
+            }
+        },
+        error: function (request, error) {
+			$("#divCarregando").css("visibility", "hidden");
+			$("#divMensagemErro").css("display", "block");
+			$("#spanMsgError").show().html("Sistema indisponível no momento."); 	                                      
+        }
+    });	
 });
 
+function atualizaTabelaConsulta(listaHoraMarcarConsultaVO) {
+	$(".tbodyTabelaConsulta").html("");
+	for (var i = 0; listaHoraMarcarConsultaVO.length > i; i++) {
+		inserirLinhaTabelaConsulta(listaHoraMarcarConsultaVO[i]);
+	}
+}
+
+function inserirLinhaTabelaConsulta(horaMarcarConsultaVO) {
+	var html = 
+		"<tr>"+
+			"<td>"+horaMarcarConsultaVO.hmlDescricao+"</td>"+
+			"<td></td>"+
+			"<td></td>"+
+			"<td></td>"+
+		"</tr>";
+	$(".tbodyTabelaConsulta").append(html);	
+}
+
 function dataRetorno(dia, mes, ano) {
-	alert('Data: '+dia+'/'+mes+'/'+ano);
-	return valor;
+	$("#spanDataMarcacaoConsulta").html('Data: '+dia+'/'+mes+'/'+ano);
 }	

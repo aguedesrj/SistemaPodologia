@@ -42,6 +42,10 @@
 									<input type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="F"/><span style="margin-left: 5px;">Feminino</span>
 									<input style="margin-left: 20px;" type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="M" checked="checked"/><span style="margin-left: 5px;">Masculino</span>								
 								</s:elseif>
+								<s:else>
+									<input type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="F"/><span style="margin-left: 5px;">Feminino</span>
+									<input style="margin-left: 20px;" type="radio" name="clienteVO.pessoaVO.pesSexo" id="pesSexo" value="M"/><span style="margin-left: 5px;">Masculino</span>
+								</s:else>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
@@ -128,7 +132,7 @@
 							    	<span class="input-group-addon">
 							        	<s:checkbox name="clienteVO.pacLabora" id="pacLabora" theme="simple"/>
 							      	</span>
-							      	<label class="form-control">Labora</label>
+							      	<label class="form-control">Trabalha</label>
 							    </div>
 							</div>
 							<div class="col-lg-3">
@@ -170,7 +174,7 @@
 							      	<span class="input-group-addon">
 							        	<s:checkbox name="clienteVO.pacTabagismo" id="pacTabagismo" theme="simple"/>
 							      	</span>
-							      	<label class="form-control">Tabagismo</label>
+							      	<label class="form-control">Fumante</label>
 							    </div>						
 							</div>						
 						</div>
@@ -225,7 +229,7 @@
 							</div>	
 							<div class="col-lg-3">
 								<s:label for="pacAltura" cssClass="control-label">Altura</s:label>
-								<s:textfield name="clienteVO.pacAltura" id="pacAltura" maxlength="2" theme="simple" cssStyle="width: 80px;" cssClass="form-control"/>
+								<s:textfield name="clienteVO.pacAltura" id="pacAltura" maxlength="4" theme="simple" cssStyle="width: 80px;" cssClass="form-control"/>
 							</div>																							
 						</div>																			
 					</div>

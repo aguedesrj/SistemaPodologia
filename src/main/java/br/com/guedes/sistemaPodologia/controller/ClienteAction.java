@@ -64,6 +64,7 @@ public class ClienteAction extends BasicAction {
     		}
     		return SUCCESS;
 		} catch (Exception e) {
+			LOGGER.fatal(e.getMessage(), e);
 			setMensagemUsuario("Erro ao iniciar o cadastro do Cliente.");
 			return ERROR;
 		}
@@ -89,7 +90,7 @@ public class ClienteAction extends BasicAction {
 	  		this.getRequest().getSession().removeAttribute(SESSION_LISTA_CONTATOS);
 	  		return SUCCESS;
 		} catch (Exception e) {
-			LOG.fatal(e.getMessage(), e);
+			LOGGER.fatal(e.getMessage(), e);
 			if (e instanceof BusinessException) {
 				setMensagemUsuario(e.getMessage());
 			} else {
@@ -255,6 +256,7 @@ public class ClienteAction extends BasicAction {
     		this.getRequest().getSession().setAttribute(SESSION_LISTA_CONTATOS, getClienteVO().getListaContatos());
     		return SUCCESS;
 		} catch (Exception e) {
+			LOGGER.fatal(e.getMessage(), e);
 			addActionError("Erro ao iniciar alteração do Cliente.");
 			return ERROR;
 		}
@@ -267,6 +269,7 @@ public class ClienteAction extends BasicAction {
     		getClienteVO().setListaContatos((List<ContatoVO>) this.getRequest().getSession().getAttribute(SESSION_LISTA_CONTATOS));
     		return SUCCESS;
 		} catch (Exception e) {
+			LOGGER.fatal(e.getMessage(), e);
 			addActionError("Erro ao iniciar alteração do Cliente.");
 			return ERROR;
 		}		

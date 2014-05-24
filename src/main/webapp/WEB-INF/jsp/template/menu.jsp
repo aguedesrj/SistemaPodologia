@@ -3,7 +3,7 @@
 	<div class="container">
 		<div class="navbar-collapse collapse">
         	<ul class="nav navbar-nav">
-            	<li class="active"><a href="/SistemaPodologia/Usuario/Home">Home</a></li>
+            	<li class="active"><a href="/SistemaPodologia/Usuario/Home">Tela de Início</a></li>
             	<li class="dropdown">
 	              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Cliente<b class="caret"></b></a>
 	              	<ul class="dropdown-menu">
@@ -11,6 +11,7 @@
 	                	<li><a href="/SistemaPodologia/Cliente/Pesquisa">Pesquisar</a></li>
 	              	</ul>	              	
             	</li>
+            	<!--
             	<li class="dropdown">
 	              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tratamento<b class="caret"></b></a>
 	              	<ul class="dropdown-menu">
@@ -31,9 +32,9 @@
 	                	<li><a href="/SistemaPodologia/Consulta/Novo">Marcar</a></li>
 	                	<li><a href="/SistemaPodologia/Consulta/Pesquisa">Pesquisar</a></li>
 	              	</ul>  
-	            </li>	            	                      	           	
+	            </li>
+	            -->            	            	                      	           	
 			</ul>
         </div>
 	</div>
 </div>
-

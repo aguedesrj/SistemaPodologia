@@ -1,5 +1,4 @@
-﻿
-function runEffectMsgSuccess() {
+﻿function runEffectMsgSuccess() {
 	$( "#divMensagemSucesso" ).show( "clip", {}, 500, callbackMsgSuccess );
 };
 
@@ -18,4 +17,4 @@ function callbackMsgError() {
 		$( "#divMensagemErro:visible" ).removeAttr( "style" ).fadeOut();
 	}, 3000 );
 };
-
+ 
